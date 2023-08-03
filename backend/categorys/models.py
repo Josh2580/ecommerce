@@ -22,4 +22,4 @@ class ProductCategory(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Cat: {self.name} || Parent: {self.parent}"
+        return f"{self.name}"
