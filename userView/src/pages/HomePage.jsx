@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import Snippet from "../components/snippet";
 import { styled } from "styled-components";
 import { snippetProduct } from "../source/ProductSource";
-import { useGetProductsQuery } from "../source/api/RootApi";
+import { useGetAllProductsQuery } from "../source/api/ProductsApi";
 
 const HomePage = () => {
-  const { data, error, isLoading } = useGetProductsQuery();
+  const { data, error, isLoading } = useGetAllProductsQuery();
 
   useEffect(() => {
     if (data) {
