@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Snippet from "../components/snippet";
 import { styled } from "styled-components";
 import { snippetProduct } from "../source/ProductSource";
+import { useGetProductsQuery } from "../source/api/RootApi";
 
 const HomePage = () => {
+  const { data, error, isLoading } = useGetProductsQuery();
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
+
   return (
     <div>
       <AllSnippet>

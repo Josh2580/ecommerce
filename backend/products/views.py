@@ -1,7 +1,6 @@
 from rest_framework import viewsets
 from products.models import Product, ProductColor, ProductQuality, ProductSize
 from products.serializers import ProductSerializer, ProductColorSerializer, ProductQualitySerializer, ProductSizeSerializer
-
 # Create your views here.
 
 
