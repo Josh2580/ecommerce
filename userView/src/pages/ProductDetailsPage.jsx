@@ -43,7 +43,7 @@ const ProductDetailsPage = () => {
                   placeHolder="select your size"
                 />
               </div>
-              <QtySelect size={5} />
+              <QtySelect size={data.quantity} placeHolder="select Quantity" />
             </Right>
           </Top>
           <Bottom>

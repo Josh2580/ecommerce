@@ -35,18 +35,24 @@ const Select = ({ sizes, placeHolder }) => {
 export default Select;
 
 export const QtySelect = ({ size, placeHolder }) => {
-  let arr = Array(size);
-  // console.log(arr.length);
-  arr.map((num, ind) => console.log(ind, num));
+  let arr = new Array(size);
+
+  {
+    /* Arrray Constructor for changing the QTY to an array of Numbers*/
+  }
+  // {
+  //   [...Array(size).keys()].map((x) => console.log(x));
+  // }
 
   return (
     <select>
       <option>{placeHolder}</option>
-      {/* {sizes.map((size) => ( */}
-      <option key={size} value={size}>
-        {size}
-      </option>
-      {/* ))} */}
+      {/* Arrray Constructor for changing the QTY to an array of Numbers*/}
+      {[...Array(size).keys()].map((x) => (
+        <option key={x} value={x + 1}>
+          {x + 1}
+        </option>
+      ))}
     </select>
   );
 };

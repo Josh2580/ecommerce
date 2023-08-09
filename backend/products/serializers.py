@@ -33,9 +33,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = "__all__"
+        # fields = "__all__"
         fields = ["id", "name", "category",
-                  "color", "price", "size", "quality", "image", "description"]
+                  "color", "price", "size", "quality", "image", "description", "quantity"]
 
         # exclude = ["price", "color"]
 
