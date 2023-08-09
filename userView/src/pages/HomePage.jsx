@@ -1,30 +1,31 @@
-import React, { useEffect } from "react";
-import Snippet from "../components/snippet";
+import React, { useEffect, useState } from "react";
+import Snippet from "../components/snippets/Snippet";
 import { styled } from "styled-components";
-import { snippetProduct } from "../source/ProductSource";
-import { useGetAllProductsQuery } from "../source/api/ProductsApi";
+// import { snippetProduct } from "../source/ProductSource";
+import { useGetAllProductQuery } from "../source/api/ProductsApi";
 
 const HomePage = () => {
-  const { data, error, isLoading } = useGetAllProductsQuery();
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
+  const { data, error, isLoading, isSuccess } = useGetAllProductQuery();
 
   return (
     <div>
       <AllSnippet>
-        {snippetProduct.map((product) => (
-          <Snippet
-            key={product.id}
-            name={product.name}
-            price={product.price}
-            picture={product.picture}
-            category={product.category}
-          />
-        ))}
+        {isSuccess ? (
+          <>
+            {data.map((product) => (
+              <Snippet
+                key={product.id}
+                name={product.name}
+                price={product.price}
+                picture={product.image}
+                category={product.category}
+                id={product.id}
+              />
+            ))}
+          </>
+        ) : (
+          <h1>"is loading"</h1>
+        )}
       </AllSnippet>
     </div>
   );

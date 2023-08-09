@@ -2,14 +2,25 @@ import { rootApi } from "./RootApi";
 
 const productsApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllProducts: build.query({
+    getAllProduct: build.query({
       query: () => "products/all/",
     }),
-    getProductsById: build.query({
-      query: ({ id }) => `products/all/${id}`,
+    getProductById: build.query({
+      query: (id) => `products/all/${id}/`,
+    }),
+    getProductColors: build.query({
+      query: () => "products/color/",
+    }),
+    getProductSizes: build.query({
+      query: () => "products/size/",
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetAllProductsQuery, useGetProductsByIdQuery } = productsApi;
+export const {
+  useGetAllProductQuery,
+  useGetProductByIdQuery,
+  useGetProductColorsQuery,
+  useGetProductSizesQuery,
+} = productsApi;

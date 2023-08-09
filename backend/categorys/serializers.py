@@ -4,6 +4,14 @@ from products.serializers import ProductSerializer
 from products.models import Product
 
 
+class CategoryNameSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = ProductCategory
+        fields = ["id", "name"]
+
+
 class CategorySerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True, read_only=True)
 

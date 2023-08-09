@@ -2,17 +2,6 @@ from rest_framework import serializers
 from products.models import Product, ProductColor, ProductSize, ProductQuality
 
 
-class ProductSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Product
-        # fields = "__all__"
-        fields = ["id", "name", "category",
-                  "color", "price", "size", "quality"]
-
-        # exclude = ["price", "color"]
-
-
 class ProductColorSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -35,3 +24,23 @@ class ProductQualitySerializer(serializers.ModelSerializer):
         model = ProductQuality
         fields = ["id", "quality", "products"]
         # depth = 1
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    # color = ProductColorSerializer(many=True, required=False)
+    # size = ProductSizeSerializer(many=True, required=False)
+    # quality = ProductQualitySerializer(many=True, required=False)
+
+    class Meta:
+        model = Product
+        fields = "__all__"
+        fields = ["id", "name", "category",
+                  "color", "price", "size", "quality", "image", "description"]
+
+        # exclude = ["price", "color"]
+
+        # def create(self, validated_data):
+        #     color = validated_data.pop('color')
+        #     product = Product.objects.create(**validated_data)
+        #     ProductColor.objects.create(product=product, **color)
+        #     return product
