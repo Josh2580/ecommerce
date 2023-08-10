@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useGetProductSizesQuery } from "../../source/api/ProductsApi";
+import { styled } from "styled-components";
 
 const SizeNames = ({ sizeId }) => {
   const { data, isSuccess } = useGetProductSizesQuery();
@@ -21,14 +22,13 @@ const SizeNames = ({ sizeId }) => {
 
 const Select = ({ sizes, placeHolder }) => {
   return (
-    <select>
-      <option>{placeHolder}</option>
+    <SelectStyled>
       {sizes.map((size) => (
         <option key={size} value={size}>
           {SizeNames({ sizeId: size })}
         </option>
       ))}
-    </select>
+    </SelectStyled>
   );
 };
 
@@ -45,14 +45,20 @@ export const QtySelect = ({ size, placeHolder }) => {
   // }
 
   return (
-    <select>
-      <option>{placeHolder}</option>
+    <SelectStyled>
       {/* Arrray Constructor for changing the QTY to an array of Numbers*/}
       {[...Array(size).keys()].map((x) => (
         <option key={x} value={x + 1}>
           {x + 1}
         </option>
       ))}
-    </select>
+    </SelectStyled>
   );
 };
+
+const SelectStyled = styled.select`
+  width: 150px;
+  padding: 0.5rem 2rem;
+  font-size: 16px;
+  background: none;
+`;

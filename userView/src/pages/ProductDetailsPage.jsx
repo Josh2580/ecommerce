@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../source/api/ProductsApi";
 import ColorSnippet from "./../components/colors/ColorSnippet";
 import Select, { QtySelect } from "../components/select/Select";
+import ShareComp from "../components/ShareComp";
+import ReviewComp from "../components/ReviewComp";
 
 const ProductDetailsPage = () => {
   //Fetching id with params from the URL
@@ -26,24 +28,40 @@ const ProductDetailsPage = () => {
               <img src={data.image} alt={data.name} />{" "}
             </Left>
             <Right>
-              <h2>{data.name}</h2>
-              <span>{data.reviews}reviews with star rating icon</span>
-              <p>${data.price}</p>
-              <p>Little Description{data.description}</p>
+              <p className="title">{data.name}</p>
+              <span className="reviews">
+                <ReviewComp />
+              </span>
+              <p className="price">${data.price}</p>
+              <p className="description">
+                Little Description{data.description}
+              </p>
               <div className="color">
-                <p>color</p>
-                {data.color.map((colorA) => (
-                  <ColorSnippet key={colorA} color={colorA} />
-                ))}
+                <p className="variantTitle">Color:</p>
+                <div className="eachColor">
+                  {data.color.map((colorA) => (
+                    <ColorSnippet key={colorA} color={colorA} />
+                  ))}
+                </div>
               </div>
               <div className="size">
+                <p className="variantTitle">Size:</p>
+
                 <Select
                   className="sizeSelect"
                   sizes={data.size}
                   placeHolder="select your size"
                 />
               </div>
-              <QtySelect size={data.quantity} placeHolder="select Quantity" />
+              <div className="qty">
+                <p className="variantTitle">Qty:</p>
+
+                <QtySelect size={data.quantity} placeHolder="select Quantity" />
+              </div>
+
+              <ButtonStyle>ADD TO CART</ButtonStyle>
+
+              <ShareComp />
             </Right>
           </Top>
           <Bottom>
@@ -56,39 +74,70 @@ const ProductDetailsPage = () => {
 };
 
 const BlogDetailStyle = styled.div`
-  background: lightgray;
+  /* background: lightgray; */
   min-height: 100vh;
 `;
 
 const Top = styled.div`
-  background: gray;
-  padding: 1rem;
+  /* background: gray; */
+  /* padding: 1rem; */
   display: flex;
+  gap: 1rem;
   @media (max-width: 800px) {
     flex-direction: column;
   }
 `;
 
 const Left = styled.div`
-  background: #c0db89;
+  /* background: #c0db89; */
   flex: 1;
-  padding: 1rem;
+  /* padding: 1rem; */
   img {
     width: 100%;
   }
 `;
 
 const Right = styled.div`
-  background: cyan;
+  /* background: cyan; */
   flex: 1;
-  .sizeSelect {
-    color: red;
-    display: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .title {
+    font-size: 30px;
+    text-transform: capitalize;
+  }
+  .price {
+    font-size: 30px;
+  }
+
+  .description {
+    line-height: 22px;
+  }
+  .variantTitle {
+    width: 50px;
+  }
+  .color,
+  .eachColor,
+  .size,
+  .qty {
+    display: flex;
+    align-items: center;
+  }
+  .eachColor {
+    gap: 7px;
   }
 `;
 
+const ButtonStyle = styled.button`
+  width: 200px;
+  padding: 0.5rem 2rem;
+  font-size: 16px;
+  background: none;
+`;
+
 const Bottom = styled.div`
-  background: yellowgreen;
+  /* background: yellowgreen; */
 `;
 
 export default ProductDetailsPage;
