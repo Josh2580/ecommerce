@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useGetProductSizesQuery } from "../../source/api/ProductsApi";
+import {
+  useGetProductSizesQuery,
+  useGetProductQualityQuery,
+} from "../../source/api/ProductsApi";
 import { styled } from "styled-components";
 
 const SizeNames = ({ sizeId }) => {
   const { data, isSuccess } = useGetProductSizesQuery();
+
   const [size, setSize] = useState("default");
 
   useEffect(() => {
@@ -18,6 +22,25 @@ const SizeNames = ({ sizeId }) => {
   }, [data, size]);
 
   return size;
+};
+
+const GradeNames = ({ gradeId }) => {
+  const { data, isSuccess } = useGetProductQualityQuery();
+
+  const [grade, setGrade] = useState("default");
+
+  useEffect(() => {
+    if (isSuccess) {
+      // Filter the Specific Size by its ID(which is the SizeId)
+      let myGradeDisplay = data.filter((grd) => grd.id == gradeId);
+
+      // Mapping the filtered Category to get its name
+      myGradeDisplay.map((finalGrade) => setGrade(finalGrade.quality));
+    }
+    // This useEffect functions always run when the data or categoryName is updated
+  }, [data, grade]);
+
+  return grade;
 };
 
 const Select = ({ sizes, placeHolder }) => {
@@ -56,9 +79,21 @@ export const QtySelect = ({ size, placeHolder }) => {
   );
 };
 
-const SelectStyled = styled.select`
+export const GradeSelect = ({ grade, placeHolder }) => {
+  return (
+    <SelectStyled>
+      {grade.map((grd) => (
+        <option key={grd} value={grd}>
+          {GradeNames({ gradeId: grd })}
+        </option>
+      ))}
+    </SelectStyled>
+  );
+};
+
+export const SelectStyled = styled.select`
   width: 150px;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
   font-size: 16px;
   background: none;
 `;

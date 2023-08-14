@@ -4,7 +4,7 @@ import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { CategoryNames } from "../categorys/CategoryNames";
 import { useNavigate } from "react-router-dom";
 
-const Snippet = ({ name, price, picture, category, id }) => {
+const SecondSnippet = ({ name, price, picture, category, id }) => {
   const navigate = useNavigate();
 
   const urlHandler = () => {
@@ -13,7 +13,7 @@ const Snippet = ({ name, price, picture, category, id }) => {
   };
 
   return (
-    <SnipStyle onClick={() => urlHandler()}>
+    <SecondSnipStyle onClick={() => urlHandler()}>
       <img src={picture} alt="SnipImg" />
       <div className="details">
         <p className="categoryName">{CategoryNames(category)}</p>
@@ -32,20 +32,16 @@ const Snippet = ({ name, price, picture, category, id }) => {
           <p className="reviewNumber"></p>
         </div>
       </div>
-    </SnipStyle>
+    </SecondSnipStyle>
   );
 };
 
-const SnipStyle = styled.div`
+const SecondSnipStyle = styled.div`
   box-shadow: 0px 0px 7px -1px #96969653;
   /* text-align: center; */
 
   img {
-    min-width: 200px;
     width: 100%;
-    @media (max-width: 550px) {
-      min-width: 120px;
-    }
   }
   .details {
     padding: 5px 10px 5px 10px;
@@ -75,4 +71,4 @@ const SnipStyle = styled.div`
   }
 `;
 
-export default Snippet;
+export default SecondSnippet;

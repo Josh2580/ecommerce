@@ -14,6 +14,9 @@ const productsApi = rootApi.injectEndpoints({
     getProductSizes: build.query({
       query: () => "products/size/",
     }),
+    getProductQuality: build.query({
+      query: () => "products/quality/",
+    }),
   }),
   overrideExisting: false,
 });
@@ -23,4 +26,5 @@ export const {
   useGetProductByIdQuery,
   useGetProductColorsQuery,
   useGetProductSizesQuery,
+  useGetProductQualityQuery,
 } = productsApi;
