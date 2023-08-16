@@ -12,7 +12,7 @@ import Shipping from "./../components/productInfos/Shipping";
 import Reviews from "./../components/productInfos/Reviews";
 import SimilarComp from "../components/SimilarComp";
 import { useNavigate } from "react-router-dom";
-import { ButtonStyle } from "../components/Button";
+import { ButtonStyle } from "../components/myModules/Button";
 
 const ProductDetailsPage = () => {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import Product1 from "../assets/product-1.jpg";
 import Product2 from "../assets/product-2.jpg";
 import { SelectStyled } from "../components/select/Select";
-import { ButtonStyle } from "../components/Button";
+import { ButtonStyle } from "../components/myModules/Button";
 import { useNavigate } from "react-router-dom";
 
 const products = [
