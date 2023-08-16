@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import StorePage from "./pages/StorePage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
 
 //
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/store" element={<StorePage />} />
           <Route path="/product/:productId" element={<ProductDetailsPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
       </BrowserRouter>
     </>

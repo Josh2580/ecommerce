@@ -12,6 +12,7 @@ import Shipping from "./../components/productInfos/Shipping";
 import Reviews from "./../components/productInfos/Reviews";
 import SimilarComp from "../components/SimilarComp";
 import { useNavigate } from "react-router-dom";
+import { ButtonStyle } from "../components/Button";
 
 const ProductDetailsPage = () => {
   const navigate = useNavigate();
@@ -236,13 +237,6 @@ const Right = styled.div`
   .eachColor {
     gap: 7px;
   }
-`;
-
-const ButtonStyle = styled.button`
-  width: 200px;
-  padding: 0.5rem 2rem;
-  font-size: 16px;
-  background: none;
 `;
 
 const Bottom = styled.div`
