@@ -5,7 +5,7 @@ from products.models import Product, ProductColor, ProductQuality, ProductSize
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["name", "category", "image", "price"]
+    list_display = ["name", "category", "image", "price", "category_name"]
     list_display_links = ["name", "price"]
     pass
 

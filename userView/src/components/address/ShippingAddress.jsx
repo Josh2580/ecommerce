@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import { styled } from "styled-components";
 import { ButtonStyle } from "../myModules/Button";
 import { InputStyle } from "../myModules/Inputs";
 
-const ShippingAddress = () => {
+const ShippingAddress = ({ done }) => {
   return (
     <ShippingAddressStyle>
+      <p className="title">Shipping Address</p>
       <Group>
         <div className="eachInput">
           <Group></Group>
@@ -124,7 +125,8 @@ const ShippingAddress = () => {
         ></textarea>
       </div>
 
-      {/* <ButtonStyle width="100%">Submit</ButtonStyle> */}
+      <InputStyle type="button" value="submit" id="lastName" name="lastName" />
+      <ButtonStyle>Submit</ButtonStyle>
     </ShippingAddressStyle>
   );
 };
@@ -134,10 +136,19 @@ export const ShippingAddressStyle = styled.form`
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
+  box-shadow: 0px 4px 7px 1px #dbdbdb;
+  .title {
+    font-size: 1.5rem;
+    border-bottom: 1px solid black;
+    padding-bottom: 0.5rem;
+  }
   .eachInput {
     display: flex;
     flex-direction: column;
     width: 100%;
+    span {
+      color: #fc7676;
+    }
   }
   #orderNote {
     /* background: red; */
@@ -156,6 +167,7 @@ const Right = styled.div``;
 export const Group = styled.div`
   display: flex;
   gap: 1rem;
+
   @media (max-width: 550px) {
     display: flex;
     flex-direction: column;

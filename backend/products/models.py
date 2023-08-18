@@ -9,13 +9,18 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     category = models.ForeignKey(
         ProductCategory, on_delete=models.CASCADE, related_name="products")
-    image = models.ImageField(null=True, upload_to=f"products/images/")
+    image = models.ImageField(null=True, blank=True,
+                              upload_to=f"products/images/")
     description = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
         return f"{self.name}"
+
+    def category_name(self):
+        catName = ProductCategory.objects.get(name=self.category)
+        return str(catName.name)
 
 
 class ProductSize(models.Model):

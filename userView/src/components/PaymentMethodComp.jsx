@@ -7,56 +7,55 @@ const PaymentMethodComp = () => {
     <PaymentMethodStyle>
       <p>Choose Payment Method</p>
       <Methods>
-        <Group>
+        <PayGroup>
           <InputStyle
             type="radio"
             id="directBankTransfer"
             name="paymentMethod"
           />
           <label htmlFor="directBankTransfer">Direct Bank Transfer</label>
-        </Group>
-        <Group>
+        </PayGroup>
+        <PayGroup>
           <InputStyle type="radio" id="cashOnDelivery" name="paymentMethod" />
           <label htmlFor="cashOnDelivery">Cash on Delivery</label>
-        </Group>
-        <Group>
+        </PayGroup>
+        <PayGroup>
           <InputStyle type="radio" id="creditCard" name="paymentMethod" />
           <label htmlFor="creditCard">Credit Card</label>
-        </Group>
+        </PayGroup>
       </Methods>
     </PaymentMethodStyle>
   );
 };
 
-const PaymentMethodStyle = styled.div`
-  margin: 1rem;
-  width: fit-content;
+export const PaymentMethodStyle = styled.div`
+  /* width: max-content; */
 
   /* background: yellowgreen; */
   padding: 1rem;
   box-shadow: 0px 4px 7px 1px #dbdbdb;
 
   p {
-    font-size: 2rem;
+    font-size: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #cfcdcd;
   }
 `;
 
-const Group = styled.div`
+export const PayGroup = styled.div`
   display: flex;
   /* background: yellowgreen; */
   width: fit-content;
   gap: 0.2rem;
-  border-bottom: 1px solid #cfcdcd;
+  /* border-bottom: 1px solid #cfcdcd; */
   padding: 0.5rem;
 
   label {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 `;
 
-const Methods = styled.div`
+export const Methods = styled.div`
   display: flex;
   flex-direction: column;
   /* gap: 0.5rem; */
