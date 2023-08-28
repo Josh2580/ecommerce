@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+# from rest_framework import generics
+
 from products.models import Product, ProductColor, ProductQuality, ProductSize
 from products.serializers import ProductSerializer, ProductColorSerializer, ProductQualitySerializer, ProductSizeSerializer
 # Create your views here.
@@ -13,6 +15,12 @@ class ProductViewSet(viewsets.ModelViewSet):
     # def perform_create(self, serializer):
     #     serializer.save(color=self.request.data)
     #     print(serializer.data)
+
+# class ProductViewSet(generics.ListCreateAPIView):
+
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+#     filterset_fields = ["name", "price"]
 
 
 class ProductColorViewSet(viewsets.ModelViewSet):
