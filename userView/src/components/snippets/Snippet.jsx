@@ -4,22 +4,23 @@ import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { CategoryNames } from "../categorys/CategoryNames";
 import { useNavigate } from "react-router-dom";
 
-const Snippet = ({ name, price, picture, category, id }) => {
+const Snippet = ({ props }) => {
   const navigate = useNavigate();
 
   const urlHandler = () => {
-    navigate(`/product/${id}`);
+    navigate(`/product/${props.id}`);
     // console.log(`${id} url handler`);
   };
 
   return (
     <SnipStyle onClick={() => urlHandler()}>
-      <img src={picture} alt="SnipImg" />
+      <img src={props.image} alt="SnipImg" />
       <div className="details">
-        <p className="categoryName">{CategoryNames(category)}</p>
+        {/* <p className="categoryName">{CategoryNames(category)}</p> */}
+        <p className="categoryName">{props.category_name}</p>
 
-        <p className="name">{name}</p>
-        <p className="price">{price}</p>
+        <p className="name">{props.name}</p>
+        <p className="price">{props.price}</p>
         <div className="review">
           <div className="icon">
             <BsStarFill className="fullStar" />
@@ -54,7 +55,7 @@ const SnipStyle = styled.div`
     gap: 3px;
     .categoryName {
       font-size: 0.9em;
-      color: lightgray;
+      color: gray;
     }
     .price {
       color: purple;

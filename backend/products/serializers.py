@@ -35,7 +35,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         # fields = "__all__"
         fields = ["id", "name", "category", "category_name",
-                  "color", "price", "size", "quality", "image", "description", "quantity"]
+                  "color", "color_name", "price", "size", "quality", "image", "description", "quantity"]
 
         # exclude = ["price", "color"]
 

@@ -13,14 +13,7 @@ const HomePage = () => {
         {isSuccess ? (
           <>
             {data.map((product) => (
-              <Snippet
-                key={product.id}
-                name={product.name}
-                price={product.price}
-                picture={product.image}
-                category={product.category}
-                id={product.id}
-              />
+              <Snippet key={product.id} props={product} />
             ))}
           </>
         ) : (

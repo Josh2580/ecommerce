@@ -3,7 +3,6 @@ from categorys.models import ProductCategory, ParentProductCategory
 from products.models import Product
 
 
-
 class TestSetUp(APITestCase):
 
     def setUp(self):
@@ -15,3 +14,5 @@ class TestSetUp(APITestCase):
 
         self.prod = Product.objects.create(
             name="test name", category=self.prodCat, price=20)
+
+        self.all_product_url = "all_products"

@@ -22,6 +22,15 @@ class Product(models.Model):
         catName = ProductCategory.objects.get(name=self.category)
         return str(catName.name)
 
+    def color_name(self):
+        # colName = self.id
+        a = ProductColor.objects.filter(products=self.pk)
+        # b = colName.productColor_set.all()
+        # b = ""
+        # for i in a:
+        #     b = str(i) + b
+        return a
+
 
 class ProductSize(models.Model):
     size = models.CharField(max_length=155, null=True, blank=True)

@@ -28,16 +28,7 @@ const CarouselComp = ({ items }) => {
     },
   };
 
-  const product = items.map((pro) => (
-    <Snippet
-      key={pro.id}
-      name={pro.name}
-      price={pro.price}
-      picture={pro.image}
-      category={pro.category}
-      id={pro.id}
-    />
-  ));
+  const product = items.map((pro) => <Snippet key={pro.id} props={pro} />);
 
   return (
     <CarouselStyle>

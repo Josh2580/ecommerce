@@ -24,7 +24,6 @@ const SimilarComp = ({ catId, itemId }) => {
     <div>
       <p>Similar Good Products </p>
       <CarouselComp items={SimilarProducts} />
-      {/* <CarouselComp items={SimilarProducts} /> */}
     </div>
   );
 };
