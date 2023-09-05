@@ -4,6 +4,7 @@ from users.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
+from users.accountModels import Customers
 
 # Register your models here.
 
@@ -26,8 +27,10 @@ class UserAdminConfig(UserAdmin):
     list_display = ("email", "first_name", "last_name")
     fieldsets = [
         (None, {"fields": ["email", "password"]}),
-        ("Personal info", {"fields": ["last_name"]}),
-        ("Permissions", {"fields": ["is_admin"]}),
+        ("Personal info", {"fields": ["first_name", "last_name"]}),
+        ("Permissions", {"fields": ["is_admin",
+         "is_active", "is_staff", "is_superuser"]}),
+
     ]
     ordering = ["email"]
     filter_horizontal = []
@@ -35,3 +38,4 @@ class UserAdminConfig(UserAdmin):
 
 
 admin.site.register(User, UserAdminConfig)
+admin.site.register(Customers)

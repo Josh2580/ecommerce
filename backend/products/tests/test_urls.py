@@ -1,11 +1,11 @@
-from django.urls import reverse, resolve
+from django.urls import reverse
 from rest_framework import status
 from products.models import Product
 from products.tests.test_setUp import TestSetUp
 
 
 # class AccountTests(APITestCase, URLPatternsTestCase):
-class AccountTests(TestSetUp):
+class TestUrls(TestSetUp):
     def test_get_all_products(self):
         """
         Ensure we get all the products with the url.

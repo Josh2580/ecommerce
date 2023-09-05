@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     "corsheaders",
     "rest_framework",
+    'rest_framework_simplejwt',
     'django_filters',
     "products",
     "categorys",
@@ -52,9 +53,6 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = "users.User"
 
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -181,3 +179,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
+}
+
+
+# REST_FRAMEWORK = {
+
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     )
+
+# }

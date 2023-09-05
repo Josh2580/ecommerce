@@ -56,6 +56,9 @@ class CustomUserManager(BaseUserManager):
             password=password,
         )
         user.is_admin = True
+        user.is_active = True
+        user.is_staff = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -79,13 +82,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_of_birth = models.DateField(null=True)
     profile_picture = models.ImageField(
         upload_to='profile/', null=True, blank=True, default="")
-    phone_number = models.CharField(
-        max_length=20, null=True, blank=True, default="")
     gender = models.CharField(max_length=10, null=True, choices=GENDER)
     # date_joined = models.DateTimeField(auto_now_add=True)
     # last_login = models.DateTimeField(auto_now=True)
 
-    is_admin = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -108,8 +109,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         # Simplest possible answer: Yes, always
         return True
 
-    @property
-    def is_staff(self):
-        "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
-        return self.is_admin
+    # @property
+    # def is_staff(self):
+    #     "Is the user a member of staff?"
+    #     # Simplest possible answer: All admins are staff
+    #     return self.is_admin

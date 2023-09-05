@@ -2,11 +2,14 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 from users.serializers import UserSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
 
 # Create your views here.
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    # permission_classes = [IsAuthenticatedOrReadOnly]
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
