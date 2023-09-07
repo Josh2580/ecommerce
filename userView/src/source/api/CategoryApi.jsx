@@ -8,15 +8,8 @@ const categorysApi = rootApi.injectEndpoints({
     getCategoryById: build.query({
       query: ({ id }) => `categorys/main/${id}/`,
     }),
-    getCategoryNames: build.query({
-      query: () => `categorys/names/`,
-    }),
   }),
   overrideExisting: false,
 });
 
-export const {
-  useGetAllCategoryQuery,
-  useGetCategoryByIdQuery,
-  useGetCategoryNamesQuery,
-} = categorysApi;
+export const { useGetAllCategoryQuery, useGetCategoryByIdQuery } = categorysApi;

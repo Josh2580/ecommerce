@@ -1,14 +1,18 @@
 from django.db import models
-# from django.contrib.auth import get_user_model
-from categorys.models import ProductCategory
+from categorys.models import ProductCategory, Vendor
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 # Create your models here.
-
 class Product(models.Model):
-    name = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(
-        ProductCategory, on_delete=models.CASCADE, related_name="products")
+        ProductCategory, on_delete=models.SET_NULL, null=True, related_name="products")
     image = models.ImageField(null=True, blank=True,
                               upload_to=f"products/images/")
     description = models.TextField(null=True, blank=True)
@@ -16,7 +20,7 @@ class Product(models.Model):
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.title}"
 
     def category_name(self):
         catName = ProductCategory.objects.get(name=self.category)

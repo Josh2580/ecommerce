@@ -4,7 +4,10 @@ from users import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
-router.register(r'', views.UserViewSet, basename="user_urls")
+router.register(r'all', views.UserViewSet, basename="user_urls")
+router.register(r'customers', views.CustomersViewSet,
+                basename="customers_urls")
+
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [

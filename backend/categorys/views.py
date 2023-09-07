@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from drf_multiple_model.views import ObjectMultipleModelAPIView, FlatMultipleModelAPIView
-from categorys.models import ProductCategory, ParentProductCategory
-from categorys.serializers import CategorySerializer, ParentCategorySerializer, CategoryNameSerializer
+from categorys.models import ProductCategory, ParentProductCategory, Vendor
+from categorys.serializers import CategorySerializer, ParentCategorySerializer, VendorSerializer
 
 # Create your views here.
 
@@ -26,8 +26,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     filterset_fields = ["name", "created_at"]
 
 
-class CategoryNameViewSet(viewsets.ModelViewSet):
+class VendorViewSet(viewsets.ModelViewSet):
 
-    queryset = ProductCategory.objects.all()
-    serializer_class = CategoryNameSerializer
-    # filterset_fields = ["name", "created_at"]
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer

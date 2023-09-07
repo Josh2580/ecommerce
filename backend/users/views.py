@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
-from users.serializers import UserSerializer
+from users.serializers import UserSerializer, CustomersSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .accountModels import Customers
 
 
 # Create your views here.
@@ -18,3 +19,8 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
+
+
+class CustomersViewSet(viewsets.ModelViewSet):
+    queryset = Customers.objects.all()
+    serializer_class = CustomersSerializer

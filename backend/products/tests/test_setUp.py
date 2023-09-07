@@ -13,9 +13,9 @@ class TestSetUp(APITestCase):
             name="test_cat", parent=self.parentCat)
 
         self.prod = Product.objects.create(
-            name="test name", category=self.prodCat, price=20)
+            title="test name", category=self.prodCat, price=20)
 
-        product = Product.objects.filter(name="test name")
+        product = Product.objects.filter(title="test name")
 
         self.prodcolor = ProductColor.objects.create(
             color="test product color")

@@ -1,15 +1,7 @@
 from rest_framework import serializers
-from categorys.models import ProductCategory, ParentProductCategory
+from categorys.models import ProductCategory, ParentProductCategory, Vendor
 from products.serializers import ProductSerializer
 from products.models import Product
-
-
-class CategoryNameSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(read_only=True)
-
-    class Meta:
-        model = ProductCategory
-        fields = ["id", "name"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -30,3 +22,10 @@ class ParentCategorySerializer(serializers.ModelSerializer):
         model = ParentProductCategory
         fields = ["id", "name", "image", "created_at",
                   "modified_at", "main_category"]
+
+
+class VendorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Vendor
+        fields = "__all__"

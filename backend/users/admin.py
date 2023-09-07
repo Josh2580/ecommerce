@@ -3,7 +3,7 @@ from django import forms
 from users.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.core.exceptions import ValidationError
+# from django.core.exceptions import ValidationError
 from users.accountModels import Customers
 
 # Register your models here.

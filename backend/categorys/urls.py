@@ -8,8 +8,9 @@ router.register(r'parent', views.ParentCategoryViewSet,
                 basename="product_category_urls")
 router.register(r'main', views.CategoryViewSet,
                 basename="product_main_category_urls")
-router.register(r'names', views.CategoryNameViewSet,
-                basename="product_name_category_urls")
+
+router.register(r'vendor', views.VendorViewSet,
+                basename="vendor_urls")
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [

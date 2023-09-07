@@ -10,7 +10,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    filterset_fields = ["name", "price"]
+    # filterset_fields = ["name", "price"]
 
     # def perform_create(self, serializer):
     #     serializer.save(color=self.request.data)
