@@ -17,6 +17,9 @@ router.register(r'quality', views.ProductQualityViewSet,
 router.register(r'size', views.ProductSizeViewSet,
                 basename="product_size_urls")
 
+router.register(r'rating', views.ProductRatingViewSet,
+                basename="product_rating_urls")
+
 # The API URLs are now determined automatically by the router.
 
 urlpatterns = [

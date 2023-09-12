@@ -1,5 +1,6 @@
 from django.db import models
 from categorys.models import ProductCategory, Vendor
+from users.accountModels import Customers
 from django.contrib.auth import get_user_model
 
 
@@ -13,8 +14,8 @@ class Product(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(
         ProductCategory, on_delete=models.SET_NULL, null=True, related_name="products")
-    image = models.ImageField(null=True, blank=True,
-                              upload_to=f"products/images/")
+    image = models.ImageField(
+        upload_to=f"products/images/", default="products/images/product_default.png")
     description = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField(default=1)
@@ -52,3 +53,16 @@ class ProductQuality(models.Model):
 
     def __str__(self):
         return self.quality
+
+
+class ProductRating(models.Model):
+    customer = models.ForeignKey(
+        Customers, related_name="customer_rating", on_delete=models.SET_NULL, null=True)
+    products = models.ForeignKey(
+        Product, related_name="product_ratings", on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    reviews = models.TextField()
+    add_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.reviews

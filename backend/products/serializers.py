@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from products.models import Product, ProductColor, ProductSize, ProductQuality
+from products import models
 
 
 class ProductColorSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = ProductColor
+        model = models.ProductColor
         fields = ["id", "color", "products"]
         # depth = 1
 
@@ -13,15 +13,14 @@ class ProductColorSerializer(serializers.ModelSerializer):
 class ProductSizeSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = ProductSize
+        model = models.ProductSize
         fields = ["id", "size", "products"]
         # depth = 1
 
 
 class ProductQualitySerializer(serializers.ModelSerializer):
-
     class Meta:
-        model = ProductQuality
+        model = models.ProductQuality
         fields = ["id", "quality", "products"]
         # depth = 1
 
@@ -32,10 +31,10 @@ class ProductSerializer(serializers.ModelSerializer):
     # quality = ProductQualitySerializer(many=True, required=False)
 
     class Meta:
-        model = Product
-        fields = "__all__"
-        # fields = ["id", "title", "category", "category_name",
-        #           "color", "price", "size", "quality", "image", "description", "quantity"]
+        model = models.Product
+        # fields = "__all__"
+        fields = ["id", "user", "title", "product_ratings", "vendor", "category", "category_name",
+                  "color", "price", "size", "quality", "image", "description", "quantity"]
 
         # exclude = ["price", "color"]
 
@@ -44,3 +43,11 @@ class ProductSerializer(serializers.ModelSerializer):
         #     product = Product.objects.create(**validated_data)
         #     ProductColor.objects.create(product=product, **color)
         #     return product
+
+
+class ProductRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ProductRating
+        fields = ["id", "customer", "products",
+                  "rating", "reviews", "add_time"]
+        # depth = 1

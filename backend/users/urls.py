@@ -7,6 +7,7 @@ router = DefaultRouter()
 router.register(r'all', views.UserViewSet, basename="user_urls")
 router.register(r'customers', views.CustomersViewSet,
                 basename="customers_urls")
+router.register(r'address', views.AddressViewSet, basename="address_urls")
 
 
 # The API URLs are now determined automatically by the router.

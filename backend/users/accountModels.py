@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from products.models import Product
 
 
 User = get_user_model()
@@ -11,10 +10,11 @@ class Customers(models.Model):
         User, on_delete=models.CASCADE, related_name="products")
     mobile = models.PositiveBigIntegerField(blank=True, null=True)
     address = models.ForeignKey(
-        "Address", on_delete=models.SET_NULL, null=True, related_name="customer_address")
+        "Address", on_delete=models.SET_NULL, null=True, related_name="customer")
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        # return f"{self.user.first_name} {self.user.last_name}"
+        return f"{self.user}"
 
 
 class Address(models.Model):
@@ -25,4 +25,4 @@ class Address(models.Model):
     country = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        return f"{self.address}"
