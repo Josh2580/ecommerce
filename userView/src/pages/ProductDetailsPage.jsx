@@ -83,7 +83,7 @@ const ProductDetailsPage = () => {
               <img src={data.image} alt={data.name} />{" "}
             </Left>
             <Right>
-              <p className="title">{data.name}</p>
+              <p className="title">{data.title}</p>
               <span className="reviews">
                 <ReviewComp />
               </span>

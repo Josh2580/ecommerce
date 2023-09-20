@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
+
 urlpatterns = [
     path('users/', include("users.urls")),
     path('auth/', include('rest_framework.urls')),
@@ -20,5 +21,7 @@ urlpatterns = [
     path('categorys/', include("categorys.urls")),
     path('products/', include("products.urls")),
     path('orders/', include("order.urls")),
+    # path('basket/', include("basket.urls"), name="basket_api"),
+
 
 ]

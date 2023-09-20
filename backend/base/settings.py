@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     "products",
     "categorys",
     "users",
-    "order"
+    "order",
+    # "basket",
     # 'drf_multiple_model',
 
 ]

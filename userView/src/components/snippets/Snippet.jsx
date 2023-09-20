@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { BsStarFill, BsStarHalf } from "react-icons/bs";
-import { CategoryNames } from "../categorys/CategoryNames";
+import {
+  BsStarFill,
+  BsStarHalf,
+  BsCartPlus,
+  BsCartPlusFill,
+} from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 const Snippet = ({ props }) => {
@@ -13,15 +17,14 @@ const Snippet = ({ props }) => {
   };
 
   return (
-    <SnipStyle onClick={() => urlHandler()}>
-      <img src={props.image} alt="SnipImg" />
+    <SnipStyle>
+      <img src={props.image} alt="SnipImg" onClick={() => urlHandler()} />
       <div className="details">
-        {/* <p className="categoryName">{CategoryNames(category)}</p> */}
         <p className="categoryName">{props.category_name}</p>
 
-        <p className="name">{props.name}</p>
+        <p className="name">{props.title}</p>
         <p className="price">{props.price}</p>
-        <div className="review">
+        {/* <div className="review">
           <div className="icon">
             <BsStarFill className="fullStar" />
             <BsStarFill className="fullStar" />
@@ -31,7 +34,8 @@ const Snippet = ({ props }) => {
           </div>
 
           <p className="reviewNumber"></p>
-        </div>
+        </div> */}
+        <BsCartPlusFill />
       </div>
     </SnipStyle>
   );
