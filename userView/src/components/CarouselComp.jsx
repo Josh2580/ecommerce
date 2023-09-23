@@ -29,6 +29,7 @@ const CarouselComp = ({ items }) => {
   };
 
   const product = items.map((pro) => <Snippet key={pro.id} props={pro} />);
+  // console.log(product);
 
   return (
     <CarouselStyle>

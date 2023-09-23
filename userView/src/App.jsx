@@ -17,24 +17,11 @@ import {
 } from "react-router-dom";
 import Root from "./components/Root/Root";
 import ErrorPage from "./components/Root/ErrorPage";
-
-// function App() {
-//   return (
-//     <>
-//       <BrowserRouter>
-//         <Routes>
-//           <Route path="/" element={<HomePage />} />
-//           <Route path="/category" element={<CategoryPage />} />
-
-//           <Route path="/store" element={<StorePage />} />
-//           <Route path="/product/:productId" element={<ProductDetailsPage />} />
-//           <Route path="/cart" element={<CartPage />} />
-//           <Route path="/checkout" element={<CheckoutPage />} />
-//         </Routes>
-//       </BrowserRouter>
-//     </>
-//   );
-// }
+import RegisterPage from "./pages/authentication/RegisterPage";
+import LoginPage from "./pages/authentication/LoginPage";
+import CustomerDashboard from "./pages/customersDashboard/CustomerDashboard";
+import CustomerNavbar from "./pages/customersDashboard/CustomerNavbar";
+import Orders from "./pages/customersDashboard/Orders";
 
 const App = createBrowserRouter(
   createRoutesFromElements(
@@ -46,7 +33,19 @@ const App = createBrowserRouter(
       errorElement={<ErrorPage />}
     >
       <Route index element={<HomePage />} />
-      // <Route path="/product/:productId" element={<ProductDetailsPage />} />
+      <Route path="product/:productId" element={<ProductDetailsPage />} />
+      <Route path="category/:categoryId" element={<CategoryPage />} />
+      <Route path="/cart" element={<CartPage />} />
+      <Route path="/checkout" element={<CheckoutPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/customer/dashboard" element={<CustomerNavbar />}>
+        <Route index element={<CustomerDashboard />} />
+        <Route path="orders" element={<Orders />} />
+      </Route>
+
+      <Route path="/store" element={<StorePage />} />
+
       {/* <Route errorElement={<ErrorPage />}>
         <Route index element={<Index />} />
         <Route

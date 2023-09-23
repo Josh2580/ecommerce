@@ -7,7 +7,7 @@ const CategorySnippet = ({ props }) => {
   const navigate = useNavigate();
 
   const urlHandler = () => {
-    navigate(`/product/${id}`);
+    navigate(`/category/${props.id}`);
     // console.log(`${id} url handler`);
   };
 
@@ -20,10 +20,19 @@ const CategorySnippet = ({ props }) => {
 };
 
 const SecondSnipStyle = styled.div`
-  box-shadow: 0px 0px 7px -1px #96969653;
+  /* box-shadow: 0px 0px 7px -1px #96969653; */
+  text-align: center;
   img {
-    width: 100%;
-    max-width: 200px;
+    max-width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  @media (max-width: 900px) {
+    font-size: 14px;
+    img {
+      max-width: 50px;
+      height: 50px;
+    }
   }
 `;
 

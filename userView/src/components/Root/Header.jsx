@@ -6,87 +6,52 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { HiBars3 } from "react-icons/hi2";
 import { LiaTimesSolid } from "react-icons/lia";
 
-const Navigation = () => {
-  return (
-    <NavigationStyle>
-      <NavLink>Home</NavLink>
-      <NavLink>Category's</NavLink>
-      <NavLink>About</NavLink>
-      <NavLink>Contact</NavLink>
-    </NavigationStyle>
-  );
-};
-
-const NavigationStyle = styled.div`
-  display: flex;
-  gap: 1rem;
-  font-size: 20px;
-  a {
-    text-decoration: none;
-  }
-`;
-
-// const BurgerHandler = () => {
-//   opbg = document.getElementsByClassName("the_burger");
-//   opbg.style;
-// };
-
-const MobileNavigation = () => {
-  //   const [hamburger, setHamburger] = useState(true);
-
-  return (
-    <MobileNavigationStyle>
-      <NavLink>
-        {" "}
-        <span>Home</span>{" "}
-      </NavLink>
-      <NavLink>
-        {" "}
-        <span>Category's</span>{" "}
-      </NavLink>
-      <NavLink>
-        <span>About</span>
-      </NavLink>
-      <NavLink>
-        <span>Contact</span>
-      </NavLink>
-    </MobileNavigationStyle>
-  );
-};
-
-const MobileNavigationStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
-  background-color: #e0e2dd;
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  max-width: 200px;
-  left: 0px;
-  /* transition:; */
-
-  a {
-    text-decoration: none;
-    border-bottom: 1px solid gray;
-    padding: 8px 0px;
-    span {
-      padding: 0px 10px;
-    }
-  }
-  transform: translateX(-100px);
-`;
-
 const Header = () => {
   const [hamburger, setHamburger] = useState(true);
+
+  const MobileNavigation = () => {
+    return (
+      <MobileNavigationStyle
+        translate={hamburger ? "-105%" : "0px"}
+        id="for_mobile_burger"
+      >
+        <br />
+        <br />
+
+        <NavLink>
+          <span>Home</span>
+        </NavLink>
+        <NavLink>
+          <span>Category's</span>
+        </NavLink>
+        <NavLink>
+          <span>About</span>
+        </NavLink>
+        <NavLink>
+          <span>Contact</span>
+        </NavLink>
+      </MobileNavigationStyle>
+    );
+  };
+
+  const Navigation = () => {
+    return (
+      <NavigationStyle>
+        <NavLink>Home</NavLink>
+        <NavLink>Category's</NavLink>
+        <NavLink>About</NavLink>
+        <NavLink>Contact</NavLink>
+      </NavigationStyle>
+    );
+  };
+
   const BurgerHandler = () => {
     setHamburger(!hamburger);
   };
+
   return (
     <HeaderStyle>
-      {/* <br /> */}
       <Left>
-        {/* <br /> */}
         <div className="the_burger" onClick={BurgerHandler}>
           {hamburger ? <HiBars3 /> : <LiaTimesSolid />}
         </div>
@@ -102,7 +67,7 @@ const Header = () => {
         </div>
       </Left>
       <Right>
-        <NavLink>
+        <NavLink to="/customer/dashboard">
           <AiOutlineUser className="headIcon" />
           <span>Account</span>
         </NavLink>
@@ -142,7 +107,6 @@ const Left = styled.div`
     .the_burger {
       display: block;
       font-size: 25px;
-      /* position: fixed; */
       z-index: 5;
     }
   }
@@ -151,6 +115,7 @@ const Left = styled.div`
 const Right = styled.div`
   display: flex;
   gap: 1rem;
+
   a {
     text-decoration: none;
     display: flex;
@@ -161,7 +126,7 @@ const Right = styled.div`
     }
     span {
       font-size: 12px;
-      visibility: hidden;
+      visibility: visible;
     }
   }
   a:hover > span {
@@ -169,12 +134,48 @@ const Right = styled.div`
   }
 `;
 
-const HeaderStyle = styled.div`
+const MobileNavigationStyle = styled.div`
   display: flex;
-  justify-content: space-between;
-  position: sticky;
-  /* width: 100%; */
+  flex-direction: column;
+  font-size: 16px;
+  background-color: #ccc6c6;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  max-width: 200px;
+  left: 0px;
   top: 0px;
+  transform: translateX(${(props) => props.translate});
+  transition: transform 2s 1s ease-in-out;
+
+  a {
+    text-decoration: none;
+    border-bottom: 1px solid gray;
+    padding: 8px 0px;
+    span {
+      padding: 0px 10px;
+    }
+  }
+`;
+
+const NavigationStyle = styled.div`
+  display: flex;
+  gap: 1rem;
+  font-size: 20px;
+  a {
+    text-decoration: none;
+  }
 `;
 
 export default Header;
+
+const HeaderStyle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0px;
+  background: #e7ccac;
+  padding: 10px 0px;
+  z-index: 4;
+`;
