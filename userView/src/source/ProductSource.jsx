@@ -61,3 +61,62 @@ export const snippetProduct = [
     category: "category1",
   },
 ];
+
+export const orderProduct = [
+  {
+    id: "1",
+    orderId: "First Product",
+    price: "$1000.00",
+    status: "completed",
+    action: "category1",
+  },
+  {
+    id: "2",
+    orderId: "First Product",
+    price: "$1000.00",
+    status: "completed",
+    action: "category2",
+  },
+  {
+    id: "3",
+    orderId: "First Product",
+    price: "$1000.00",
+    status: "pending",
+    action: "category3",
+  },
+  {
+    id: "4",
+    orderId: "First Product",
+    price: "$1000.00",
+    status: "failed",
+    action: "category4",
+  },
+  {
+    id: "11",
+    orderId: "First Product",
+    price: "$1000.00",
+    status: "completed",
+    action: "category1",
+  },
+  {
+    id: "21",
+    orderId: "First Product",
+    price: "$1000.00",
+    status: "completed",
+    action: "category2",
+  },
+  {
+    id: "31",
+    orderId: "First Product",
+    price: "$1000.00",
+    status: "pending",
+    action: "category3",
+  },
+  {
+    id: "41",
+    orderId: "First Product",
+    price: "$1000.00",
+    status: "failed",
+    action: "category1",
+  },
+];

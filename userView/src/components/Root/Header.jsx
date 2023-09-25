@@ -5,9 +5,36 @@ import { BsCart } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { HiBars3 } from "react-icons/hi2";
 import { LiaTimesSolid } from "react-icons/lia";
+import AccountHeader from "../../pages/accounts/AccountHeader";
+import MobileMenu from "./MobileMenu";
 
 const Header = () => {
   const [hamburger, setHamburger] = useState(true);
+  const [menu, setMenu] = useState(true);
+  const [account, setAccount] = useState(false);
+
+  const MobileHeadHandler = (e) => {
+    let value = e.target.id;
+    // alert(value);
+    switch (value) {
+      case "mobile_head_menu":
+        setMenu(true);
+        setAccount(false);
+        break;
+
+      case "mobile_head_account":
+        setMenu(false);
+        setAccount(true);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const BurgerHandler = () => {
+    setHamburger(!hamburger);
+  };
 
   const MobileNavigation = () => {
     return (
@@ -15,21 +42,24 @@ const Header = () => {
         translate={hamburger ? "-105%" : "0px"}
         id="for_mobile_burger"
       >
-        <br />
-        <br />
-
-        <NavLink>
-          <span>Home</span>
-        </NavLink>
-        <NavLink>
-          <span>Category's</span>
-        </NavLink>
-        <NavLink>
-          <span>About</span>
-        </NavLink>
-        <NavLink>
-          <span>Contact</span>
-        </NavLink>
+        <MobileHead>
+          <SpanHead
+            borderbottom={menu ? "2px solid red" : "none"}
+            id="mobile_head_menu"
+            onClick={(e) => MobileHeadHandler(e)}
+          >
+            Menu
+          </SpanHead>
+          <SpanHead
+            borderbottom={account ? "2px solid red" : "none"}
+            id="mobile_head_account"
+            onClick={(e) => MobileHeadHandler(e)}
+          >
+            Account
+          </SpanHead>
+        </MobileHead>
+        {account && <AccountHeader onClick={BurgerHandler} />}
+        {menu && <MobileMenu onClick={BurgerHandler} />}
       </MobileNavigationStyle>
     );
   };
@@ -43,10 +73,6 @@ const Header = () => {
         <NavLink>Contact</NavLink>
       </NavigationStyle>
     );
-  };
-
-  const BurgerHandler = () => {
-    setHamburger(!hamburger);
   };
 
   return (
@@ -108,6 +134,7 @@ const Left = styled.div`
       display: block;
       font-size: 25px;
       z-index: 5;
+      /* padding: 16px; */
     }
   }
 `;
@@ -137,25 +164,35 @@ const Right = styled.div`
 const MobileNavigationStyle = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 16px;
   background-color: #ccc6c6;
   position: absolute;
   width: 100%;
   height: 100vh;
-  max-width: 200px;
+  max-width: 300px;
   left: 0px;
   top: 0px;
+  padding-top: 3rem;
   transform: translateX(${(props) => props.translate});
   transition: transform 2s 1s ease-in-out;
+`;
 
-  a {
-    text-decoration: none;
-    border-bottom: 1px solid gray;
-    padding: 8px 0px;
-    span {
-      padding: 0px 10px;
-    }
+const MobileHead = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  span:hover {
+    /* color: red; */
   }
+`;
+
+const SpanHead = styled.span`
+  border-bottom: ${(props) => props.borderbottom};
+
+  width: 100%;
+  padding: 10px 16px;
+  /* color: red; */
+  /* background: white; */
 `;
 
 const NavigationStyle = styled.div`

@@ -19,9 +19,8 @@ import Root from "./components/Root/Root";
 import ErrorPage from "./components/Root/ErrorPage";
 import RegisterPage from "./pages/authentication/RegisterPage";
 import LoginPage from "./pages/authentication/LoginPage";
-import CustomerDashboard from "./pages/customersDashboard/CustomerDashboard";
-import CustomerNavbar from "./pages/customersDashboard/CustomerNavbar";
-import Orders from "./pages/customersDashboard/Orders";
+import UsersDashboard from "./pages/accounts/UsersDashboard";
+import Orders from "./pages/accounts/Orders";
 
 const App = createBrowserRouter(
   createRoutesFromElements(
@@ -39,10 +38,8 @@ const App = createBrowserRouter(
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/customer/dashboard" element={<CustomerNavbar />}>
-        <Route index element={<CustomerDashboard />} />
-        <Route path="orders" element={<Orders />} />
-      </Route>
+      <Route path="/customer/dashboard/orders" element={<Orders />} />
+      <Route path="/customer/dashboard" element={<UsersDashboard />} />
 
       <Route path="/store" element={<StorePage />} />
 
