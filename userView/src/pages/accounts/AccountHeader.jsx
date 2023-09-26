@@ -12,14 +12,17 @@ const AccountHeader = (props) => {
       <NavLink onClick={props.onClick} to="/customer/dashboard/orders">
         <span>My Orders</span>
       </NavLink>
-      <NavLink onClick={props.onClick}>
+      <NavLink onClick={props.onClick} to="/customer/wishlist">
         <span>Wishlist</span>
       </NavLink>
-      <NavLink onClick={props.onClick}>
+      <NavLink onClick={props.onClick} to="/customer/profile">
         <span>Profile</span>
       </NavLink>
-      <NavLink onClick={props.onClick}>
+      <NavLink onClick={props.onClick} to="/customer/address">
         <span>Address</span>
+      </NavLink>
+      <NavLink onClick={props.onClick} to="/customer/change-password">
+        <span>Change Password</span>
       </NavLink>
       <NavLink onClick={props.onClick}>
         <span>Logout</span>
@@ -52,22 +55,25 @@ export default AccountHeader;
 export const AccountMainHeader = (props) => {
   return (
     <AccountMainHeaderStyle>
-      <NavLink onClick={props.onClick} to="/customer/dashboard">
+      <NavLink to="/customer/dashboard">
         <span>Dashboard</span>
       </NavLink>
-      <NavLink onClick={props.onClick} to="/customer/dashboard/orders">
+      <NavLink to="/customer/dashboard/orders">
         <span>My Orders</span>
       </NavLink>
-      <NavLink onClick={props.onClick}>
+      <NavLink to="/customer/wishlist">
         <span>Wishlist</span>
       </NavLink>
-      <NavLink onClick={props.onClick}>
+      <NavLink to="/customer/profile">
         <span>Profile</span>
       </NavLink>
-      <NavLink onClick={props.onClick}>
+      <NavLink to="/customer/address">
         <span>Address</span>
       </NavLink>
-      <NavLink onClick={props.onClick}>
+      <NavLink to="/customer/change-password">
+        <span>Change Password</span>
+      </NavLink>
+      <NavLink>
         <span>Logout</span>
       </NavLink>
     </AccountMainHeaderStyle>

@@ -3,8 +3,8 @@ import { orderProduct } from "../../source/ProductSource";
 import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 import { AccountMainHeader } from "./AccountHeader";
-import { AccHeader } from "./UsersDashboard";
-import { UserDiv } from "./UsersDashboard";
+import { AccHeader, UserDiv } from "./UsersDashboard";
+import { FaSpinner, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 const Orders = () => {
   return (
@@ -24,25 +24,39 @@ const Orders = () => {
         </thead>
         <tbody>
           {orderProduct.map((data, i) => (
-            <Tr>
+            <Tr key={i}>
               <td className="serialNumber">{i + 1}</td>
               <td>{data.orderId}</td>
               <td>{data.price}</td>
-              <td>{data.status}</td>
+              <Td
+                color={
+                  data.status === "completed"
+                    ? "green"
+                    : "pending"
+                    ? "goldenrod"
+                    : "failed"
+                    ? "red"
+                    : "none"
+                }
+                // color={data.status === "completed" ? "green" : "none"}
+                // color={data.status === "pending" ? "goldenrod" : "none"}
+
+                // color="green"
+              >
+                {" "}
+                {data.status === "completed" && <FaCheckCircle />}
+                {data.status === "failed" && <FaTimesCircle />}{" "}
+                {data.status === "pending" && <FaSpinner />} {data.status}
+              </Td>
               {/* <td>{data.action}</td> */}
-              <td>
-                <tr>
-                  <td>
-                    <NavLink>
-                      <span>Delete</span>
-                    </NavLink>
-                  </td>
-                  <td>
-                    <NavLink>
-                      <span>Action</span>
-                    </NavLink>
-                  </td>
-                </tr>
+              <td className="action">
+                <NavLink>
+                  <span>Delete</span>
+                </NavLink>
+
+                <NavLink>
+                  <span>Action</span>
+                </NavLink>
               </td>
             </Tr>
           ))}
@@ -64,9 +78,22 @@ const Tr = styled.tr`
     width: 100px;
     padding: 5px 0px;
   }
+
+  .action {
+    display: flex;
+    gap: 7px;
+  }
+
   .serialNumber {
     width: 25px;
   }
+`;
+
+const Td = styled.td`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: ${(props) => props.color};
 `;
 
 const Table = styled.table`

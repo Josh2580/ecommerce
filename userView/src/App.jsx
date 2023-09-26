@@ -21,6 +21,11 @@ import RegisterPage from "./pages/authentication/RegisterPage";
 import LoginPage from "./pages/authentication/LoginPage";
 import UsersDashboard from "./pages/accounts/UsersDashboard";
 import Orders from "./pages/accounts/Orders";
+import OrderSuccess from "./pages/OrderSuccess";
+import ChangePassword from "./pages/authentication/ChangePassword";
+import Profile from "./pages/authentication/Profile";
+import Address from "./pages/accounts/Address";
+import Wishlist from "./pages/accounts/Wishlist";
 
 const App = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +45,12 @@ const App = createBrowserRouter(
       <Route path="/login" element={<LoginPage />} />
       <Route path="/customer/dashboard/orders" element={<Orders />} />
       <Route path="/customer/dashboard" element={<UsersDashboard />} />
+      <Route path="/customer/change-password" element={<ChangePassword />} />
+      <Route path="/customer/profile" element={<Profile />} />
+      <Route path="/customer/address" element={<Address />} />
+      <Route path="/customer/wishlist" element={<Wishlist />} />
+
+      <Route path="/order/success" element={<OrderSuccess />} />
 
       <Route path="/store" element={<StorePage />} />
 
@@ -50,16 +61,6 @@ const App = createBrowserRouter(
           element={<Contact />}
           loader={contactLoader}
           action={contactAction}
-        />
-        <Route
-          path="contacts/:contactId/edit"
-          element={<EditContact />}
-          loader={contactLoader}
-          action={editAction}
-        />
-        <Route
-          path="contacts/:contactId/destroy"
-          action={destroyAction}
         />
       </Route> */}
     </Route>
