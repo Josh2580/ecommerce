@@ -11,6 +11,11 @@ const SellersHeader = (props) => {
       <NavLink onClick={props.onClick} to="/seller/products">
         <span>Products</span>
       </NavLink>
+
+      <NavLink onClick={props.onClick} to="/seller/add-products">
+        <span>Add Products</span>
+      </NavLink>
+
       <NavLink onClick={props.onClick} to="/seller/dashboard/orders">
         <span>Orders</span>
       </NavLink>
@@ -60,6 +65,9 @@ export const SellersMainHeader = (props) => {
       </NavLink>
       <NavLink to="/seller/products">
         <span>Products</span>
+      </NavLink>
+      <NavLink to="/seller/add-products">
+        <span>Add Products</span>
       </NavLink>
       <NavLink to="/seller/orders">
         <span>Orders</span>

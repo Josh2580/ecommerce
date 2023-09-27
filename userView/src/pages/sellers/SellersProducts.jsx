@@ -1,23 +1,34 @@
 import React from "react";
 import { orderProduct } from "../../source/ProductSource";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { FaSpinner, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { SellersMainHeader } from "./SellersHeader";
 import { AccHeader, UserDiv } from "./SellersDashboard";
 import { SellersProductsApi } from "./sellersProductSource";
+import { ButtonStyle } from "../../components/myModules/Button";
 
 const SellersProducts = () => {
+  const navigate = useNavigate();
+
   return (
     <UserDiv>
       <AccHeader>
         <SellersMainHeader />
       </AccHeader>
+
       <Table>
         <thead>
+          <Tr colspan="5">
+            <th>
+              <ButtonStyle onClick={() => navigate("/seller/add-products")}>
+                Add Product
+              </ButtonStyle>
+            </th>
+          </Tr>
           <Tr>
             <th className="serialNumber">S/N</th>
-            <th>ProductId</th>
+            <th>Product Title</th>
             <th>Price</th>
             <th>Status</th>
             <th>Action</th>
