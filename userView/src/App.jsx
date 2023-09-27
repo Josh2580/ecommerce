@@ -39,6 +39,7 @@ import AddProduct from "./pages/sellers/AddProduct";
 import SellersOrders from "./pages/sellers/SellersOrders";
 import SellersCustomers from "./pages/sellers/SellersCustomers";
 import SellersReport from "./pages/sellers/SellersReport";
+import SellersChangePassword from "./pages/sellers/SellersChangePassword";
 
 const App = createBrowserRouter(
   createRoutesFromElements(
@@ -76,7 +77,10 @@ const App = createBrowserRouter(
       <Route path="/seller/orders" element={<SellersOrders />} />
       <Route path="/seller/customers" element={<SellersCustomers />} />
       <Route path="/seller/reports" element={<SellersReport />} />
-      <Route path="/seller/change-password" element={<ChangePassword />} />
+      <Route
+        path="/seller/change-password"
+        element={<SellersChangePassword />}
+      />
       <Route path="/seller/profile" element={<Profile />} />
 
       {/* <Route errorElement={<ErrorPage />}>
