@@ -58,7 +58,7 @@ const CategoryList = () => {
         transitionDuration={500}
       >
         {isSuccess &&
-          data.map((category) => (
+          data.results.map((category) => (
             <CategorySnippet key={category.id} props={category} />
           ))}
       </Carousel>

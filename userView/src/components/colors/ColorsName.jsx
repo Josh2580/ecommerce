@@ -7,7 +7,7 @@ export const ColorNames = (colorId) => {
   useEffect(() => {
     if (isSuccess) {
       // Filter the Specific Color by its ID(which is the colorId)
-      let myColorDisplay = data.filter((color) => color.id == colorId);
+      let myColorDisplay = data.results.filter((color) => color.id == colorId);
       // Mapping the filtered Color to get its name
       myColorDisplay.map((finalColor) => setColorName(finalColor.color));
     }

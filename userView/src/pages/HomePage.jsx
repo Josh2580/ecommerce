@@ -22,7 +22,7 @@ const HomePage = () => {
       <AllSnippet>
         {isSuccess ? (
           <>
-            {data.map((product) => (
+            {data.results.map((product) => (
               <Snippet key={product.id} props={product} />
             ))}
           </>
