@@ -54,6 +54,9 @@ const SellersCustomers = () => {
               {/* <td>{data.action}</td> */}
               <td className="action">
                 <NavLink>
+                  <span>Orders</span>
+                </NavLink>
+                <NavLink>
                   <span>Remove</span>
                 </NavLink>
               </td>
