@@ -8,17 +8,17 @@ const SellersHeader = (props) => {
       <NavLink onClick={props.onClick} to="/seller/dashboard">
         <span>Dashboard</span>
       </NavLink>
-      <NavLink onClick={props.onClick} to="/seller/wishlist">
+      <NavLink onClick={props.onClick} to="/seller/products">
         <span>Products</span>
       </NavLink>
       <NavLink onClick={props.onClick} to="/seller/dashboard/orders">
         <span>Orders</span>
       </NavLink>
 
-      <NavLink onClick={props.onClick} to="/seller/profile">
+      <NavLink onClick={props.onClick} to="/seller/customers">
         <span>Customers</span>
       </NavLink>
-      <NavLink onClick={props.onClick} to="/seller/address">
+      <NavLink onClick={props.onClick} to="/seller/reports">
         <span>Reports</span>
       </NavLink>
       <NavLink onClick={props.onClick} to="/seller/change-password">
@@ -58,16 +58,16 @@ export const SellersMainHeader = (props) => {
       <NavLink to="/seller/dashboard">
         <span>Dashboard</span>
       </NavLink>
-      <NavLink to="/seller/dashboard/orders">
+      <NavLink to="/seller/products">
         <span>Products</span>
       </NavLink>
-      <NavLink to="/seller/wishlist">
+      <NavLink to="/seller/orders">
         <span>Orders</span>
       </NavLink>
-      <NavLink to="/seller/profile">
+      <NavLink to="/seller/customers">
         <span>Customers</span>
       </NavLink>
-      <NavLink to="/seller/address">
+      <NavLink to="/seller/reports">
         <span>Reports</span>
       </NavLink>
       <NavLink to="/seller/change-password">

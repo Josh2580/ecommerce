@@ -66,6 +66,12 @@ const App = createBrowserRouter(
       <Route path="/seller/login" element={<SellersLoginPage />} />
       <Route path="/seller/register" element={<SellersRegisterPage />} />
       <Route path="/seller/dashboard" element={<SellersDashboard />} />
+      <Route path="/seller/products" element={<Profile />} />
+      <Route path="/seller/dashboard/orders" element={<Orders />} />
+      <Route path="/seller/customers" element={<Address />} />
+      <Route path="/seller/reports" element={<Wishlist />} />
+      <Route path="/seller/change-password" element={<ChangePassword />} />
+      <Route path="/seller/profile" element={<Profile />} />
 
       {/* <Route errorElement={<ErrorPage />}>
         <Route index element={<Index />} />
