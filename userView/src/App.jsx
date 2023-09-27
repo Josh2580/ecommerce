@@ -36,6 +36,7 @@ import SellersRegisterPage from "./pages/sellers/SellersRegisterPage";
 import SellersDashboard from "./pages/sellers/SellersDashboard";
 import SellersProducts from "./pages/sellers/SellersProducts";
 import AddProduct from "./pages/sellers/AddProduct";
+import SellersOrders from "./pages/sellers/SellersOrders";
 
 const App = createBrowserRouter(
   createRoutesFromElements(
@@ -70,7 +71,7 @@ const App = createBrowserRouter(
       <Route path="/seller/dashboard" element={<SellersDashboard />} />
       <Route path="/seller/products" element={<SellersProducts />} />
       <Route path="/seller/add-products" element={<AddProduct />} />
-      <Route path="/seller/dashboard/orders" element={<Orders />} />
+      <Route path="/seller/orders" element={<SellersOrders />} />
       <Route path="/seller/customers" element={<Address />} />
       <Route path="/seller/reports" element={<Wishlist />} />
       <Route path="/seller/change-password" element={<ChangePassword />} />

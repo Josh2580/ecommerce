@@ -16,7 +16,7 @@ const SellersHeader = (props) => {
         <span>Add Products</span>
       </NavLink>
 
-      <NavLink onClick={props.onClick} to="/seller/dashboard/orders">
+      <NavLink onClick={props.onClick} to="/seller/orders">
         <span>Orders</span>
       </NavLink>
 
