@@ -11,7 +11,7 @@ import {
   Button,
   DetailForm,
   LinkStyle,
-} from "./AuthenticationStyle";
+} from "../Customers/AuthenticationStyle";
 
 const RegisterPage = () => {
   //   const userInfo = useSelector((state) => state.auth.userInfo);

@@ -35,7 +35,7 @@ const Wishlist = () => {
         <AccountMainHeader />
       </AccHeader>
       <CartStyle>
-        <button>Continue Shopping</button>
+        <h2>Wishlist</h2>
         <CartBody>
           <CartDetails>
             <div className="header">
@@ -88,6 +88,9 @@ const Wishlist = () => {
 
 const CartStyle = styled.div`
   /* padding: 5rem; */
+  h2 {
+    text-align: center;
+  }
 `;
 
 const CartBody = styled.div`

@@ -1,5 +1,5 @@
 import React from "react";
-import { AccountHeaderStyle } from "./../../pages/accounts/AccountHeader";
+import { AccountHeaderStyle } from "../../pages/Customers/AccountHeader";
 import { NavLink } from "react-router-dom";
 
 const MobileMenu = (props) => {

@@ -12,8 +12,8 @@ import {
   DetailForm,
   LinkStyle,
 } from "./AuthenticationStyle";
-import { AccHeader, UserDiv } from "../accounts/UsersDashboard";
-import { AccountMainHeader } from "../accounts/AccountHeader";
+import { AccountMainHeader } from "../customers/AccountHeader";
+import { AccHeader, UserDiv } from "../customers/UsersDashboard";
 
 const ChangePassword = () => {
   //   const userInfo = useSelector((state) =>

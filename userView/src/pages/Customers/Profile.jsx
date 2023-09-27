@@ -12,9 +12,9 @@ import {
   DetailForm,
   LinkStyle,
 } from "./AuthenticationStyle";
-import { AccHeader, UserDiv } from "../accounts/UsersDashboard";
-import { AccountMainHeader } from "../accounts/AccountHeader";
-// import { UserDiv } from "../accounts/UsersDashboard";
+import { AccHeader, UserDiv } from "../customers/UsersDashboard";
+import { AccountMainHeader } from "../customers/AccountHeader";
+// import { UserDiv } from "../customers/UsersDashboard";
 
 const Profile = () => {
   //   const userInfo = useSelector((state) => state.auth.userInfo);

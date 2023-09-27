@@ -1,37 +1,37 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import CustomerDashboard from "./UsersDashboard";
 
-const AccountHeader = (props) => {
+const SellersHeader = (props) => {
   return (
-    <AccountHeaderStyle>
-      <NavLink onClick={props.onClick} to="/customer/dashboard">
+    <SellersHeaderStyle>
+      <NavLink onClick={props.onClick} to="/seller/dashboard">
         <span>Dashboard</span>
       </NavLink>
-      <NavLink onClick={props.onClick} to="/customer/dashboard/orders">
-        <span>My Orders</span>
+      <NavLink onClick={props.onClick} to="/seller/wishlist">
+        <span>Products</span>
       </NavLink>
-      <NavLink onClick={props.onClick} to="/customer/wishlist">
-        <span>Wishlist</span>
+      <NavLink onClick={props.onClick} to="/seller/dashboard/orders">
+        <span>Orders</span>
       </NavLink>
-      <NavLink onClick={props.onClick} to="/customer/profile">
-        <span>Profile</span>
+
+      <NavLink onClick={props.onClick} to="/seller/profile">
+        <span>Customers</span>
       </NavLink>
-      <NavLink onClick={props.onClick} to="/customer/address">
-        <span>Address</span>
+      <NavLink onClick={props.onClick} to="/seller/address">
+        <span>Reports</span>
       </NavLink>
-      <NavLink onClick={props.onClick} to="/customer/change-password">
+      <NavLink onClick={props.onClick} to="/seller/change-password">
         <span>Change Password</span>
       </NavLink>
       <NavLink onClick={props.onClick}>
         <span>Logout</span>
       </NavLink>
-    </AccountHeaderStyle>
+    </SellersHeaderStyle>
   );
 };
 
-export const AccountHeaderStyle = styled.div`
+export const SellersHeaderStyle = styled.div`
   display: flex;
   flex-direction: column;
   /* font-size: 16px; */
@@ -50,37 +50,37 @@ export const AccountHeaderStyle = styled.div`
   }
 `;
 
-export default AccountHeader;
+export default SellersHeader;
 
-export const AccountMainHeader = (props) => {
+export const SellersMainHeader = (props) => {
   return (
-    <AccountMainHeaderStyle>
-      <NavLink to="/customer/dashboard">
+    <SellersMainHeaderStyle>
+      <NavLink to="/seller/dashboard">
         <span>Dashboard</span>
       </NavLink>
-      <NavLink to="/customer/dashboard/orders">
-        <span>My Orders</span>
+      <NavLink to="/seller/dashboard/orders">
+        <span>Products</span>
       </NavLink>
-      <NavLink to="/customer/wishlist">
-        <span>Wishlist</span>
+      <NavLink to="/seller/wishlist">
+        <span>Orders</span>
       </NavLink>
-      <NavLink to="/customer/profile">
-        <span>Profile</span>
+      <NavLink to="/seller/profile">
+        <span>Customers</span>
       </NavLink>
-      <NavLink to="/customer/address">
-        <span>Address</span>
+      <NavLink to="/seller/address">
+        <span>Reports</span>
       </NavLink>
-      <NavLink to="/customer/change-password">
+      <NavLink to="/seller/change-password">
         <span>Change Password</span>
       </NavLink>
       <NavLink>
         <span>Logout</span>
       </NavLink>
-    </AccountMainHeaderStyle>
+    </SellersMainHeaderStyle>
   );
 };
 
-const AccountMainHeaderStyle = styled.div`
+const SellersMainHeaderStyle = styled.div`
   display: flex;
   flex-direction: column;
   /* font-size: 16px; */

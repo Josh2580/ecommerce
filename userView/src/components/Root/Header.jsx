@@ -5,13 +5,15 @@ import { BsCart } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { HiBars3 } from "react-icons/hi2";
 import { LiaTimesSolid } from "react-icons/lia";
-import AccountHeader from "../../pages/accounts/AccountHeader";
+import AccountHeader from "../../pages/Customers/AccountHeader";
 import MobileMenu from "./MobileMenu";
+import SellersHeader from "../../pages/sellers/SellersHeader";
 
 const Header = () => {
   const [hamburger, setHamburger] = useState(true);
   const [menu, setMenu] = useState(true);
   const [account, setAccount] = useState(false);
+  const [seller, setSeller] = useState(false);
 
   const MobileHeadHandler = (e) => {
     let value = e.target.id;
@@ -20,11 +22,22 @@ const Header = () => {
       case "mobile_head_menu":
         setMenu(true);
         setAccount(false);
+        setSeller(false);
+
         break;
 
       case "mobile_head_account":
         setMenu(false);
         setAccount(true);
+        setSeller(false);
+
+        break;
+
+      case "mobile_head_seller":
+        setMenu(false);
+        setAccount(false);
+        setSeller(true);
+
         break;
 
       default:
@@ -57,8 +70,17 @@ const Header = () => {
           >
             Account
           </SpanHead>
+          <SpanHead
+            borderbottom={seller ? "2px solid red" : "none"}
+            id="mobile_head_seller"
+            onClick={(e) => MobileHeadHandler(e)}
+          >
+            Seller
+          </SpanHead>
         </MobileHead>
         {account && <AccountHeader onClick={BurgerHandler} />}
+        {seller && <SellersHeader onClick={BurgerHandler} />}
+
         {menu && <MobileMenu onClick={BurgerHandler} />}
       </MobileNavigationStyle>
     );
@@ -82,7 +104,7 @@ const Header = () => {
           {hamburger ? <HiBars3 /> : <LiaTimesSolid />}
         </div>
 
-        <NavLink>
+        <NavLink to="/">
           <h2>LOGO</h2>
         </NavLink>
         <div className="nav">
@@ -97,12 +119,21 @@ const Header = () => {
           <AiOutlineUser className="headIcon" />
           <span>Account</span>
         </NavLink>
-        <NavLink>
+        <NavLink to="/seller/dashboard">
+          <AiOutlineUser className="headIcon" />
+          <span>Sellers Account</span>
+        </NavLink>
+        <NavLink to="/customer/wishlist">
           <AiOutlineHeart className="headIcon" />
           <span>Wishlist</span>
         </NavLink>
 
         <NavLink>
+          <BsCart className="headIcon" />
+          <span>New Orders</span>
+        </NavLink>
+
+        <NavLink to="/cart">
           <BsCart className="headIcon" />
           <span>Cart</span>
         </NavLink>
