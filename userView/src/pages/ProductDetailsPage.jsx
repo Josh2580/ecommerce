@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../source/api/ProductsApi";
 import ColorSnippet from "./../components/colors/ColorSnippet";
-import Select, { GradeSelect, QtySelect } from "../components/select/Select";
+import { SelectStyled } from "../components/select/Select";
 import ShareComp from "../components/ShareComp";
 import ReviewComp from "../components/ReviewComp";
 import Description from "./../components/productInfos/Description";
@@ -13,6 +13,8 @@ import Reviews from "./../components/productInfos/Reviews";
 import SimilarComp from "../components/SimilarComp";
 import { useNavigate } from "react-router-dom";
 import { ButtonStyle } from "../components/myModules/Button";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const ProductDetailsPage = () => {
   const navigate = useNavigate();
@@ -70,6 +72,44 @@ const ProductDetailsPage = () => {
       break;
   }
 
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+  };
+
+  const ImageDisplay = () => {
+    return (
+      <Carousel
+        responsive={responsive}
+        swipeable={true}
+        draggable={true}
+        keyBoardControl={true}
+        customTransition="all .5"
+        transitionDuration={500}
+      >
+        {data.product_images.map((data, index) => (
+          <img key={index} src={data.images} alt={data.name} />
+        ))}
+        {data.image.length >= 1 && <img src={data.image} alt={data.name} />}
+      </Carousel>
+    );
+  };
+  if (isSuccess) {
+    let arr = new Array(data.quantity);
+  }
   return (
     <>
       {isLoading ? (
@@ -80,7 +120,7 @@ const ProductDetailsPage = () => {
         <ProductDetailStyle>
           <Top>
             <Left>
-              <img src={data.image} alt={data.name} />{" "}
+              <ImageDisplay />
             </Left>
             <Right>
               <p className="title">{data.title}</p>
@@ -95,8 +135,8 @@ const ProductDetailsPage = () => {
                 <div className="color">
                   <p className="variantTitle">Color:</p>
                   <div className="eachColor">
-                    {data.color.map((colorA) => (
-                      <ColorSnippet key={colorA} color={colorA} />
+                    {data.color.map((colorA, index) => (
+                      <ColorSnippet key={index} color={colorA} />
                     ))}
                   </div>
                 </div>
@@ -105,29 +145,38 @@ const ProductDetailsPage = () => {
                 <div className="size">
                   <p className="variantTitle">Size:</p>
 
-                  <Select
-                    className="sizeSelect"
-                    sizes={data.size}
-                    placeHolder="select your size"
-                  />
+                  <SelectStyled>
+                    {data.size.map((siz) => (
+                      <option key={siz.id} value={siz.id}>
+                        {siz.size}
+                      </option>
+                    ))}
+                  </SelectStyled>
                 </div>
               )}
 
               {data.quality.length > 0 && (
                 <div className="size">
                   <p className="variantTitle">Grade:</p>
-
-                  <GradeSelect
-                    className="gradeSelect"
-                    grade={data.quality}
-                    placeHolder="select your grade"
-                  />
+                  <SelectStyled>
+                    {data.quality.map((qual) => (
+                      <option key={qual.id} value={qual.id}>
+                        {qual.quality}
+                      </option>
+                    ))}
+                  </SelectStyled>
                 </div>
               )}
               <div className="qty">
                 <p className="variantTitle">Qty:</p>
-
-                <QtySelect size={data.quantity} placeHolder="select Quantity" />
+                <SelectStyled>
+                  {/* Arrray Constructor for changing the QTY to an array of Numbers*/}
+                  {[...Array(data.quantity).keys()].map((x) => (
+                    <option key={x} value={x + 1}>
+                      {x + 1}
+                    </option>
+                  ))}
+                </SelectStyled>
               </div>
 
               <ButtonStyle onClick={() => navigate("/cart")}>
@@ -201,9 +250,12 @@ const Top = styled.div`
 const Left = styled.div`
   /* background: #c0db89; */
   flex: 1;
-  /* padding: 1rem; */
+  max-width: 50%;
   img {
     width: 100%;
+  }
+  @media (max-width: 800px) {
+    max-width: 100%;
   }
 `;
 

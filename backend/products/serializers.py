@@ -18,6 +18,14 @@ class ProductSizeSerializer(serializers.ModelSerializer):
         # depth = 1
 
 
+class ProductImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.ProductImages
+        fields = ["id", "products", "images"]
+        # depth = 1
+
+
 class ProductQualitySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ProductQuality
@@ -26,15 +34,16 @@ class ProductQualitySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    # color = ProductColorSerializer(many=True, required=False)
-    # size = ProductSizeSerializer(many=True, required=False)
-    # quality = ProductQualitySerializer(many=True, required=False)
+    color = ProductColorSerializer(many=True, required=False)
+    size = ProductSizeSerializer(many=True, required=False)
+    quality = ProductQualitySerializer(many=True, required=False)
+    product_images = ProductImageSerializer(many=True, required=False)
 
     class Meta:
         model = models.Product
         # fields = "__all__"
         fields = ["id", "user", "title", "product_ratings", "vendor", "category", "category_name",
-                  "color", "price", "size", "quality", "image", "description", "quantity"]
+                  "color", "price", "size", "quality", "image", "product_images", "description", "quantity"]
 
         # exclude = ["price", "color"]
 
@@ -50,4 +59,3 @@ class ProductRatingSerializer(serializers.ModelSerializer):
         model = models.ProductRating
         fields = ["id", "customer", "products",
                   "rating", "reviews", "add_time"]
-        # depth = 1

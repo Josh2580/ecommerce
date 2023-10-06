@@ -5,14 +5,66 @@ import { useGetAllProductQuery } from "../source/api/ProductsApi";
 import { useGetAllCategoryQuery } from "../source/api/CategoryApi";
 import CategorySnippet from "../components/snippets/CategorySnippet";
 import CategoryList from "../components/CategoryList";
+import ReactPaginate from "react-paginate";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import { NavLink } from "react-router-dom";
 
 const HomePage = () => {
-  const { data, isSuccess } = useGetAllProductQuery();
+  const { data: allData, isSuccess } = useGetAllProductQuery();
   const { isSuccess: categoryIsSuccess } = useGetAllCategoryQuery();
+  const pageSize = 3;
+  const [data, setData] = useState([]);
+  const [total, setTotal] = useState();
+
+  const [pagination, setPagination] = useState({
+    count: 0,
+    from: 0,
+    to: pageSize,
+  });
+
+  // const handleChange = (event, page) => {
+  //   const from = (page - 1) * pageSize;
+  //   const to = (page - 1) * pageSize + pageSize;
+
+  //   setPagination({ ...pagination, from: from, to: to });
+
+  //   console.log(pagination.from, pagination.to);
+  // };
+
+  // useEffect(() => {
+  // {
+  //   isSuccess &&
+  //     setData(allData.results.slice(pagination.from, pagination.to));
+  // }
+  // {
+  //   isSuccess && setData(allData.results);
+  // }
+  // {
+  //   isSuccess && setTotal(allData.count);
+  // }
+  // {
+  //   isSuccess &&
+  //     setPagination({
+  //       ...pagination,
+  //       count: Math.ceil(allData.count / pageSize),
+  //     });
+  // }
+  // }, [isSuccess, total]);
+
+  // var links = [];
+
+  // for (let i = 1, i <= total; i++){
+  //   links.push[<NavLink>{i}</NavLink>]
+  // }
 
   return (
     <div>
       <br />
+      {/* {data} */}
+      {/* {isSuccess && (
+        <Pagination count={pagination.count} onChange={handleChange} />
+      )} */}
 
       <CategorySnippetStyle>
         {categoryIsSuccess && <CategoryList />}
@@ -22,7 +74,7 @@ const HomePage = () => {
       <AllSnippet>
         {isSuccess ? (
           <>
-            {data.results.map((product) => (
+            {allData.results.map((product) => (
               <Snippet key={product.id} props={product} />
             ))}
           </>
