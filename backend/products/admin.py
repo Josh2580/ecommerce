@@ -4,10 +4,15 @@ from products import models
 # Register your models here.
 
 
+class ProductImagesInline(admin.StackedInline):
+    model = models.ProductImages
+
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["title", "category", "image", "price", "category_name"]
     list_display_links = ["title", "price"]
-    pass
+    prepopulated_fields = {"slug": ("title", )}
+    inlines = [ProductImagesInline,]
 
 
 class ProductColorAdmin(admin.ModelAdmin):

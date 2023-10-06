@@ -10,7 +10,9 @@ User = get_user_model()
 # Create your models here.
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250)
+
     vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(
         ProductCategory, on_delete=models.SET_NULL, null=True, related_name="products")
