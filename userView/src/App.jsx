@@ -60,7 +60,7 @@ const App = createBrowserRouter(
 
       {/* Customers Panel */}
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/customer/login" element={<LoginPage />} />
       <Route path="/customer/dashboard/orders" element={<Orders />} />
       <Route path="/customer/dashboard" element={<UsersDashboard />} />
       <Route path="/customer/change-password" element={<ChangePassword />} />

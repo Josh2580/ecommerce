@@ -9,19 +9,16 @@ from rest_framework_simplejwt.views import (
 
 
 urlpatterns = [
-    path('users/', include("users.urls")),
-    path('auth/', include('rest_framework.urls')),
+    path('users/', include("my_users.urls")),
+    # path('auth/', include('rest_framework.urls')),
 
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    # path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
-
-    path('categorys/', include("categorys.urls")),
-    path('products/', include("products.urls")),
+    path('categorys/', include("category.urls")),
+    path('products/', include("product.urls")),
     path('orders/', include("order.urls")),
-    # path('basket/', include("basket.urls"), name="basket_api"),
-
 
 ]

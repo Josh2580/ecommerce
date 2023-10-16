@@ -1,6 +1,6 @@
 from django.db import models
-from users.accountModels import Customers
-from products.models import Product
+from my_users.second_models import Customers
+from product.models import Products
 
 # Create your models here.
 
@@ -17,7 +17,7 @@ class Order(models.Model):
 class OrderItems(models.Model):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="order_items")
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.product}"

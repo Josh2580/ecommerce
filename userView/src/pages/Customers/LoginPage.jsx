@@ -23,20 +23,33 @@ const LoginPage = () => {
 
   //   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginFormData, setLoginFormData] = useState({
+    email: "",
+    password: "",
+  });
 
   const navigate = useNavigate();
 
-  const SubmitHandler = async (e) => {
-    // e.preventDefault();
-    // const userData = await loginUser({ email, password });
-    // // console.log(userData);
-    // dispatch(setCredentials({ ...userData }));
-    // setEmail("");
-    // setPassword("");
-    // navigate("/dashboard");
+  const InputHandler = (event) => {
+    setLoginFormData({
+      ...loginFormData,
+      [event.target.name]: event.target.value,
+    });
   };
+  // console.log(loginFormData);
+  const formData = new FormData();
+
+  const SubmitHandler = (e) => {
+    e.preventDefault();
+    formData.append("email", loginFormData.email);
+    formData.append("password", loginFormData.password);
+    for (var key of formData.entries()) {
+      console.log(key[0] + " , " + key[1]);
+    }
+  };
+
+  // const buttonEnable =
+  //   loginFormData.email != "" && loginFormData.password != "";
 
   //   useEffect(() => {
   //     userData && navigate("/dashboard");
@@ -55,9 +68,9 @@ const LoginPage = () => {
               maxLength={50}
               required
               placeholder="Enter Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              // onChange={handlerUsernameInput}
+              name="email"
+              value={loginFormData.email}
+              onChange={InputHandler}
             />
           </Input>
           <Input>
@@ -67,10 +80,10 @@ const LoginPage = () => {
               id="password"
               maxLength={50}
               required
+              name="password"
               placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              // onChange={handlerPasswordInput}
+              value={loginFormData.password}
+              onChange={InputHandler}
             />
           </Input>
           <p>
@@ -83,6 +96,13 @@ const LoginPage = () => {
           <TheButtons>
             <Button>Login</Button>
           </TheButtons>
+          {/* <input
+            type="button"
+            id="button"
+            disabled={!buttonEnable}
+            value={"Submit"}
+            onClick={SubmitHandler}
+          /> */}
         </div>
       </DetailForm>
     </Login>

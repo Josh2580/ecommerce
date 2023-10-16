@@ -26,6 +26,9 @@ urlpatterns = [
     # path('categorys/', include("categorys.urls")),
     # path('products/', include('products.urls')),
     path('api/', include("base.urlsApi"), ),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
+
 ]
 
 if settings.DEBUG:
