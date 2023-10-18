@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCustomersLoginMutation } from "../../source/api/authenticationApi";
-
-// import { setCredentials } from "../features/auth/authSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { setCredentials } from "../../source/storage/AuthSlice";
 
 import {
   Login,
@@ -20,9 +21,9 @@ const LoginPage = () => {
   //   );
   //   const { data: userData } = userInfo;
 
-  const [loginUser, { isError, isSuccess, data }] = useCustomersLoginMutation();
+  const [loginUser] = useCustomersLoginMutation();
 
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [loginFormData, setLoginFormData] = useState({
     email: "",
@@ -37,24 +38,44 @@ const LoginPage = () => {
       [event.target.name]: event.target.value,
     });
   };
-  // console.log(loginFormData);
   const formData = new FormData();
+  // const notify = ({ info }) => toast(`the information `);
 
-  const SubmitHandler = (e) => {
+  const SubmitHandler = async (e) => {
+    let result;
+    console.log(result);
     e.preventDefault();
+
+    // {
+    //   result == undefined && toast("is Loading");
+    // }
+
     formData.append("email", loginFormData.email);
     formData.append("password", loginFormData.password);
-    for (var key of formData.entries()) {
-      console.log(key[0] + " , " + key[1]);
+
+    result = await loginUser({ formData });
+    if (result.data) {
+      toast(`Login Successful `);
+      dispatch(setCredentials({ ...result }));
+    } else if (result.error) {
+      toast(`Login Failed: ${result.error.data.detail}`);
     }
+    console.log(result);
+
+    setLoginFormData({
+      ...loginFormData,
+      email: "",
+      password: "",
+    });
   };
 
-  // const buttonEnable =
-  //   loginFormData.email != "" && loginFormData.password != "";
-
-  //   useEffect(() => {
-  //     userData && navigate("/dashboard");
-  //   }, [userData, navigate]);
+  useEffect(() => {
+    setLoginFormData({
+      ...loginFormData,
+      email: "",
+      password: "",
+    });
+  }, []);
 
   return (
     <Login>
@@ -93,6 +114,7 @@ const LoginPage = () => {
             </span>
             <LinkStyle to="/register"> Register</LinkStyle>
           </p>
+          <ToastContainer />
 
           <TheButtons>
             <Button>Login</Button>
