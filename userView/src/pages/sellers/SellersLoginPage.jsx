@@ -23,19 +23,29 @@ const SellersLoginPage = () => {
 
   //   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginFormData, setLoginFormData] = useState({
+    email: "",
+    password: "",
+  });
 
   const navigate = useNavigate();
 
-  const SubmitHandler = async (e) => {
-    // e.preventDefault();
-    // const userData = await loginUser({ email, password });
-    // // console.log(userData);
-    // dispatch(setCredentials({ ...userData }));
-    // setEmail("");
-    // setPassword("");
-    // navigate("/dashboard");
+  const InputHandler = (event) => {
+    setLoginFormData({
+      ...loginFormData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const formData = new FormData();
+
+  const SubmitHandler = (e) => {
+    e.preventDefault();
+    formData.append("email", loginFormData.email);
+    formData.append("password", loginFormData.password);
+    for (var key of formData.entries()) {
+      console.log(key[0] + " , " + key[1]);
+    }
   };
 
   //   useEffect(() => {
@@ -45,7 +55,7 @@ const SellersLoginPage = () => {
   return (
     <Login>
       <DetailForm onSubmit={SubmitHandler}>
-        <h1>Login Page</h1>
+        <h1>Sellers Login Page</h1>
         <div>
           <Input>
             <label htmlFor="email">Email</label>
@@ -54,9 +64,10 @@ const SellersLoginPage = () => {
               id="email"
               maxLength={50}
               required
+              name="email"
               placeholder="Enter Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={loginFormData.email}
+              onChange={InputHandler}
               // onChange={handlerUsernameInput}
             />
           </Input>
@@ -65,12 +76,12 @@ const SellersLoginPage = () => {
             <input
               type="password"
               id="password"
-              maxLength={50}
+              maxLength={20}
               required
+              name="password"
               placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              // onChange={handlerPasswordInput}
+              value={loginFormData.password}
+              onChange={InputHandler}
             />
           </Input>
           <p>

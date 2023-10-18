@@ -86,6 +86,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # date_joined = models.DateTimeField(auto_now_add=True)
     # last_login = models.DateTimeField(auto_now=True)
 
+    is_seller = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

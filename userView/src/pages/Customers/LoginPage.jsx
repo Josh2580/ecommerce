@@ -58,7 +58,7 @@ const LoginPage = () => {
   return (
     <Login>
       <DetailForm onSubmit={SubmitHandler}>
-        <h1>Login Page</h1>
+        <h1>Customers Login Page</h1>
         <div>
           <Input>
             <label htmlFor="email">Email</label>

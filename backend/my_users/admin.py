@@ -4,7 +4,7 @@ from my_users.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 # from django.core.exceptions import ValidationError
-from my_users.second_models import Customers, Address
+from my_users.second_models import CustomerProfile, Address
 # from django.contrib.auth.models import User
 
 # Register your models here.
@@ -39,5 +39,5 @@ class UserAdminConfig(UserAdmin):
 
 
 admin.site.register(User, UserAdminConfig)
-admin.site.register(Customers)
+admin.site.register(CustomerProfile)
 admin.site.register(Address)

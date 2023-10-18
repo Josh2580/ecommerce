@@ -35,10 +35,10 @@ const HomePage = () => {
   // useEffect(() => {
   // {
   //   isSuccess &&
-  //     setData(allData.results.slice(pagination.from, pagination.to));
+  //     setData(allData.slice(pagination.from, pagination.to));
   // }
   // {
-  //   isSuccess && setData(allData.results);
+  //   isSuccess && setData(allData);
   // }
   // {
   //   isSuccess && setTotal(allData.count);
@@ -74,7 +74,7 @@ const HomePage = () => {
       <AllSnippet>
         {isSuccess ? (
           <>
-            {allData.results.map((product) => (
+            {allData.map((product) => (
               <Snippet key={product.id} props={product} />
             ))}
           </>

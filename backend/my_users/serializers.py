@@ -1,29 +1,22 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .second_models import Customers, Address
+from .second_models import CustomerProfile, Address
 # from django.contrib.auth.models import User
 
 User = get_user_model()
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        # fields = "__all__"
-        exclude = ["password"]
-
-
 # class CustomersSerializer(serializers.ModelSerializer):
 #     address = AddressSerializer
 #     class Meta:
-#         model = Customers
+#         model = CustomerProfile
 #         fields = ["id", "user", "mobile", "address"]
 #         # depth = 1
 
 
 class AddressSerializer(serializers.ModelSerializer):
     customer = serializers.PrimaryKeyRelatedField(
-        queryset=Customers.objects.all(), many=True)
+        queryset=CustomerProfile.objects.all(), many=True)
 
     class Meta:
         model = Address
@@ -35,7 +28,25 @@ class CustomersSerializer(serializers.ModelSerializer):
     # address = AddressSerializer()
 
     class Meta:
-        model = Customers
-        # fields = "__all__"
-        fields = ["id",  "email", "username"]
+        model = CustomerProfile
+        fields = "__all__"
+        # fields = ["id",  "email", "first_name"]
         # depth = 1
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        # fields = "__all__"
+        fields = ["id", "email", "first_name",
+                  "last_name", "date_of_birth", "is_seller"]
+
+        # exclude = ["password"]
+
+    # def create(self, validated_data):
+    #     users_data = validated_data.pop('customer_profile')
+    #     user = User.objects.create(**validated_data)
+    #     for user_data in users_data:
+    #         Customers.objects.create(user=user, **user_data)
+    #     return user

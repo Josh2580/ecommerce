@@ -223,7 +223,7 @@ const ProductDetailsPage = () => {
               {shipping && <Shipping />} {reviews && <Reviews />}
             </BottomBottom>
             <SimilarProduct>
-              <SimilarComp catId={data.category} itemId={data.id} />
+              {/* <SimilarComp catId={data.category} itemId={data.id} /> */}
             </SimilarProduct>
           </Bottom>
         </ProductDetailStyle>

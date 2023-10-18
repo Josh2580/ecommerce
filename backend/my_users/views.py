@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 from my_users.serializers import UserSerializer, CustomersSerializer, AddressSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from my_users.second_models import Customers, Address
+from my_users.second_models import CustomerProfile, Address
 # from django.contrib.auth.models import User
 
 
@@ -25,7 +25,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class CustomersViewSet(viewsets.ModelViewSet):
-    queryset = Customers.objects.all()
+    queryset = CustomerProfile.objects.all()
     serializer_class = CustomersSerializer
 
 

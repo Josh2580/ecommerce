@@ -1,5 +1,5 @@
 from django.db import models
-from my_users.second_models import Customers
+from my_users.second_models import CustomerProfile
 from product.models import Products
 
 # Create your models here.
@@ -7,7 +7,7 @@ from product.models import Products
 
 class Order(models.Model):
     customer = models.ForeignKey(
-        Customers, on_delete=models.CASCADE, related_name="customer_orders")
+        CustomerProfile, on_delete=models.CASCADE, related_name="customer_orders")
     order_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

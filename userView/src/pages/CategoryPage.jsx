@@ -18,15 +18,17 @@ const CategoryPage = () => {
   return (
     <CategoryPageStyle>
       <CategoryList />
-      {isSuccess && data.products.length >= 1 && <h2>{data.name} Products</h2>}
+      {isSuccess && data.category_products.length >= 1 && (
+        <h2>{data.name} Products</h2>
+      )}
 
       <AllSnippet>
         {isSuccess ? (
           <>
-            {data.products.map((product) => (
+            {data.category_products.map((product) => (
               <Snippet key={product.id} props={product} />
             ))}
-            {data.products.length < 1 && (
+            {data.category_products.length < 1 && (
               <h2>Please select another category to view more products</h2>
             )}
           </>

@@ -11,7 +11,7 @@ const SimilarComp = ({ catId, itemId }) => {
     SimilarProducts = [];
   if (isSuccess) {
     // Filtering the category from the Prop-In category id (catId)
-    FilteredCategory = data.results.filter((cat) => cat.id == catId);
+    FilteredCategory = data.filter((cat) => cat.id == catId);
 
     // putting the products of the filtered category in the Product variable
     FilteredCategory.map((e) => (ProductsfromFilteredCategory = e.products));

@@ -5,13 +5,13 @@ from product.models import Products as Product
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    # products = ProductSerializer(many=True, read_only=True)
+    category_products = ProductSerializer(many=True, read_only=True)
 
     class Meta:
         model = ProductCategory
-        # fields = ["id", "name",
-        #           "image", "created_at", "modified_at", "parent", "products"]
-        fields = "__all__"
+        fields = ["id", "name",
+                  "image", "created_at", "modified_at", "parent", "category_products"]
+        # fields = "__all__"
 
         # depth = 1
         # exclude = ["parent"]

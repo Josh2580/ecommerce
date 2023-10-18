@@ -1,6 +1,6 @@
 from django.db import models
 from category.models import ProductCategory, Vendor
-from my_users.second_models import Customers
+from my_users.second_models import CustomerProfile
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
@@ -17,7 +17,7 @@ class Products(models.Model):
 
     vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(
-        ProductCategory, on_delete=models.SET_NULL, null=True, related_name="products")
+        ProductCategory, on_delete=models.SET_NULL, null=True, related_name="category_products")
     image = models.ImageField(
         upload_to=f"products/images/", default="products/images/product_default.png")
     description = models.TextField(null=True, blank=True)
@@ -62,7 +62,7 @@ class ProductQuality(models.Model):
 
 class ProductRating(models.Model):
     customer = models.ForeignKey(
-        Customers, related_name="customer_rating", on_delete=models.SET_NULL, null=True)
+        CustomerProfile, related_name="customer_rating", on_delete=models.SET_NULL, null=True)
     products = models.ForeignKey(
         Products, related_name="product_ratings", on_delete=models.CASCADE)
     rating = models.IntegerField()

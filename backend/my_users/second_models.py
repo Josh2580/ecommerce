@@ -5,16 +5,16 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class Customers(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="customer_products")
+class CustomerProfile(models.Model):
+    account = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="customer_profile")
     mobile = models.PositiveBigIntegerField(blank=True, null=True)
     address = models.ForeignKey(
-        "Address", on_delete=models.SET_NULL, null=True, related_name="customer")
+        "Address", on_delete=models.SET_NULL, null=True, related_name="customer_address")
 
     def __str__(self):
         # return f"{self.user.first_name} {self.user.last_name}"
-        return f"{self.user}"
+        return f"{self.account}"
 
 
 class Address(models.Model):
