@@ -10,6 +10,8 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('users/', include("my_users.urls")),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
     # path('auth/', include('rest_framework.urls')),
 
     # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

@@ -1,10 +1,10 @@
 import { rootApi } from "./RootApi";
 
-const categorysApi = rootApi.injectEndpoints({
+const authenticationApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
-    customerLogin: build.mutation({
+    customersLogin: build.mutation({
       query: ({ formData }) => ({
-        url: "categorys/main/${id}/",
+        url: "auth/jwt/create/",
         method: POST,
         body: formData,
       }),
@@ -20,4 +20,4 @@ const categorysApi = rootApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetAllCategoryQuery, useGetCategoryByIdQuery } = categorysApi;
+export const { useCustomersLoginMutation } = authenticationApi;

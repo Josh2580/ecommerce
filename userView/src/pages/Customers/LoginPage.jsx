@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { useLoginUserMutation } from "../features/Post/PostApi";
+import { useCustomersLoginMutation } from "../../source/api/authenticationApi";
+
 // import { setCredentials } from "../features/auth/authSlice";
 
 import {
@@ -19,7 +20,7 @@ const LoginPage = () => {
   //   );
   //   const { data: userData } = userInfo;
 
-  //   const [loginUser] = useLoginUserMutation();
+  const [loginUser, { isError, isSuccess, data }] = useCustomersLoginMutation();
 
   //   const dispatch = useDispatch();
 
