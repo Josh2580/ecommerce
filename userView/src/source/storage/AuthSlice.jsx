@@ -17,7 +17,7 @@ const accessToken =
 
 const initialState = {
   userInfo: userInfoFromStorage,
-  //   token: accessToken,
+  token: accessToken,
 };
 
 // console.log(initialState.userInfo);
@@ -28,11 +28,11 @@ const AuthSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
-      //   localStorage.setItem("accessToken", JSON.stringify(action.payload.data));
+      localStorage.setItem("accessToken", JSON.stringify(action.payload.data));
       // console.log(action.payload);
 
       state.userInfo = action.payload;
-      //   state.token = action.payload.data ? action.payload.data : [];
+      state.token = action.payload.data ? action.payload.data : [];
     },
 
     logout: (state) => {

@@ -1,6 +1,6 @@
-import { rootApi } from "./RootApi";
+import { RootApi } from "./RootApi";
 
-const authenticationApi = rootApi.injectEndpoints({
+const authenticationApi = RootApi.injectEndpoints({
   tagTypes: ["User"],
 
   endpoints: (build) => ({
@@ -12,15 +12,20 @@ const authenticationApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    getCategoryById: build.query({
-      query: ({ id }) => ({
-        url: "categorys/main/${id}/",
-        method: POST,
+    postUserProfile: build.mutation({
+      query: ({ formData }) => ({
+        url: "auth/jwt/create/",
+        method: "POST",
         body: formData,
       }),
+      invalidatesTags: ["User"],
+    }),
+    getUserProfile: build.query({
+      query: () => "auth/users/me/",
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useCustomersLoginMutation } = authenticationApi;
+export const { useCustomersLoginMutation, useGetUserProfileQuery } =
+  authenticationApi;

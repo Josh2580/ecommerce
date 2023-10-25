@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useGetUserProfileQuery } from "../../source/api/authenticationApi";
 // import { useRegisterUserMutation } from "../features/Post/PostApi";
 // import { setCredentials } from "../features/auth/authSlice";
 
@@ -17,6 +18,9 @@ import { AccountMainHeader } from "../customers/AccountHeader";
 // import { UserDiv } from "../customers/UsersDashboard";
 
 const Profile = () => {
+  const { data, isError, error, isSuccess } = useGetUserProfileQuery();
+  console.log(data);
+
   //   const userInfo = useSelector((state) => state.auth.userInfo);
   //   if (userInfo === undefined) {
   //     console.log("its Undefined");

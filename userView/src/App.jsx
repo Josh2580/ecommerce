@@ -40,6 +40,7 @@ import SellersOrders from "./pages/sellers/SellersOrders";
 import SellersCustomers from "./pages/sellers/SellersCustomers";
 import SellersReport from "./pages/sellers/SellersReport";
 import SellersChangePassword from "./pages/sellers/SellersChangePassword";
+import AddCategoryPage from "./pages/AddCategoryPage";
 
 const App = createBrowserRouter(
   createRoutesFromElements(
@@ -53,6 +54,8 @@ const App = createBrowserRouter(
       <Route index element={<HomePage />} />
       <Route path="product/:productId" element={<ProductDetailsPage />} />
       <Route path="category/:categoryId" element={<CategoryPage />} />
+      <Route path="category/add" element={<AddCategoryPage />} />
+
       <Route path="/cart" element={<CartPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/order/success" element={<OrderSuccess />} />

@@ -1,6 +1,6 @@
-import { rootApi } from "./RootApi";
+import { RootApi } from "./RootApi";
 
-const productsApi = rootApi.injectEndpoints({
+const productsApi = RootApi.injectEndpoints({
   endpoints: (build) => ({
     getAllProduct: build.query({
       query: () => "products/all/",
@@ -20,6 +20,19 @@ const productsApi = rootApi.injectEndpoints({
   }),
   overrideExisting: false,
 });
+
+//  prepareHeaders: (headers, { getState }) => {
+//         const token = getState().auth.userInfo;
+//         console.log(token);
+
+//         Add custom headers here
+//         console.log(localStorage.getItem("userInfo"));
+//         headers.append(
+//           "Authorization",
+//           `JWT ${localStorage.getItem("userInfo")}`
+//         );
+//         return headers;
+//       },
 
 export const {
   useGetAllProductQuery,

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from drf_multiple_model.views import ObjectMultipleModelAPIView, FlatMultipleModelAPIView
 from category.models import ProductCategory, ParentProductCategory, Vendor
 from category.serializers import CategorySerializer, ParentCategorySerializer, VendorSerializer
@@ -17,6 +18,7 @@ class ParentCategoryViewSet(viewsets.ModelViewSet):
     queryset = ParentProductCategory.objects.all()
     serializer_class = ParentCategorySerializer
     filterset_fields = ["name", "created_at"]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class CategoryViewSet(viewsets.ModelViewSet):

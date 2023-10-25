@@ -110,6 +110,13 @@ const ProductDetailsPage = () => {
   if (isSuccess) {
     let arr = new Array(data.quantity);
   }
+
+  const AddToCartHandler = () => {
+    console.log("added to cart");
+    // addToCart;
+    // () => navigate("/cart")
+  };
+
   return (
     <>
       {isLoading ? (
@@ -179,9 +186,7 @@ const ProductDetailsPage = () => {
                 </SelectStyled>
               </div>
 
-              <ButtonStyle onClick={() => navigate("/cart")}>
-                ADD TO CART
-              </ButtonStyle>
+              <ButtonStyle onClick={AddToCartHandler}>ADD TO CART</ButtonStyle>
 
               <ShareComp />
             </Right>

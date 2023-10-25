@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useCustomersLoginMutation } from "../../source/api/authenticationApi";
+// import { usePostCategoryMutation } from "../source/api/CategoryApi";
+import { usePostCategoryMutation } from "../source/api/RootApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { setCredentials } from "../../source/storage/AuthSlice";
+// import { setCredentials } from "../../source/storage/AuthSlice";
 
 import {
   Login,
@@ -13,26 +14,26 @@ import {
   Button,
   DetailForm,
   LinkStyle,
-} from "./AuthenticationStyle";
+} from "./Customers/AuthenticationStyle";
 
-const LoginPage = () => {
+const AddCategoryPage = () => {
   const userInfo = useSelector((state) =>
     state.auth.userInfo ? state.auth.userInfo : ""
   );
   const { data: userData } = userInfo;
 
-  // console.log(userInfo.data.access);
+  //   console.log(userInfo.data.access);
 
-  const [loginUser] = useCustomersLoginMutation();
+  const [parentCategory, { data, error }] = usePostCategoryMutation();
 
-  const dispatch = useDispatch();
+  //   const dispatch = useDispatch();
 
   const [loginFormData, setLoginFormData] = useState({
-    email: "",
-    password: "",
+    name: "",
+    // password: "",
   });
 
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   const InputHandler = (event) => {
     setLoginFormData({
@@ -41,20 +42,21 @@ const LoginPage = () => {
     });
   };
   const formData = new FormData();
-  // const notify = ({ info }) => toast(`the information `);
 
   const SubmitHandler = async (e) => {
+    // const SubmitHandler = (e) => {
     let result;
     e.preventDefault();
-    formData.append("email", loginFormData.email);
-    formData.append("password", loginFormData.password);
 
-    result = await loginUser({ formData });
+    formData.append("name", loginFormData.name);
+    // formData.append("password", loginFormData.password);
+
+    result = await parentCategory({ formData });
+    // parentCategory({ formData });
+
     if (result.data) {
-      // Notification Message
-      toast(`Login Successful `);
-      // Sending to the state
-      dispatch(setCredentials({ ...result }));
+      toast(`Parent Category Added Successful `);
+      // dispatch(setCredentials({ ...result }));
     } else if (result.error) {
       toast(`Login Failed: ${result.error.data.detail}`);
     }
@@ -62,38 +64,38 @@ const LoginPage = () => {
 
     setLoginFormData({
       ...loginFormData,
-      email: "",
-      password: "",
+      name: "",
+      // password: "",
     });
   };
 
   useEffect(() => {
     setLoginFormData({
       ...loginFormData,
-      email: "",
-      password: "",
+      name: "",
+      //   password: "",
     });
   }, []);
 
   return (
     <Login>
       <DetailForm onSubmit={SubmitHandler}>
-        <h1>Customers Login Page</h1>
+        <h1>Add Category Page</h1>
         <div>
           <Input>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="name">name</label>
             <input
               type="text"
-              id="email"
+              id="name"
               maxLength={50}
               required
-              placeholder="Enter Email"
-              name="email"
-              value={loginFormData.email}
+              placeholder="Enter name"
+              name="name"
+              value={loginFormData.name}
               onChange={InputHandler}
             />
           </Input>
-          <Input>
+          {/* <Input>
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -105,7 +107,7 @@ const LoginPage = () => {
               value={loginFormData.password}
               onChange={InputHandler}
             />
-          </Input>
+          </Input> */}
           <p>
             <span>
               <i>Don't have account yet? </i>
@@ -115,7 +117,7 @@ const LoginPage = () => {
           <ToastContainer />
 
           <TheButtons>
-            <Button>Login</Button>
+            <Button>Post</Button>
           </TheButtons>
           {/* <input
             type="button"
@@ -130,4 +132,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default AddCategoryPage;

@@ -40,8 +40,8 @@ const CartPage = () => {
             <p className="proAction">Action</p>
           </div>
           <div className="productsInfo ">
-            {products.map((prod) => (
-              <div className="eachProd">
+            {products.map((prod, i) => (
+              <div className="eachProd" key={i}>
                 <div className="basicInfo">
                   <img src={prod.image} alt={prod.name} />
                   <div className="prodVariant ">

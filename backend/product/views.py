@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 # from rest_framework import generics
 
 from product import models, serializers
@@ -6,6 +6,8 @@ from product import models, serializers
 
 
 class ProductViewSet(viewsets.ModelViewSet):
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticated]
 
     queryset = models.Products.objects.all()
     serializer_class = serializers.ProductSerializer
@@ -23,6 +25,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class ProductColorViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
 
     queryset = models.ProductColor.objects.all()
     serializer_class = serializers.ProductColorSerializer
