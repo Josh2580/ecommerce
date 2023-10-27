@@ -1,32 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
-import Product1 from "../assets/product-1.jpg";
-import Product2 from "../assets/product-2.jpg";
 import { SelectStyled } from "../components/select/Select";
 import { ButtonStyle } from "../components/myModules/Button";
 import { useNavigate } from "react-router-dom";
-
-const products = [
-  {
-    name: "Kids School Bag /Backpack and more",
-    image: Product1,
-    color: "blue",
-    size: " medium",
-    price: 1000,
-    quantity: 1,
-  },
-  {
-    name: "Adult clothinf and accessories",
-    image: Product2,
-    color: "pink",
-    size: " large",
-    price: 2000,
-    quantity: 2,
-  },
-];
+import { updateCart } from "../source/storage/CartSlice";
 
 const CartPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { cartItems } = useSelector((state) => state.cart || []);
+
+  const [productQty, setProductQty] = useState();
+
+  const removeCartItemHandler = ({ prod }) => {
+    console.log("item removed");
+    console.log(prod);
+    dispatch(updateCart(prod));
+  };
 
   return (
     <CartStyle>
@@ -40,22 +32,27 @@ const CartPage = () => {
             <p className="proAction">Action</p>
           </div>
           <div className="productsInfo ">
-            {products.map((prod, i) => (
+            {cartItems.map((prod, i) => (
               <div className="eachProd" key={i}>
                 <div className="basicInfo">
-                  <img src={prod.image} alt={prod.name} />
+                  <img src={prod.data.image} alt={prod.data.title} />
                   <div className="prodVariant ">
-                    <p className="prodName ">{prod.name}</p>
-                    <p>color: {prod.color}</p>
-                    <p>size: {prod.size}</p>
+                    <p className="prodName ">{prod.data.title}</p>
+                    <p>color: {prod.selectedColor}</p>
+                    <p>size: {prod.selectedSize}</p>
                   </div>
                 </div>
 
                 <p className="proQty">
-                  {/* {prod.quantity} */}
-                  <QtySelectStyled>
+                  <QtySelectStyled
+                    // value={productQty}
+                    onChange={(e) => setProductQty(e.target.value)}
+                  >
                     {/* Arrray Constructor for changing the QTY to an array of Numbers*/}
-                    {[...Array(prod.quantity).keys()].map((x) => (
+                    <option disabled={productQty === ""}>
+                      {prod.selectedQuantity}
+                    </option>
+                    {[...Array(prod.data.quantity).keys()].map((x) => (
                       <option key={x} value={x + 1}>
                         {x + 1}
                       </option>
@@ -65,7 +62,12 @@ const CartPage = () => {
                 <p className="proPrice">{prod.price}</p>
 
                 <div className="proAction">
-                  <p className="remove">Remove item</p>
+                  <p
+                    className="remove"
+                    onClick={() => removeCartItemHandler({ prod: prod })}
+                  >
+                    Remove item
+                  </p>
                   <p className="save">Save for Later</p>
                 </div>
               </div>

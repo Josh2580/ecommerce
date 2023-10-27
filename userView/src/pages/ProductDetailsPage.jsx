@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../source/api/ProductsApi";
@@ -15,9 +15,12 @@ import { useNavigate } from "react-router-dom";
 import { ButtonStyle } from "../components/myModules/Button";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../source/storage/CartSlice";
 
 const ProductDetailsPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //Fetching id with params from the URL
   const { productId } = useParams();
@@ -26,6 +29,8 @@ const ProductDetailsPage = () => {
     useGetProductByIdQuery(productId);
   // Product Informations State
   const [switching, setSwitching] = useState("");
+
+  // console.log(productData.id);
 
   let description, additional, shipping, reviews;
 
@@ -111,11 +116,43 @@ const ProductDetailsPage = () => {
     let arr = new Array(data.quantity);
   }
 
+  const [selectedColor, setSelectedColor] = useState([]);
+  const [price, setPrice] = useState("");
+  const [selectedSize, setSelectedSize] = useState([]);
+  const [selectedQuality, setSelectedQuality] = useState([]);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+
   const AddToCartHandler = () => {
     console.log("added to cart");
+    dispatch(
+      addToCart({
+        data,
+        selectedColor,
+        selectedSize,
+        selectedQuality,
+        selectedQuantity,
+      })
+    );
+    console.log(selectedColor);
+    console.log(selectedSize);
+    console.log(selectedQuality);
+    console.log(selectedQuantity);
+
     // addToCart;
     // () => navigate("/cart")
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      // setSelectedColor(data.SelectedColor);
+      setPrice(data.price);
+      // setSelectedSize(data.SelectedSize);
+      // setQuality(data.quality);
+      // setSelectedQuantity(data.SelectedQuantity);
+    }
+  }, [data]);
+
+  // console.log(SelectedQuantity);
 
   return (
     <>
@@ -142,9 +179,16 @@ const ProductDetailsPage = () => {
                 <div className="color">
                   <p className="variantTitle">Color:</p>
                   <div className="eachColor">
-                    {data.color.map((colorA, index) => (
-                      <ColorSnippet key={index} color={colorA} />
-                    ))}
+                    <SelectStyled
+                      onChange={(e) => setSelectedColor(e.target.value)}
+                    >
+                      <option>Choose color</option>
+                      {data.color.map((col, i) => (
+                        <option key={i} value={col}>
+                          <ColorSnippet color={col} />
+                        </option>
+                      ))}
+                    </SelectStyled>
                   </div>
                 </div>
               )}
@@ -152,9 +196,17 @@ const ProductDetailsPage = () => {
                 <div className="size">
                   <p className="variantTitle">Size:</p>
 
-                  <SelectStyled>
+                  <SelectStyled
+                    onChange={(e) => setSelectedSize(e.target.value)}
+                  >
+                    <option>Choose Size</option>
+
                     {data.size.map((siz) => (
-                      <option key={siz.id} value={siz.id}>
+                      <option
+                        key={siz.id}
+                        value={siz.id}
+                        // onChange={(e) => setSelectedSize(e.target.value)}
+                      >
                         {siz.size}
                       </option>
                     ))}
@@ -165,7 +217,12 @@ const ProductDetailsPage = () => {
               {data.quality.length > 0 && (
                 <div className="size">
                   <p className="variantTitle">Grade:</p>
-                  <SelectStyled>
+
+                  <SelectStyled
+                    onChange={(e) => setSelectedQuality(e.target.value)}
+                  >
+                    <option>Choose Grade</option>
+
                     {data.quality.map((qual) => (
                       <option key={qual.id} value={qual.id}>
                         {qual.quality}
@@ -176,7 +233,9 @@ const ProductDetailsPage = () => {
               )}
               <div className="qty">
                 <p className="variantTitle">Qty:</p>
-                <SelectStyled>
+                <SelectStyled
+                  onChange={(e) => setSelectedQuantity(e.target.value)}
+                >
                   {/* Arrray Constructor for changing the QTY to an array of Numbers*/}
                   {[...Array(data.quantity).keys()].map((x) => (
                     <option key={x} value={x + 1}>

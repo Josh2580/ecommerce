@@ -4,15 +4,15 @@ export const RootApi = createApi({
   reducerPath: "RootApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:8000/api/",
-    prepareHeaders: (headers, { getState }) => {
-      const { access } = getState().auth.token ? getState().auth.token : "";
-      console.log(access);
-      if (access) {
-        // console.log(access);
-        headers.set("authorization", `JWT ${access}`);
-      }
-      return headers;
-    },
+    // prepareHeaders: (headers, { getState }) => {
+    //   const { access } = getState().auth.token ? getState().auth.token : "";
+    //   // console.log(access);
+    //   if (access) {
+    //     // console.log(access);
+    //     headers.set("authorization", `JWT ${access}`);
+    //   }
+    //   return headers;
+    // },
   }),
   tagTypes: ["ParentProductCategory"],
 
