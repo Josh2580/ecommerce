@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "category",
     "my_users",
     "order",
+    "cart",
     # 'drf_multiple_model',
 
 ]
@@ -186,9 +187,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+# }
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': [

@@ -1,5 +1,6 @@
 from rest_framework import viewsets, permissions
 # from rest_framework import generics
+from django_filters.rest_framework import DjangoFilterBackend
 
 from product import models, serializers
 # Create your views here.
@@ -25,10 +26,15 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class ProductColorViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.AllowAny]
-
     queryset = models.ProductColor.objects.all()
     serializer_class = serializers.ProductColorSerializer
+
+    # permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['products']
+
+    # def get_queryset(self):
+    #     return models.ProductColor.objects.filter(products_id=self.kwargs["product_pk"])
 
 
 class ProductSizeViewSet(viewsets.ModelViewSet):
