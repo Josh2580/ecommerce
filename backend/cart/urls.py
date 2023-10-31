@@ -1,20 +1,24 @@
 from django.urls import path, include, resolve
 from rest_framework.routers import DefaultRouter
+from rest_framework_nested import routers
+
 from cart import views
 
 # Create a router and register our viewsets with it.
-router = DefaultRouter()
-router.register(r'all', views.CartViewSet,
-                basename='cart')
+router = routers.DefaultRouter()
+router.register('all', views.CartViewSet)
 
-router.register(r'items', views.CartItemsViewSet,
-                basename="cart_items")
 
-# router.register(r'size', views.ProductSizeViewSet,
-#                 basename="product_size_urls")
+cart_router = routers.NestedDefaultRouter(router, "all", lookup='cart')
+
+cart_router.register('items', views.CartItemsViewSet,
+                     basename="cart_items")
+
 
 # The API URLs are now determined automatically by the router.
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(cart_router.urls)),
+
 ]

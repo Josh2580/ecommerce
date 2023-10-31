@@ -15,13 +15,14 @@ class CartViewSet(viewsets.ModelViewSet):
 
 
 class CartItemsViewSet(viewsets.ModelViewSet):
-    queryset = CartItems.objects.all()
-    serializer_class = CartItemSerializer
 
-    # def get_serializer_class(self):
-    #     if self.request.method == "POST":
-    #         return AddCartItemSerializer
-    #     return CartItemSerializer
+    def get_queryset(self):
+        return CartItems.objects.filter(cart_id=self.kwargs["cart_pk"])
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return AddCartItemSerializer
+        return CartItemSerializer
 
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['cart']
