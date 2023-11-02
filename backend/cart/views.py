@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Cart, CartItems
-from .serializers import CartSerializer, CartItemSerializer, AddCartItemSerializer
+from .serializers import CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 #
 
@@ -16,12 +16,16 @@ class CartViewSet(viewsets.ModelViewSet):
 
 class CartItemsViewSet(viewsets.ModelViewSet):
 
+    http_method_names = ["get", "post", "patch", "delete"]
+
     def get_queryset(self):
         return CartItems.objects.filter(cart_id=self.kwargs["cart_pk"])
 
     def get_serializer_class(self):
         if self.request.method == "POST":
             return AddCartItemSerializer
+        elif self.request.method == "PATCH":
+            return UpdateCartItemSerializer
         return CartItemSerializer
 
     def get_serializer_context(self):
