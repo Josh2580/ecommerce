@@ -24,5 +24,8 @@ class CartItemsViewSet(viewsets.ModelViewSet):
             return AddCartItemSerializer
         return CartItemSerializer
 
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['cart']
+    def get_serializer_context(self):
+        return {"cart_id": self.kwargs["cart_pk"]}
+
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['cart']
