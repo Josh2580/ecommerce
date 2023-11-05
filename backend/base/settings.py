@@ -270,6 +270,7 @@ DJOSER = {
     # 'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
         'current_user': 'my_users.serializers.UserSerializer',
+        'user_create': 'my_users.serializers.MyUserCreateSerializer',
     },
     # 'LOGIN_FIELD': 'email'
 }

@@ -10,22 +10,23 @@ class CustomUserManager(BaseUserManager):
         Creates and saves a User with the given email, first_name, last_name and password.
         """
 
-    def create_user(self, email, first_name, last_name, password, **other_fields):
+    # def create_user(self, email, first_name, last_name, password, **other_fields):
+    def create_user(self, email, password, **other_fields):
         # The required field customization
         if not email:
             raise ValueError("Email is required")
 
-        if not first_name:
-            raise ValueError("First name is required")
+        # if not first_name:
+        #     raise ValueError("First name is required")
 
-        if not last_name:
-            raise ValueError("First name is required")
+        # if not last_name:
+        #     raise ValueError("First name is required")
         # ends here.
 
         user = self.model(
             email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name,
+            # first_name=first_name,
+            # last_name=last_name,
             password=password,
         )
 
@@ -33,17 +34,18 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, password=None):
+    # def create_superuser(self, email, first_name, last_name, password=None):
+    def create_superuser(self, email, password=None):
 
         # The required field customization
         if not email:
             raise ValueError("Email is required")
 
-        if not first_name:
-            raise ValueError("First name is required")
+        # if not first_name:
+        #     raise ValueError("First name is required")
 
-        if not last_name:
-            raise ValueError("First name is required")
+        # if not last_name:
+        #     raise ValueError("First name is required")
 
         """
         Creates and saves a superuser with the given email, first_name, last_name and password.
@@ -51,8 +53,8 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.create_user(
             email,
-            last_name=last_name,
-            first_name=first_name,
+            # last_name=last_name,
+            # first_name=first_name,
             password=password,
         )
         user.is_admin = True
@@ -95,7 +97,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name"]
+    # REQUIRED_FIELDS = ["first_name", "last_name"]
 
     def __str__(self):
         return self.email

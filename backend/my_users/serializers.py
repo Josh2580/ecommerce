@@ -2,8 +2,15 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .second_models import CustomerProfile, Address
 # from django.contrib.auth.models import User
+from djoser.serializers import UserCreateSerializer
 
 User = get_user_model()
+
+
+class MyUserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        model = User
+        fields = ["id", "email", "first_name", "last_name", "password"]
 
 
 # class CustomersSerializer(serializers.ModelSerializer):

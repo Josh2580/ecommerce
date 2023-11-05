@@ -8,8 +8,8 @@ router.register(r'all', views.OrderViewSet,
                 basename='all_order')
 
 
-router.register(r'items', views.OrderItemsViewSet,
-                basename="order_items")
+# router.register(r'items', views.OrderItemsViewSet,
+#                 basename="order_items")
 
 # router.register(r'quality', views.ProductQualityViewSet,
 #                 basename="product_quality_urls")
@@ -23,8 +23,5 @@ urlpatterns = [
     path('', include(router.urls)),
 ]
 
-# urlpatterns = [
-#     path('', views.ProductViewSet.as_view(), name="product_now"),
-# ]
 
 # urlpatterns = router.urls

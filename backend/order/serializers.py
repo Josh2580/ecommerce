@@ -5,8 +5,8 @@ from order.models import Order, OrderItems
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        # fields = ["id", "customer", "order_items"]
-        fields = "__all__"
+        fields = ["id", "customer", "order_items", "pending_status"]
+        # fields = "__all__"
 
         # depth = 1
 

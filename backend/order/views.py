@@ -6,8 +6,14 @@ from order.serializers import OrderSerializer, OrderItemsSerializer
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
+    # queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return Order.objects.all()
+        return Order.objects.filter(customer_id=user.pk)
 
 
 class OrderItemsViewSet(viewsets.ModelViewSet):
