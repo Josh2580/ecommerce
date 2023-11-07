@@ -28,7 +28,8 @@ class Order(models.Model):
         max_length=50, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
 
     def __str__(self):
-        return str(self.pending_status)
+        # return str(self.pending_status)
+        return f"{self.pending_status} - {self.customer.email}"
 
 
 class OrderItems(models.Model):
