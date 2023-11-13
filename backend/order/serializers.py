@@ -17,7 +17,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ["id", "customer", "order_items",
-                  "pending_status", "order_items"]
+                  "order_status", "order_items"]
         # fields = "__all__"
 
 
@@ -25,7 +25,7 @@ class CreateOrderSerializer(serializers.Serializer):
     cart_id = serializers.UUIDField()
 
     def save(self, **kwargs):
-        with transaction.atomic:
+        with transaction.atomic():
             imp_cart_id = self.validated_data["cart_id"]
             imp_user_id = self.context["user_id"]
             order = Order.objects.create(customer_id=imp_user_id)

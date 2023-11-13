@@ -274,3 +274,5 @@ DJOSER = {
     },
     # 'LOGIN_FIELD': 'email'
 }
+
+FLW_SEC_KEY = "FLWPUBK_TEST-868bdaa706e0b567d7a25d0cfe8cd8d0-X"

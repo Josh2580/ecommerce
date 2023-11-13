@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from .models import Cart, CartItems
 from .serializers import CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 from django_filters.rest_framework import DjangoFilterBackend
@@ -7,15 +7,17 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 # Create your views here.
-
-
-class CartViewSet(viewsets.ModelViewSet):
+class CartViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin,
+                  #   mixins.ListModelMixin,
+                  viewsets.GenericViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
 
 
 class CartItemsViewSet(viewsets.ModelViewSet):
-
     http_method_names = ["get", "post", "patch", "delete"]
 
     def get_queryset(self):

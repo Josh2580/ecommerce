@@ -24,12 +24,19 @@ class Order(models.Model):
     customer = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="customer_orders")
     order_time = models.DateTimeField(auto_now_add=True)
-    pending_status = models.CharField(
+    order_status = models.CharField(
         max_length=50, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
 
     def __str__(self):
-        # return str(self.pending_status)
-        return f"{self.pending_status} - {self.customer.email}"
+        # return str(self.order_status)
+        return f"{self.order_status} - {self.customer.email}"
+
+    @property
+    def total_price(self):
+        items = self.order_items.all()
+        # Performing List Comprehension Below
+        total = sum([item.quantity * item.product.price for item in items])
+        return total
 
 
 class OrderItems(models.Model):

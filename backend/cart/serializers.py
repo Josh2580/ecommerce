@@ -1,11 +1,19 @@
 from rest_framework import serializers
 from cart.models import Cart, CartItems
 from product.models import Products
-from product.serializers import ProductSerializer
+# from product.serializers import ProductSerializer
+
+
+class ProductCartSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Products
+        fields = ["id", "title", "image",
+                  "quantity", "product_images", "price"]
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(many=False)
+    product = ProductCartSerializer(many=False)
     sub_total = serializers.SerializerMethodField(method_name="total")
 
     class Meta:
@@ -24,7 +32,7 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ["id", "items", "grand_total"]
+        fields = ["id", "owner", "items", "grand_total"]
 
     def main_total(self, cart: Cart):
         items = cart.items.all()
