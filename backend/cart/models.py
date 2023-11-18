@@ -12,11 +12,11 @@ User = get_user_model()
 class Cart(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    owner = models.OneToOneField(
+    owner = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name="cart")
 
     def __str__(self):
-        return str(self.id)
+        return f"{self.id} - {self.owner}"
 
 
 class CartItems(models.Model):

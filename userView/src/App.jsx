@@ -56,7 +56,7 @@ const App = createBrowserRouter(
       <Route path="category/:categoryId" element={<CategoryPage />} />
       <Route path="category/add" element={<AddCategoryPage />} />
 
-      <Route path="/cart" element={<CartPage />} />
+      <Route path="cart/:cartId" element={<CartPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/order/success" element={<OrderSuccess />} />
       <Route path="/store" element={<StorePage />} />

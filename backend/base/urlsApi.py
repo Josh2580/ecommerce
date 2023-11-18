@@ -11,8 +11,8 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 router = DefaultRouter()
-router.register('cart', CartViewSet,
-                basename="cart")
+# router.register('cart', CartViewSet,
+#                 basename="cart")
 router.register('orders', OrderViewSet,
                 basename="orders")
 
@@ -30,6 +30,8 @@ urlpatterns = [
 
     path('categorys/', include("category.urls")),
     path('products/', include("product.urls")),
+    path('cart/', include("cart.urls")),
+
     path('', include(router.urls)),
 
 

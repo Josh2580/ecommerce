@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from .second_models import CustomerProfile, Address
 # from django.contrib.auth.models import User
 from djoser.serializers import UserCreateSerializer
+from cart.models import Cart
 
 User = get_user_model()
 
@@ -42,6 +43,9 @@ class CustomersSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    # cart = serializers.PrimaryKeyRelatedField(
+    #     many=True, queryset=Cart.objects.all())
+    # cart = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = User

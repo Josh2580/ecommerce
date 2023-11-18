@@ -29,6 +29,8 @@ class CartSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
     items = CartItemSerializer(many=True, read_only=True)
     grand_total = serializers.SerializerMethodField(method_name="main_total")
+    # owner = serializers.ReadOnlyField(source='owner.email')
+    # owner = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
 
     class Meta:
         model = Cart

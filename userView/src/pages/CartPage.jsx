@@ -3,12 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
 import { SelectStyled } from "../components/select/Select";
 import { ButtonStyle } from "../components/myModules/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateCart } from "../source/storage/CartSlice";
+import {
+  useGetCartItemsFromIdQuery,
+  useGetCartByIdQuery,
+} from "../source/api/CartApi";
+useGetCartItemsFromIdQuery;
 
 const CartPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { cartId } = useParams();
+
+  const { data, isLoading, error } = useGetCartItemsFromIdQuery(cartId);
+
+  console.log("data: ", data);
 
   const { cartItems } = useSelector((state) => state.cart || []);
 

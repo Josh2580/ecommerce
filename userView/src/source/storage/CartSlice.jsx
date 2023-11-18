@@ -4,8 +4,13 @@ const cartItemsFromStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
   : [];
 
+const cartIdFromStorage = localStorage.getItem("state_cart_id")
+  ? JSON.parse(localStorage.getItem("state_cart_id"))
+  : "";
+
 const initialState = {
   cartItems: cartItemsFromStorage,
+  cartId: cartIdFromStorage,
 };
 
 const CartSlice = createSlice({
@@ -13,16 +18,18 @@ const CartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const item = action.payload;
-      const theIndex = state.cartItems.findIndex((obj) => obj.id == item.id);
+      // const item = action.payload;
+      // const theIndex = state.cartItems.findIndex((obj) => obj.id == item.id);
 
-      state.cartItems[theIndex].quantity =
-        Number(state.cartItems[theIndex].quantity) +
-        Number(action.payload.quantity);
-      state.cartItems.push(action.payload);
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      // state.cartItems[theIndex].quantity =
+      //   Number(state.cartItems[theIndex].quantity) +
+      //   Number(action.payload.quantity);
+      // state.cartItems.push(action.payload);
+      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem("state_cart_id", JSON.stringify(action.payload));
 
       // state.cartItems = [action.payload];
+      console.log(action.payload);
     },
 
     updateCart: (state, action) => {
@@ -50,6 +57,7 @@ export const { addToCart, deleteCart, updateCart } = CartSlice.actions;
 export default CartSlice.reducer;
 
 export const selectCartItems = (state) => state.cart.cartItems;
+export const getCartId = (state) => state.cart.cartId;
 
 {
   /*

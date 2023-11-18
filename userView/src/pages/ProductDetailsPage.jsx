@@ -15,8 +15,12 @@ import { useNavigate } from "react-router-dom";
 import { ButtonStyle } from "../components/myModules/Button";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../source/storage/CartSlice";
+import {
+  useCreateCartMutation,
+  useCreateCartItemsMutation,
+} from "../source/api/CartApi";
 
 const ProductDetailsPage = () => {
   const navigate = useNavigate();
@@ -122,24 +126,47 @@ const ProductDetailsPage = () => {
   const [selectedQuality, setSelectedQuality] = useState([]);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
-  const AddToCartHandler = () => {
-    console.log("added to cart");
-    dispatch(
-      addToCart({
-        data,
-        selectedColor,
-        selectedSize,
-        selectedQuality,
-        selectedQuantity,
-      })
-    );
-    console.log(selectedColor);
-    console.log(selectedSize);
-    console.log(selectedQuality);
-    console.log(selectedQuantity);
+  // This is for Adding to Cart Management
+  // This is for Adding to Cart Management
+  // This is for Adding to Cart Management
+  const [createCart] = useCreateCartMutation();
+  const [addToCartItems] = useCreateCartItemsMutation();
+
+  const cartInfo = useSelector((state) =>
+    state.cart ? state.cart.cartId : ""
+  );
+  console.log(cartInfo);
+
+  const AddToCartHandler = async () => {
+    const formData = new FormData();
+    formData.append("owner", "");
+    if (!cartInfo) {
+      let cartResult = await createCart({ formData });
+      let cartId = cartResult.data.id;
+      dispatch(addToCart({ cart_id: cartId }));
+      navigate(`/cart/${cartId}`);
+    } else {
+      navigate(`/cart/${cartInfo.cart_id}`);
+    }
+
+    // if (cartResult.data) {
+    //   // const cartItemFormData = new FormData();
+    //   // cartItemFormData.append("product_id", data.id);
+    //   // cartItemFormData.append("quantity", selectedQuantity);
+    //   // let cartItemResult = await addToCartItems({
+    //   //   formData: cartItemFormData,
+    //   //   id: cartId,
+    //   // });
+    //   // console.log(cartItemResult);
+    //   // navigate(`/cart/${cartId}`);
+    // }
+    // console.log(selectedColor);
+    // console.log(selectedSize);
+    // console.log(selectedQuality);
+    // console.log(selectedQuantity);
 
     // addToCart;
-    // () => navigate("/cart")
+    // navigate(`/cart/${id}`);
   };
 
   useEffect(() => {
