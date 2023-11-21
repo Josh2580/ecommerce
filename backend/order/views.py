@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from order.models import OrderItems, Order
 from order.serializers import OrderSerializer, CreateOrderSerializer, OrderItemsSerializer
@@ -67,34 +68,35 @@ def initiate_payment(amount, email, order_id):
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    # queryset = Order.objects.all()
-    # serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
-    @action(detail=True, methods=['POST'])
-    def pay(self, request, pk):
-        order = self.get_object()
-        amount = order.total_price
-        order_id = str(order.id)
-        email = request.user.email
-        # redirect_url = "http://127.0.0.1:8000/confirm"
+    # @action(detail=True, methods=['POST'])
+    # def pay(self, request, pk):
+    #     order = self.get_object()
+    #     amount = order.total_price
+    #     order_id = str(order.id)
+    #     email = request.user.email
+    #     # redirect_url = "http://127.0.0.1:8000/confirm"
 
-        return initiate_payment(amount, email, order_id)
-        # return Response(initiate_payment(amount, email, order_id))
+    #     return initiate_payment(amount, email, order_id)
+    #     # return Response(initiate_payment(amount, email, order_id))
 
-    @action(detail=False, methods=['POST'])
-    def confirm_payment(self, request):
-        order_id = request.GET.get("o_id")
-        order = Order.objects.get(id=order_id)
-        order.order_status = "C"
-        order.save()
-        serializer = OrderSerializer(order)
+    # @action(detail=False, methods=['POST'])
+    # def confirm_payment(self, request):
+    #     order_id = request.GET.get("o_id")
+    #     order = Order.objects.get(id=order_id)
+    #     order.order_status = "C"
+    #     order.save()
+    #     serializer = OrderSerializer(order)
 
-        data = {
-            "msg": "Payment is successful",
-            "data": serializer.data
-        }
+    #     data = {
+    #         "msg": "Payment is successful",
+    #         "data": serializer.data
+    #     }
 
-        return Response(data)
+    #     return Response(data)
 
     def get_serializer_class(self):
         if self.request.method == "POST":
@@ -115,3 +117,6 @@ class OrderItemsViewSet(viewsets.ModelViewSet):
     queryset = OrderItems.objects.all()
     serializer_class = OrderItemsSerializer
     # lookup_field = 'order'
+
+    def get_queryset(self):
+        return OrderItems.objects.filter(order_id=self.kwargs["order_pk"])

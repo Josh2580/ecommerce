@@ -14,7 +14,7 @@ export const RootApi = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ["ParentProductCategory"],
+  tagTypes: ["ParentProductCategory", "Cart", "CartItems"],
 
   endpoints: (builder) => ({
     postCategory: builder.mutation({

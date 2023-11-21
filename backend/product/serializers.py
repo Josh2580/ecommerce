@@ -2,6 +2,14 @@ from rest_framework import serializers
 from product import models
 
 
+class ProductCartSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Products
+        fields = ["id", "title", "image",
+                  "quantity",  "price"]
+
+
 class ProductColorSerializer(serializers.ModelSerializer):
 
     class Meta:

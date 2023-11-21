@@ -135,18 +135,47 @@ const ProductDetailsPage = () => {
   const cartInfo = useSelector((state) =>
     state.cart ? state.cart.cartId : ""
   );
-  console.log(cartInfo);
+  // console.log(cartInfo);
+
+  // const [cartIdUrl, setCartIdUrl] = useState();
+  // const [cartItemResult, setCartItemResult] = useState();
+
+  // useEffect(() => {
+  //   setCartIdUrl(cartInfo.cart_id);
+  // }, [cartInfo]);
 
   const AddToCartHandler = async () => {
+    // FormData: for Creating CART
     const formData = new FormData();
     formData.append("owner", "");
+    // CartItems_FormData: for Creating CART ITEMS
+    const cartItemFormData = new FormData();
+    cartItemFormData.append("product_id", data.id);
+    cartItemFormData.append("quantity", selectedQuantity);
+    //  Create New Cart if there's no Cart_Id in State and vice_versa
     if (!cartInfo) {
       let cartResult = await createCart({ formData });
       let cartId = cartResult.data.id;
       dispatch(addToCart({ cart_id: cartId }));
-      navigate(`/cart/${cartId}`);
+
+      let cartItemResult = await addToCartItems({
+        formData: cartItemFormData,
+        id: cartId,
+      });
+      if (cartItemResult) {
+        navigate(`/cart/${cartId}`);
+      }
+      // console.log(cartItemResult);
     } else {
-      navigate(`/cart/${cartInfo.cart_id}`);
+      let cartItemResult = await addToCartItems({
+        formData: cartItemFormData,
+        id: cartInfo.cart_id,
+      });
+      if (cartItemResult) {
+        navigate(`/cart/${cartInfo.cart_id}`);
+      }
+      // navigate(`/cart/${cartInfo.cart_id}`);
+      console.log(cartItemResult);
     }
 
     // if (cartResult.data) {

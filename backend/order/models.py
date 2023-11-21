@@ -8,7 +8,7 @@ User = get_user_model()
 
 # Create your models here.
 
-
+ 
 class Order(models.Model):
 
     PAYMENT_STATUS_PENDING = "P"

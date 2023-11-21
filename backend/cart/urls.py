@@ -1,5 +1,5 @@
 from django.urls import path, include, resolve
-from rest_framework.routers import DefaultRouter
+# from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
 
 from cart import views

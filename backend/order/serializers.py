@@ -2,22 +2,25 @@ from rest_framework import serializers
 from order.models import Order, OrderItems
 from cart.models import CartItems, Cart
 from django.db import transaction
+from product.serializers import ProductCartSerializer
 
 
 class OrderItemsSerializer(serializers.ModelSerializer):
+    product = ProductCartSerializer()
+
     class Meta:
         model = OrderItems
-        fields = "__all__"
+        fields = ["id", "product", "quantity"]
         # depth = 1
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    # order_items = OrderItemsSerializer(many=True)
+    order_items = OrderItemsSerializer(many=True)
 
     class Meta:
         model = Order
-        fields = ["id", "customer", "order_items",
-                  "order_status", "order_items"]
+        fields = ["id", "customer",
+                  "order_status", "order_time", "order_items"]
         # fields = "__all__"
 
 
@@ -45,6 +48,6 @@ class CreateOrderSerializer(serializers.Serializer):
 
     class Meta:
         model = Order
-        fields = ["id", "customer", "order_items",
-                  "pending_status", "order_items"]
+        fields = ["id", "customer",
+                  "order_status", "order_items"]
         # fields = "__all__"

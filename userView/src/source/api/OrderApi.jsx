@@ -1,39 +1,39 @@
 import { RootApi } from "./RootApi";
 
-const CartsApi = RootApi.injectEndpoints({
+const OrderApi = RootApi.injectEndpoints({
   endpoints: (build) => ({
-    createCart: build.mutation({
+    createOrder: build.mutation({
       query: ({ formData }) => ({
-        url: "cart/all/",
+        url: "orders/all/",
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: ["Cart", "CartItems"],
+      invalidatesTags: ["Order", "OrderItems"],
     }),
-    getCartById: build.query({
+    getOrderById: build.query({
       query: (id) => `cart/all/${id}/`,
       providesTags: ["Cart", "CartItems"],
     }),
-    getCartItemsFromId: build.query({
+    getOrders: build.query({
       query: (id) => `cart/all/${id}/items/`,
       providesTags: ["Cart", "CartItems"],
     }),
-    createCartItems: build.mutation({
-      query: ({ formData, id }) => ({
-        url: `cart/all/${id}/items/`,
-        method: "POST",
-        body: formData,
-      }),
-      invalidatesTags: ["Cart", "CartItems"],
-    }),
-    updateCartItems: build.mutation({
-      query: ({ formData, cart_id, item_id }) => ({
-        url: `cart/all/${cart_id}/items/${item_id}/`,
-        method: "PATCH",
-        body: formData,
-      }),
-      invalidatesTags: ["Cart", "CartItems"],
-    }),
+    // createCartItems: build.mutation({
+    //   query: ({ formData, id }) => ({
+    //     url: `cart/all/${id}/items/`,
+    //     method: "POST",
+    //     body: formData,
+    //   }),
+    //   invalidatesTags: ["Cart", "CartItems"],
+    // }),
+    // updateCartItems: build.mutation({
+    //   query: ({ formData, cart_id, item_id }) => ({
+    //     url: `cart/all/${cart_id}/items/${item_id}/`,
+    //     method: "PATCH",
+    //     body: formData,
+    //   }),
+    //   invalidatesTags: ["Cart", "CartItems"],
+    // }),
   }),
   overrideExisting: false,
 });
@@ -57,4 +57,4 @@ export const {
   useCreateCartMutation,
   useCreateCartItemsMutation,
   useUpdateCartItemsMutation,
-} = CartsApi;
+} = OrderApi;

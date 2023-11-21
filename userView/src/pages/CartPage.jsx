@@ -8,6 +8,7 @@ import { updateCart } from "../source/storage/CartSlice";
 import {
   useGetCartItemsFromIdQuery,
   useGetCartByIdQuery,
+  useUpdateCartItemsMutation,
 } from "../source/api/CartApi";
 useGetCartItemsFromIdQuery;
 
@@ -17,12 +18,34 @@ const CartPage = () => {
   const { cartId } = useParams();
 
   const { data, isLoading, error } = useGetCartItemsFromIdQuery(cartId);
+  const {
+    data: CartData,
+    isLoading: CartIsLoading,
+    error: CartError,
+  } = useGetCartByIdQuery(cartId);
+  const [updateCart] = useUpdateCartItemsMutation();
 
-  console.log("data: ", data);
+  if (CartData) {
+    CartData.items.map((data) => {
+      // console.log(data.product);
+      // console.log(data);
+    });
+  }
 
-  const { cartItems } = useSelector((state) => state.cart || []);
+  const UpdateCartItem = (e) => {
+    let item_id = e.target.id;
+    let cart_updated = e.target.value;
 
-  const [productQty, setProductQty] = useState();
+    const formData = new FormData();
+    formData.append("quantity", cart_updated);
+
+    console.log("item_id: ", item_id);
+    console.log("cart_updated: ", cart_updated);
+
+    updateCart({ formData, cart_id: cartId, item_id: item_id });
+  };
+  const formData = new FormData();
+  formData.append("owner", "");
 
   const removeCartItemHandler = ({ prod }) => {
     console.log("item removed");
@@ -42,46 +65,46 @@ const CartPage = () => {
             <p className="proAction">Action</p>
           </div>
           <div className="productsInfo ">
-            {cartItems.map((prod, i) => (
-              <div className="eachProd" key={i}>
-                <div className="basicInfo">
-                  <img src={prod.data.image} alt={prod.data.title} />
-                  <div className="prodVariant ">
-                    <p className="prodName ">{prod.data.title}</p>
-                    <p>color: {prod.selectedColor}</p>
-                    <p>size: {prod.selectedSize}</p>
+            {CartData &&
+              CartData.items.map((prod, i) => (
+                <div className="eachProd" key={i}>
+                  <div className="basicInfo">
+                    <img src={prod.product.image} alt={prod.product.title} />
+                    <div className="prodVariant ">
+                      <p className="prodName ">{prod.product.title}</p>
+                      {/* <p>color: {prod.selectedColor}</p> */}
+                      {/* <p>size: {prod.selectedSize}</p> */}
+                      <p>Unit Price: {prod.product.price}</p>
+                    </div>
+                  </div>
+
+                  <p className="proQty">
+                    <QtySelectStyled
+                      id={prod.id}
+                      onChange={(e) => UpdateCartItem(e)}
+                    >
+                      {/* Arrray Constructor for changing the QTY to an array of Numbers*/}
+                      <option>{prod.quantity}</option>
+                      {[...Array(prod.product.quantity).keys()].map((x) => (
+                        <option key={x} value={x + 1}>
+                          {x + 1}
+                        </option>
+                      ))}
+                    </QtySelectStyled>
+                  </p>
+                  <p className="proPrice">{prod.sub_total}</p>
+
+                  <div className="proAction">
+                    <p
+                      className="remove"
+                      onClick={() => removeCartItemHandler({ prod: prod })}
+                    >
+                      Remove item
+                    </p>
+                    <p className="save">Save for Later</p>
                   </div>
                 </div>
-
-                <p className="proQty">
-                  <QtySelectStyled
-                    // value={productQty}
-                    onChange={(e) => setProductQty(e.target.value)}
-                  >
-                    {/* Arrray Constructor for changing the QTY to an array of Numbers*/}
-                    <option disabled={productQty === ""}>
-                      {prod.selectedQuantity}
-                    </option>
-                    {[...Array(prod.data.quantity).keys()].map((x) => (
-                      <option key={x} value={x + 1}>
-                        {x + 1}
-                      </option>
-                    ))}
-                  </QtySelectStyled>
-                </p>
-                <p className="proPrice">{prod.price}</p>
-
-                <div className="proAction">
-                  <p
-                    className="remove"
-                    onClick={() => removeCartItemHandler({ prod: prod })}
-                  >
-                    Remove item
-                  </p>
-                  <p className="save">Save for Later</p>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </CartDetails>
         <CartSummary>
@@ -101,7 +124,7 @@ const CartPage = () => {
 
           <div className="subTotal">
             <p>SubTotal</p>
-            <p>5000</p>
+            {CartData && CartData.grand_total}
           </div>
           <div className="total">
             <p>Total</p>
