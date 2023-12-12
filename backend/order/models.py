@@ -1,14 +1,16 @@
 from django.db import models
 from my_users.second_models import CustomerProfile
 from product.models import Products
+from cart.models import Cart, CartItems
 from django.contrib.auth import get_user_model
+from my_users.second_models import Address
 # from django.contrib.auth.models import User
 
 User = get_user_model()
 
 # Create your models here.
 
- 
+
 class Order(models.Model):
 
     PAYMENT_STATUS_PENDING = "P"
@@ -26,10 +28,12 @@ class Order(models.Model):
     order_time = models.DateTimeField(auto_now_add=True)
     order_status = models.CharField(
         max_length=50, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
+    shipping_address = models.ForeignKey(
+        Address, on_delete=models.SET_NULL, null=True, related_name="order_info")
 
     def __str__(self):
         # return str(self.order_status)
-        return f"{self.order_status} - {self.customer.email}"
+        return f"{self.order_status} - {self.id} - {self.order_items} - {self.customer.email}"
 
     @property
     def total_price(self):
@@ -37,6 +41,10 @@ class Order(models.Model):
         # Performing List Comprehension Below
         total = sum([item.quantity * item.product.price for item in items])
         return total
+
+    @property
+    def order_id(self):
+        return (self.id)
 
 
 class OrderItems(models.Model):

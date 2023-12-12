@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { styled } from "styled-components";
 import { SelectStyled } from "../components/select/Select";
 import { ButtonStyle } from "../components/myModules/Button";
@@ -9,6 +9,7 @@ import {
   useGetCartItemsFromIdQuery,
   useGetCartByIdQuery,
   useUpdateCartItemsMutation,
+  useRemoveCartItemsMutation,
 } from "../source/api/CartApi";
 useGetCartItemsFromIdQuery;
 
@@ -24,13 +25,11 @@ const CartPage = () => {
     error: CartError,
   } = useGetCartByIdQuery(cartId);
   const [updateCart] = useUpdateCartItemsMutation();
+  const [removeCartItem] = useRemoveCartItemsMutation();
 
-  if (CartData) {
-    CartData.items.map((data) => {
-      // console.log(data.product);
-      // console.log(data);
-    });
-  }
+  // setInterval(() => {
+  //   console.log("Timeout funtion");
+  // }, 3000);
 
   const UpdateCartItem = (e) => {
     let item_id = e.target.id;
@@ -48,11 +47,20 @@ const CartPage = () => {
   formData.append("owner", "");
 
   const removeCartItemHandler = ({ prod }) => {
-    console.log("item removed");
-    console.log(prod);
-    dispatch(updateCart(prod));
+    // console.log("item removed");
+    // console.log(prod.id);
+    removeCartItem({ cart_id: prod.cart, item_id: prod.id });
   };
 
+  const ChechoutHandler = () => {
+    if (CartData) {
+      CartData.items.map((data) => {
+        // console.log(data.product);
+        console.log(data);
+        navigate(`/checkout/${data.cart}`);
+      });
+    }
+  };
   return (
     <CartStyle>
       <button>Continue Shopping</button>
@@ -69,7 +77,10 @@ const CartPage = () => {
               CartData.items.map((prod, i) => (
                 <div className="eachProd" key={i}>
                   <div className="basicInfo">
-                    <img src={prod.product.image} alt={prod.product.title} />
+                    <img
+                      src={"http://127.0.0.1:8000" + prod.product.image}
+                      alt={prod.product.title}
+                    />
                     <div className="prodVariant ">
                       <p className="prodName ">{prod.product.title}</p>
                       {/* <p>color: {prod.selectedColor}</p> */}
@@ -113,26 +124,22 @@ const CartPage = () => {
             <p>3 items</p>
           </div>
           <div className="delivery">
-            <div className="deliveryInfo">
-              <p>Delivery Charges</p>
-              <p>$10</p>
-            </div>
-            <span>
-              This may vary depending on the address you fill on checkout
-            </span>
+            <p>Delivery Charges</p>
+            <p id="DLV">
+              Delivery charges will be made available during checkout
+            </p>
           </div>
 
           <div className="subTotal">
             <p>SubTotal</p>
+
             {CartData && CartData.grand_total}
           </div>
           <div className="total">
             <p>Total</p>
-            <p>5010</p>
+            {CartData && CartData.grand_total}
           </div>
-          <ButtonStyle onClick={() => navigate("/checkout")}>
-            Checkout
-          </ButtonStyle>
+          <ButtonStyle onClick={() => ChechoutHandler()}>Checkout</ButtonStyle>
         </CartSummary>
       </CartBody>
     </CartStyle>
@@ -176,11 +183,27 @@ const CartDetails = styled.div`
       /* background: #ebd2b1; */
       width: 100px;
       text-align: center;
-      .remove,
-      .save {
-        color: #e42f2f;
+      .remove {
         font-size: 14px;
-        padding-bottom: 5px;
+        /* margin-bottom: 5px; */
+        padding: 3px;
+        &:hover {
+          background: #e42f2f;
+          border-radius: 5px;
+          color: white;
+        }
+      }
+
+      .save {
+        font-size: 14px;
+        /* margin-bottom: 5px; */
+        padding: 3px;
+
+        &:hover {
+          background: blueviolet;
+          border-radius: 5px;
+          color: white;
+        }
       }
     }
   }
@@ -231,7 +254,7 @@ const CartDetails = styled.div`
       display: none;
     }
     .productsInfo {
-      flex-direction: column;
+      /* flex-direction: column; */
       padding: 1rem 1rem;
       /* display: flex; */
       background: none;
@@ -268,12 +291,6 @@ const CartDetails = styled.div`
           text-align: left;
           padding: 0px;
         }
-        .remove,
-        .save {
-          color: #e42f2f;
-          font-size: 14px;
-          padding: 0px;
-        }
       }
       p {
         font-weight: lighter;
@@ -302,23 +319,16 @@ const CartSummary = styled.div`
     font-size: 14px;
     border-bottom: 1px solid #c9c9c9;
     padding-bottom: 1rem;
+    #DLV {
+      text-align: right;
+      font-size: 12px;
+      max-width: 50%;
+    }
   }
   .total {
     /* border: none; */
   }
-  .delivery {
-    flex-direction: column;
-    padding-bottom: 0.5rem;
-    gap: 1rem;
-    .deliveryInfo {
-      display: flex;
-      justify-content: space-between;
-    }
-    span {
-      font-size: 12px;
-      color: #b68406;
-    }
-  }
+
   .total,
   .header {
     font-weight: bold;

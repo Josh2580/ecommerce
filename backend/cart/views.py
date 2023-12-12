@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, mixins
 from .models import Cart, CartItems
-from .serializers import CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
+from .serializers import CartSerializer, NewCartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from my_users.serializers import UserSerializer
 import uuid
@@ -13,8 +13,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 #
 
-
 # Create your views here.
+
+
 class CartViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
@@ -22,7 +23,7 @@ class CartViewSet(mixins.CreateModelMixin,
                   mixins.ListModelMixin,
                   viewsets.GenericViewSet):
     queryset = Cart.objects.all()
-    serializer_class = CartSerializer
+    # serializer_class = CartSerializer
 
     def get_queryset(self):
         user = self.request.user
@@ -33,12 +34,24 @@ class CartViewSet(mixins.CreateModelMixin,
             if pk:
                 single_cart = Cart(id=pk)
                 uuid_cart = uuid.UUID(single_cart.id)
-                print(type(uuid_cart))
+                # print(type(uuid_cart))
                 return Cart.objects.filter(id=uuid_cart)
             pass
         elif str(user) != "AnonymousUser":
             return Cart.objects.filter(owner=user.pk)
             # return Cart.objects.all()
+
+    def get_serializer_class(self):
+        user = self.request.user
+        if self.request.method == "POST":
+            if str(user) == "AnonymousUser":
+                return CartSerializer
+            elif str(user) != "AnonymousUser":
+                return NewCartSerializer
+        return CartSerializer
+
+    def get_serializer_context(self):
+        return {"user_id": self.request.user.id}
 
 
 class CartItemsViewSet(viewsets.ModelViewSet):

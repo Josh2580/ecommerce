@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   createRoutesFromElements,
@@ -57,7 +58,7 @@ const App = createBrowserRouter(
       <Route path="category/add" element={<AddCategoryPage />} />
 
       <Route path="cart/:cartId" element={<CartPage />} />
-      <Route path="/checkout" element={<CheckoutPage />} />
+      <Route path="/checkout/:cartId" element={<CheckoutPage />} />
       <Route path="/order/success" element={<OrderSuccess />} />
       <Route path="/store" element={<StorePage />} />
 

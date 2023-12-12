@@ -34,6 +34,21 @@ class CartSerializer(serializers.ModelSerializer):
         return total
 
 
+class NewCartSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+    owner = serializers.SerializerMethodField(method_name="my_owner")
+
+    class Meta:
+        model = Cart
+        fields = ["id", "owner"]
+
+    def my_owner(self, obj):
+        imp_user_id = self.context["user_id"]
+        print(imp_user_id)
+        return imp_user_id
+        # return (now() - obj.date_joined).days
+
+
 class AddCartItemSerializer(serializers.ModelSerializer):
     product_id = serializers.IntegerField()
 

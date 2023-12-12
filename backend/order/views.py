@@ -100,6 +100,11 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.request.method == "POST":
+            # serializer = CreateOrderSerializer(data={'cart_id': 'your_cart_id_here'}, context={
+            #                                    'user_id': 'your_user_id_here'})
+            # if serializer.is_valid():
+            #     order_id = serializer.save()
+            #     print(f"Order created with ID: {order_id}")
             return CreateOrderSerializer
         return OrderSerializer
 

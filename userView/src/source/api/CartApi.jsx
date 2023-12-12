@@ -34,6 +34,13 @@ const CartsApi = RootApi.injectEndpoints({
       }),
       invalidatesTags: ["Cart", "CartItems"],
     }),
+    removeCartItems: build.mutation({
+      query: ({ cart_id, item_id }) => ({
+        url: `cart/all/${cart_id}/items/${item_id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Cart", "CartItems"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -57,4 +64,5 @@ export const {
   useCreateCartMutation,
   useCreateCartItemsMutation,
   useUpdateCartItemsMutation,
+  useRemoveCartItemsMutation,
 } = CartsApi;

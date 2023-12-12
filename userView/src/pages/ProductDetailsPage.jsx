@@ -154,6 +154,7 @@ const ProductDetailsPage = () => {
     cartItemFormData.append("quantity", selectedQuantity);
     //  Create New Cart if there's no Cart_Id in State and vice_versa
     if (!cartInfo) {
+      console.log(cartInfo);
       let cartResult = await createCart({ formData });
       let cartId = cartResult.data.id;
       dispatch(addToCart({ cart_id: cartId }));

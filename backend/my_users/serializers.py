@@ -4,6 +4,8 @@ from .second_models import CustomerProfile, Address
 # from django.contrib.auth.models import User
 from djoser.serializers import UserCreateSerializer
 from cart.models import Cart
+from order.serializers import OrderSerializer
+from order.models import Order
 
 User = get_user_model()
 
@@ -23,13 +25,21 @@ class MyUserCreateSerializer(UserCreateSerializer):
 
 
 class AddressSerializer(serializers.ModelSerializer):
-    customer = serializers.PrimaryKeyRelatedField(
-        queryset=CustomerProfile.objects.all(), many=True)
+    # order_info = OrderSerializer(many=True)
+    order_info = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Order.objects.all())
 
     class Meta:
         model = Address
         fields = "__all__"
         # depth = 1
+
+    # def create(self, validated_data):
+    #     order_data = validated_data.pop('order_info')
+    #     address = Address.objects.create(**validated_data)
+    #     for ord_data in order_data:
+    #         Order.objects.create(shipping_address=order_data, **ord_data)
+    #     return address
 
 
 class CustomersSerializer(serializers.ModelSerializer):
