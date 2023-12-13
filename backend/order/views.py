@@ -21,16 +21,15 @@ from rest_framework.renderers import JSONRenderer
 def initiate_payment(amount, email, order_id):
     url = "https://api.flutterwave.com/v3/payments"
     headers = {
-        "Authorization": settings.FLW_SEC_KEY
+        "Authorization": f"Bearer {settings.FLW_SEC_KEY}"
     }
-    # header = {
-    #     "Authorization": "Bearer token"
-    # }
     data = {
         "tx_ref": str(uuid.uuid4()),
         "amount": str(amount),
         "currency": "NGN",
-        "redirect_url": "http://127.0.0.1:8000/api/orders/all/3/pay/confirm_payment/?o_id=" + order_id,
+        "redirect_url": "http://127.0.0.1:8000/api/orders/all/confirm_payment/?o_id=" + order_id,
+        # "redirect_url": redirect_url,
+
         "meta": {
             "consumer_id": 23,
             "consumer_mac": "92a3-912ba-1192a"
@@ -45,17 +44,6 @@ def initiate_payment(amount, email, order_id):
             "logo": "http://www.piedpiper.com/app/themes/joystick-v27/images/logo.png"
         }
     }
-
-    # try:
-    #     response = requests.post(url, headers=headers, json=data)
-    #     response_data = response.json()
-    #     return Response(response_data)
-    # except requests.exceptions.RequestException as err:
-    #     print("The Payment did not go through")
-    #     return Response({"error": str(err)}, status=500)
-
-    # stream = io.BytesIO(content)
-    # data = JSONParser().parse(stream)
 
     try:
         response = requests.post(url, headers=headers, json=data)
@@ -72,39 +60,31 @@ class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
-    # @action(detail=True, methods=['POST'])
-    # def pay(self, request, pk):
-    #     order = self.get_object()
-    #     amount = order.total_price
-    #     order_id = str(order.id)
-    #     email = request.user.email
-    #     # redirect_url = "http://127.0.0.1:8000/confirm"
-
-    #     return initiate_payment(amount, email, order_id)
+    @action(detail=True, methods=["post"])
+    def pay(self, request, pk):
+        order = self.get_object()
+        amount = order.total_price
+        order_id = str(order.id)
+        email = request.user.email
+        return initiate_payment(amount, email, order_id)
     #     # return Response(initiate_payment(amount, email, order_id))
 
-    # @action(detail=False, methods=['POST'])
-    # def confirm_payment(self, request):
-    #     order_id = request.GET.get("o_id")
-    #     order = Order.objects.get(id=order_id)
-    #     order.order_status = "C"
-    #     order.save()
-    #     serializer = OrderSerializer(order)
+    @action(detail=False, methods=['POST'])
+    def confirm_payment(self, request):
+        order_id = request.GET.get("o_id")
+        order = Order.objects.get(id=order_id)
+        order.order_status = "C"
+        order.save()
+        serializer = OrderSerializer(order)
 
-    #     data = {
-    #         "msg": "Payment is successful",
-    #         "data": serializer.data
-    #     }
-
-    #     return Response(data)
+        data = {
+            "msg": "Payment is successful",
+            "data": serializer.data
+        }
+        return Response(data)
 
     def get_serializer_class(self):
         if self.request.method == "POST":
-            # serializer = CreateOrderSerializer(data={'cart_id': 'your_cart_id_here'}, context={
-            #                                    'user_id': 'your_user_id_here'})
-            # if serializer.is_valid():
-            #     order_id = serializer.save()
-            #     print(f"Order created with ID: {order_id}")
             return CreateOrderSerializer
         return OrderSerializer
 
