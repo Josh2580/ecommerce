@@ -45,19 +45,6 @@ const CartsApi = RootApi.injectEndpoints({
   overrideExisting: false,
 });
 
-//  prepareHeaders: (headers, { getState }) => {
-//         const token = getState().auth.userInfo;
-//         console.log(token);
-
-//         Add custom headers here
-//         console.log(localStorage.getItem("userInfo"));
-//         headers.append(
-//           "Authorization",
-//           `JWT ${localStorage.getItem("userInfo")}`
-//         );
-//         return headers;
-//       },
-
 export const {
   useGetCartByIdQuery,
   useGetCartItemsFromIdQuery,

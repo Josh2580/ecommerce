@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useCustomersLoginMutation } from "../../source/api/authenticationApi";
+import {
+  useCustomersLoginMutation,
+  useGetUserProfileQuery,
+} from "../../source/api/authenticationApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { setCredentials } from "../../source/storage/AuthSlice";
+import { login, userState } from "../../source/storage/AuthSlice";
 
 import {
   Login,
@@ -16,14 +19,12 @@ import {
 } from "./AuthenticationStyle";
 
 const LoginPage = () => {
-  const userInfo = useSelector((state) =>
-    state.auth.userInfo ? state.auth.userInfo : ""
-  );
-  const { data: userData } = userInfo;
+  const userState = useSelector((state) => state.auth.userState || "");
 
   // console.log(userInfo.data.access);
 
   const [loginUser] = useCustomersLoginMutation();
+  const { data: userData } = useGetUserProfileQuery() || "";
 
   const dispatch = useDispatch();
 
@@ -54,7 +55,11 @@ const LoginPage = () => {
       // Notification Message
       toast(`Login Successful `);
       // Sending to the state
-      dispatch(setCredentials({ ...result }));
+      dispatch(userState({ ...userData }));
+
+      dispatch(login({ ...result }));
+      //Navigation
+      // navigate(-1);
     } else if (result.error) {
       toast(`Login Failed: ${result.error.data.detail}`);
     }

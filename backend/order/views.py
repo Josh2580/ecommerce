@@ -21,14 +21,16 @@ from rest_framework.renderers import JSONRenderer
 def initiate_payment(amount, email, order_id):
     url = "https://api.flutterwave.com/v3/payments"
     headers = {
-        "Authorization": f"Bearer {settings.FLW_SEC_KEY}"
+        "Authorization": f"Bearer {settings.FLW_SEC_KEY}",
+        "Content-Type": "application/json"
     }
     data = {
         "tx_ref": str(uuid.uuid4()),
         "amount": str(amount),
         "currency": "NGN",
-        "redirect_url": "http://127.0.0.1:8000/api/orders/all/confirm_payment/?o_id=" + order_id,
-        # "redirect_url": redirect_url,
+        "redirect_url": "http://localhost:8000/api/orders/all/confirm_payment/?o_id=" + order_id,
+        # "redirect_url": "https://www.google.com",
+
 
         "meta": {
             "consumer_id": 23,
@@ -47,11 +49,16 @@ def initiate_payment(amount, email, order_id):
 
     try:
         response = requests.post(url, headers=headers, json=data)
-        # response = requests.post(url)
+        response.raise_for_status()
 
-        response_data = JSONRenderer().render(response)
+        # Debugging: Print raw response content
+        print(response.content)
+
+        response_data = response.json()
         return Response(response_data)
     except requests.exceptions.RequestException as err:
+        print("The payment didn't go through")
+        print(err)
         return Response({"error": str(err)}, status=500)
 
 

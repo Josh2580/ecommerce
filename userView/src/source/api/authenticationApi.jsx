@@ -12,14 +12,6 @@ const authenticationApi = RootApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    postUserProfile: build.mutation({
-      query: ({ formData }) => ({
-        url: "auth/jwt/create/",
-        method: "POST",
-        body: formData,
-      }),
-      invalidatesTags: ["User"],
-    }),
     getUserProfile: build.query({
       query: () => "auth/users/me/",
     }),

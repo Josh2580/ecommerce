@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { useRegisterUserMutation } from "../features/Post/PostApi";
-// import { setCredentials } from "../features/auth/authSlice";
+// import { login } from "../features/auth/authSlice";
 
 import {
   RegisterStyle,
@@ -55,7 +55,7 @@ const RegisterPage = () => {
   //       });
   //       console.log(userData);
 
-  //       dispatch(setCredentials({ ...userData }));
+  //       dispatch(login({ ...userData }));
   //       navigate("/dashboard");
   //     }
   //   };

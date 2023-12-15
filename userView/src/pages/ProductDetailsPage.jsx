@@ -21,6 +21,7 @@ import {
   useCreateCartMutation,
   useCreateCartItemsMutation,
 } from "../source/api/CartApi";
+import { AddToCartHandler } from "../components/ManageCart";
 
 const ProductDetailsPage = () => {
   const navigate = useNavigate();
@@ -144,7 +145,7 @@ const ProductDetailsPage = () => {
   //   setCartIdUrl(cartInfo.cart_id);
   // }, [cartInfo]);
 
-  const AddToCartHandler = async () => {
+  const AddToCartHandlerss = async () => {
     // FormData: for Creating CART
     const formData = new FormData();
     formData.append("owner", "");
@@ -302,7 +303,9 @@ const ProductDetailsPage = () => {
                 </SelectStyled>
               </div>
 
-              <ButtonStyle onClick={AddToCartHandler}>ADD TO CART</ButtonStyle>
+              <ButtonStyle>
+                <AddToCartHandler prodId={data.id} prodQty={selectedQuantity} />
+              </ButtonStyle>
 
               <ShareComp />
             </Right>

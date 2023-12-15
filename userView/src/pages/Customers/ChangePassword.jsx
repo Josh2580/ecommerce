@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { useLoginUserMutation } from "../features/Post/PostApi";
-// import { setCredentials } from "../features/auth/authSlice";
+// import { login } from "../features/auth/authSlice";
 
 import {
   Login,
@@ -34,7 +34,7 @@ const ChangePassword = () => {
     // e.preventDefault();
     // const userData = await loginUser({ email, password });
     // // console.log(userData);
-    // dispatch(setCredentials({ ...userData }));
+    // dispatch(login({ ...userData }));
     // setEmail("");
     // setPassword("");
     // navigate("/dashboard");

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
 import { SelectStyled } from "../components/select/Select";
 import { ButtonStyle } from "../components/myModules/Button";
@@ -18,6 +18,9 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const { cartId } = useParams();
 
+  const userData = useSelector((state) => state.auth.userInfo || "");
+  console.log(userData);
+
   const { data, isLoading, error } = useGetCartItemsFromIdQuery(cartId);
   const {
     data: CartData,
@@ -31,6 +34,7 @@ const CartPage = () => {
   //   console.log("Timeout funtion");
   // }, 3000);
 
+  // console.log(CartData);
   const UpdateCartItem = (e) => {
     let item_id = e.target.id;
     let cart_updated = e.target.value;

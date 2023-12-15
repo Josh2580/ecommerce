@@ -2,6 +2,10 @@ from rest_framework import serializers
 from cart.models import Cart, CartItems
 from product.models import Products
 from product.serializers import ProductCartSerializer
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 class CartItemSerializer(serializers.ModelSerializer):
@@ -42,11 +46,13 @@ class NewCartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ["id", "owner"]
 
+    def create(self, validated_data):
+        imp_user_id = self.context["user_id"]
+        return Cart.objects.create(owner_id=imp_user_id)
+
     def my_owner(self, obj):
         imp_user_id = self.context["user_id"]
-        print(imp_user_id)
         return imp_user_id
-        # return (now() - obj.date_joined).days
 
 
 class AddCartItemSerializer(serializers.ModelSerializer):
