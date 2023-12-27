@@ -11,8 +11,9 @@ import { useNavigate } from "react-router-dom";
 const Snippet = ({ props }) => {
   const navigate = useNavigate();
 
+  // console.log(props);
   const urlHandler = () => {
-    navigate(`/product/${props.id}`);
+    navigate(`/product/${props.id}/${props.category}`);
     // console.log(`${id} url handler`);
   };
 

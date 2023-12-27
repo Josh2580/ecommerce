@@ -1,30 +1,36 @@
 import React from "react";
-import { useGetAllCategoryQuery } from "../source/api/CategoryApi";
+import {
+  useGetAllCategoryQuery,
+  useGetCategoryByIdQuery,
+} from "../source/api/CategoryApi";
 import Snippet from "./snippets/Snippet";
 import { styled } from "styled-components";
 import CarouselComp from "./CarouselComp";
+import { useParams } from "react-router-dom";
 
 const SimilarComp = ({ catId, itemId }) => {
-  const { data, isSuccess } = useGetAllCategoryQuery();
-  let FilteredCategory,
-    ProductsfromFilteredCategory,
-    SimilarProducts = [];
-  if (isSuccess) {
-    // Filtering the category from the Prop-In category id (catId)
-    FilteredCategory = data.filter((cat) => cat.id == catId);
+  const { catyId } = useParams();
+  // const { data, isSuccess } = useGetAllCategoryQuery();
+  // console.log(catyId);
+  const { data, isSuccess } = useGetCategoryByIdQuery({ id: catyId });
 
-    // putting the products of the filtered category in the Product variable
-    FilteredCategory.map((e) => (ProductsfromFilteredCategory = e.products));
+  let SimilarProducts = [];
+
+  if (isSuccess) {
     // filtering the remaining products to display
-    SimilarProducts = ProductsfromFilteredCategory.filter(
+    SimilarProducts = data.category_products.filter(
       (prod) => prod.id != itemId
     );
   }
-  // console.log(SimilarProducts);
+  console.log(SimilarProducts);
   return (
     <div>
-      <p>Similar Good Products </p>
-      <CarouselComp items={SimilarProducts} />
+      {isSuccess && (
+        <>
+          <p>Similar Good Products </p>
+          <CarouselComp items={SimilarProducts} />
+        </>
+      )}
     </div>
   );
 };

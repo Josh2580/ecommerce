@@ -32,3 +32,14 @@ class CustomersViewSet(viewsets.ModelViewSet):
 class AddressViewSet(viewsets.ModelViewSet):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        address_pk = self.kwargs.get("pk")
+
+        if str(user) == "AnonymousUser":
+            if address_pk:
+                return Address.objects.filter(user_id=address_pk)
+            pass
+        elif str(user) != "AnonymousUser":
+            return Address.objects.filter(user_id=user.pk)

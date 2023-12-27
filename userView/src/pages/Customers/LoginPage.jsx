@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  useCustomersLoginMutation,
-  useGetUserProfileQuery,
-} from "../../source/api/authenticationApi";
+import { useCustomersLoginMutation } from "../../source/api/authenticationApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { login, userState } from "../../source/storage/AuthSlice";
@@ -19,12 +16,12 @@ import {
 } from "./AuthenticationStyle";
 
 const LoginPage = () => {
-  const userState = useSelector((state) => state.auth.userState || "");
+  const { isToken } = useSelector((state) => state.auth);
 
-  // console.log(userInfo.data.access);
+  console.log(isToken);
 
   const [loginUser] = useCustomersLoginMutation();
-  const { data: userData } = useGetUserProfileQuery() || "";
+  // const { data: userData } = useGetUserProfileQuery() || "";
 
   const dispatch = useDispatch();
 
@@ -51,15 +48,17 @@ const LoginPage = () => {
     formData.append("password", loginFormData.password);
 
     result = await loginUser({ formData });
+    console.log(result);
+
     if (result.data) {
       // Notification Message
-      toast(`Login Successful `);
-      // Sending to the state
-      dispatch(userState({ ...userData }));
-
+      toast(`Login Successful`);
+      // Sending to the state User Token
       dispatch(login({ ...result }));
+      // Sending to the state User Profile
+      // dispatch(userState(userData));
       //Navigation
-      // navigate(-1);
+      // navigate(1);
     } else if (result.error) {
       toast(`Login Failed: ${result.error.data.detail}`);
     }
@@ -73,12 +72,14 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
+    if (isToken) {
+      navigate(-1);
+    }
     setLoginFormData({
       ...loginFormData,
-      email: "",
       password: "",
     });
-  }, []);
+  }, [isToken]);
 
   return (
     <Login>

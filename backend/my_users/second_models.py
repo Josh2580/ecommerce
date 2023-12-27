@@ -18,6 +18,8 @@ class CustomerProfile(models.Model):
 
 
 class Address(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL,
+                             null=True, blank=True, related_name="user_address")
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
     phone_number = models.CharField(max_length=55, null=True, blank=True)
@@ -30,4 +32,4 @@ class Address(models.Model):
     lga = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.first_name}  {self.address}"
+        return f"{self.user} {self.first_name}  {self.address}"

@@ -28,27 +28,6 @@ const CategoryList = () => {
 
   return (
     <div>
-      {isSuccess ? (
-        <>
-          {/* {data.map((category) => (
-            <CategorySnippet key={category.id} props={category} />
-          ))}
-          {data.map((category) => (
-            <CategorySnippet key={category.id} props={category} />
-          ))}
-          {data.map((category) => (
-            <CategorySnippet key={category.id} props={category} />
-          ))}
-          {data.map((category) => (
-            <CategorySnippet key={category.id} props={category} />
-          ))} */}
-          {/* {data.map((category) => (
-            <CategorySnippet key={category.id} props={category} />
-          ))} */}
-        </>
-      ) : (
-        <h1>Category is loading</h1>
-      )}
       <Carousel
         responsive={responsive}
         swipeable={true}

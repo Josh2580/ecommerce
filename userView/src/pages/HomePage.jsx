@@ -60,7 +60,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <br />
+      {/* <br /> */}
       {/* {data} */}
       {/* {isSuccess && (
         <Pagination count={pagination.count} onChange={handleChange} />
@@ -101,6 +101,10 @@ const AllSnippet = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 16px;
+  @media (max-width: 899px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
   @media (max-width: 550px) {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 16px;

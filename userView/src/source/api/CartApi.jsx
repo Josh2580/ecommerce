@@ -10,6 +10,14 @@ const CartsApi = RootApi.injectEndpoints({
       }),
       invalidatesTags: ["Cart", "CartItems"],
     }),
+    updateCart: build.mutation({
+      query: ({ formData, cartId }) => ({
+        url: `cart/all/${cartId}/`,
+        method: "PATCH",
+        body: formData,
+      }),
+      invalidatesTags: ["Cart", "CartItems"],
+    }),
     getCartById: build.query({
       query: (id) => `cart/all/${id}/`,
       providesTags: ["Cart", "CartItems"],
@@ -47,6 +55,7 @@ const CartsApi = RootApi.injectEndpoints({
 
 export const {
   useGetCartByIdQuery,
+  useUpdateCartMutation,
   useGetCartItemsFromIdQuery,
   useCreateCartMutation,
   useCreateCartItemsMutation,

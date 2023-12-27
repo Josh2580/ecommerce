@@ -6,6 +6,8 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import Root from "./components/Root/Root";
+import PrivateRoute from "./components/Root/PrivateRoute";
+
 import ErrorPage from "./components/Root/ErrorPage";
 
 //PAGES
@@ -20,7 +22,7 @@ import CategoryPage from "./pages/CategoryPage";
 import "./App.css";
 
 import Orders from "./pages/Customers/Orders";
-import OrderSuccess from "./pages/OrderSuccess";
+import OrderDetails from "./pages/OrderDetails";
 
 //Customers Panel
 import RegisterPage from "./pages/Customers/RegisterPage";
@@ -53,13 +55,18 @@ const App = createBrowserRouter(
       errorElement={<ErrorPage />}
     >
       <Route index element={<HomePage />} />
-      <Route path="product/:productId" element={<ProductDetailsPage />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="/checkout/:cartId" element={<CheckoutPage />} />
+      </Route>
+      <Route
+        path="product/:productId/:catyId"
+        element={<ProductDetailsPage />}
+      />
       <Route path="category/:categoryId" element={<CategoryPage />} />
       <Route path="category/add" element={<AddCategoryPage />} />
 
       <Route path="cart/:cartId" element={<CartPage />} />
-      <Route path="/checkout/:cartId" element={<CheckoutPage />} />
-      <Route path="/order/success" element={<OrderSuccess />} />
+      <Route path="/order/success" element={<OrderDetails />} />
       <Route path="/store" element={<StorePage />} />
 
       {/* Customers Panel */}

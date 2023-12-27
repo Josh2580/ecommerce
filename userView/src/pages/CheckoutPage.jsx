@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Bootstrap files
-import Container from "react-bootstrap/Container";
-import Accordion from "react-bootstrap/Accordion";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Row from "react-bootstrap/Row";
+import {
+  Container,
+  Row,
+  Col,
+  Accordion,
+  Form,
+  InputGroup,
+  Button,
+} from "react-bootstrap";
+//
 //
 
 import ShippingAddress, {
@@ -24,17 +27,29 @@ import { styled } from "styled-components";
 // import Product1 from "../assets/product-1.jpg";
 // import Product2 from "../assets/product-2.jpg";
 import { ButtonStyle } from "../components/myModules/Button";
-import { InputStyle } from "../components/myModules/Inputs";
+// import { InputStyle } from "../components/myModules/Inputs";
 
 import {
   // useGetCartItemsFromIdQuery,
   useGetCartByIdQuery,
   // useUpdateCartItemsMutation,
 } from "../source/api/CartApi";
-import { useOrderAddressMutation } from "../source/api/OrderApi";
-import { useCreateAddressMutation } from "../source/api/AddressApi";
+import {
+  useCreateOrderAddressMutation,
+  useCreateOrderMutation,
+  useUpdateOrderPaymentMutation,
+} from "../source/api/OrderApi";
+import { useGetAddressQuery } from "../source/api/AddressApi";
+import { usePayMutation } from "../source/api/PaymentApi";
 
 import { Country, State, City } from "country-state-city";
+import Address from "./Customers/Address";
+//
+//
+import { useSelector, useDispatch } from "react-redux";
+import { useGetUserProfileQuery } from "../source/api/authenticationApi";
+import { userState } from "../source/storage/AuthSlice";
+//
 
 // console.log("All Countries", Country.getAllCountries());
 // console.log("All States", State.getAllStates());
@@ -51,87 +66,148 @@ import { Country, State, City } from "country-state-city";
 
 const CheckoutPage = () => {
   const { cartId } = useParams();
+  const navigate = useNavigate();
+  const { data: userData } = useGetUserProfileQuery() || {};
+  // console.log(userData.id);
 
   const {
     data: CartItems,
     isLoading: CartIsLoading,
     error: CartError,
   } = useGetCartByIdQuery(cartId);
+  const [pay, { data: payData, isSuccess: paySuccess }] = usePayMutation();
 
   const [
-    createAddress,
-    { data: AddressData, isLoading: AddressIsLoading, error: AddressError },
-  ] = useCreateAddressMutation();
+    createOrder,
+    { data: createOrderData, isSuccess: createOrderSuccess },
+  ] = useCreateOrderMutation();
+  const [
+    updateOrderPayment,
+    { data: updateOrderPaymentData, isSuccess: updateOrderPaymentSuccess },
+  ] = useUpdateOrderPaymentMutation();
+  const [
+    createOrderAddress,
+    { data: orderAddressData, isSuccess: orderAddressSuccess },
+  ] = useCreateOrderAddressMutation();
+  // {
+  //   orderAddressSuccess && console.log(orderAddressData);
+  // }
+  // {
+  //   createOrderSuccess && console.log(createOrderData);
+  // }
+
+  const {
+    data: AddressData,
+    isLoading: AddressIsLoading,
+    error: AddressError,
+  } = useGetAddressQuery();
 
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  const [inputData, setInputData] = useState({
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    address: "",
+    descriptions: "",
+    postal_code: "",
+    city: "",
+    state: "",
+    country: "",
+    lga: "",
+    payment_method: "credit_card",
+  });
 
-    setValidated(true);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    // console.log(inputData.first_name);
   };
-
-  // const [order_info, setOrder_info] = useState(null);
-  const [first_name, setFirst_name] = useState("");
-  const [last_name, setLast_name] = useState("");
-  const [phone_number, setPhone_number] = useState("");
-  const [address, setAddress] = useState("");
-  const [directions, setDirections] = useState("");
-  const [postal_code, setPostal_code] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [lga, setLga] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("credit_card");
 
   const formData = new FormData();
 
-  // formData.append("order_info", order_info);
-  formData.append("first_name", first_name);
-  formData.append("last_name", last_name);
-  formData.append("phone_number", phone_number);
-  formData.append("address", address);
-  formData.append("directions", directions);
-  formData.append("postal_code", postal_code);
-  formData.append("lga", lga);
-  formData.append("city", city);
-  formData.append("state", state);
-  formData.append("country", country);
+  Object.entries(inputData).forEach(([key, value]) => {
+    formData.append(key, value);
+    // console.log(value);
+  });
 
-  const AddressHandler = async (e) => {
-    e.preventDefault();
-
-    //   let process = await createAddress({ formData, id: "138", method: "PATCH" });
-    let proc = await createAddress({ formData });
-    console.log(proc);
+  const handleSubmit = async (event) => {
+    const cartFormData = new FormData();
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+      console.log("Some field empty");
+    } else {
+      cartFormData.append("cart_id", cartId);
+      let orderNow = await createOrder({ formData: cartFormData });
+      // createOrder({ formData: cartFormData });
+      if (orderNow) {
+        const paymentFormData = new FormData();
+        paymentFormData.append("payment_method", inputData.payment_method);
+        updateOrderPayment({
+          formData: paymentFormData,
+          orderId: orderNow.data.order_id,
+        });
+        formData.append("user", userData.id);
+        formData.append("order", orderNow.data.order_id);
+        let orderAddressResult = await createOrderAddress({
+          // createOrderAddress({
+          formData,
+          orderId: orderNow.data.order_id,
+        });
+        if (orderAddressResult) {
+          let payResult = await pay({
+            orderId: orderNow.data.order_id,
+          });
+          if (payResult) {
+            const { link } = payResult.data.data;
+            // console.log(payResult.data);
+            console.log(link);
+            window.location.href = `${link}`;
+          }
+        }
+        // navigate("/");
+      }
+    }
+    // setValidated(true);
   };
 
-  const PlaceOrderHandler = async (e) => {
-    e.preventDefault();
-    let proc = await createAddress({ formData });
-    console.log(proc);
+  useEffect(() => {
+    {
+      AddressData &&
+        AddressData.map((abcd) =>
+          Object.entries(abcd).forEach(([key, value]) => {
+            setInputData((prevData) => ({
+              ...prevData,
+              [key]: value,
+            }));
+            // console.log(key);
+          })
+        );
+    }
+  }, [AddressData]);
 
-    // AddressHandler();
-    // console.log(paymentMethod);
-  };
-
-  // console.log(first_name);
   return (
-    <Container as="form" onSubmit={(e) => PlaceOrderHandler(e)}>
+    <Container
+      as="form"
+      style={{
+        marginTop: "30px",
+      }}
+      onSubmit={handleSubmit}
+    >
       <Row>
         <Col>
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
-            <Accordion.Item eventKey="0">
+            <Accordion.Item eventKey={"0"}>
               <Accordion.Header>
                 <h5>Delivery Details</h5>
               </Accordion.Header>
               <Accordion.Body>
-                <div noValidate validated={validated}>
-                  {/* <div> */}
+                <Form as="div" noValidate validated={validated}>
                   <Row className="mb-3">
                     <Form.Group as={Col} md="4" controlId="validationCustom01">
                       <Form.Label>First name</Form.Label>
@@ -139,8 +215,9 @@ const CheckoutPage = () => {
                         required
                         type="text"
                         placeholder="First name"
-                        defaultValue={first_name}
-                        onChange={(e) => setFirst_name(e.target.value)}
+                        defaultValue={inputData.first_name}
+                        name="first_name"
+                        onChange={handleInputChange}
                       />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
@@ -150,8 +227,9 @@ const CheckoutPage = () => {
                         required
                         type="text"
                         placeholder="Last name"
-                        defaultValue={last_name}
-                        onChange={(e) => setLast_name(e.target.value)}
+                        defaultValue={inputData.last_name}
+                        name="last_name"
+                        onChange={handleInputChange}
                       />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
@@ -167,8 +245,9 @@ const CheckoutPage = () => {
                           placeholder="Phone Number"
                           aria-describedby="inputGroupPrepend"
                           required
-                          defaultValue={phone_number}
-                          onChange={(e) => setPhone_number(e.target.value)}
+                          defaultValue={inputData.phone_number}
+                          name="phone_number"
+                          onChange={handleInputChange}
                         />
                         <Form.Control.Feedback type="invalid">
                           Please provide a valid Phone Number.
@@ -177,19 +256,24 @@ const CheckoutPage = () => {
                     </Form.Group>
                   </Row>
                   <Row className="mb-3">
-                    <Form.Group as={Col} md="6" controlId="validationCustom01">
+                    <Form.Group
+                      // as={Col}
+                      md="6"
+                      controlId="validationCustom01"
+                    >
                       <Form.Label>Address</Form.Label>
                       <Form.Control
                         required
                         type="text"
                         placeholder="Address"
-                        defaultValue={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        defaultValue={inputData.address}
+                        name="address"
+                        onChange={handleInputChange}
                       />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group
-                      as={Col}
+                      // as={Col}
                       md="6"
                       controlId="validationCustomDescription"
                     >
@@ -198,8 +282,9 @@ const CheckoutPage = () => {
                         as="textarea"
                         rows={3}
                         placeholder="Additional instructions on delivery or address"
-                        defaultValue={directions}
-                        onChange={(e) => setDirections(e.target.value)}
+                        defaultValue={inputData.descriptions}
+                        name="descriptions"
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                   </Row>
@@ -210,8 +295,9 @@ const CheckoutPage = () => {
                         type="text"
                         placeholder="City"
                         required
-                        defaultValue={city}
-                        onChange={(e) => setCity(e.target.value)}
+                        defaultValue={inputData.city}
+                        name="city"
+                        onChange={handleInputChange}
                       />
                       <Form.Control.Feedback type="invalid">
                         Please provide a valid city.
@@ -223,8 +309,9 @@ const CheckoutPage = () => {
                         type="text"
                         placeholder="State"
                         required
-                        defaultValue={state}
-                        onChange={(e) => setState(e.target.value)}
+                        defaultValue={inputData.state}
+                        name="state"
+                        onChange={handleInputChange}
                       />
                       <Form.Control.Feedback type="invalid">
                         Please provide a valid state.
@@ -236,56 +323,59 @@ const CheckoutPage = () => {
                         type="text"
                         placeholder="Country"
                         required
-                        defaultValue={country}
-                        onChange={(e) => setCountry(e.target.value)}
+                        defaultValue={inputData.country}
+                        name="country"
+                        onChange={handleInputChange}
                       />
                       <Form.Control.Feedback type="invalid">
                         Please provide a valid Country.
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Row>
-                </div>
+                </Form>
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="0">
+            <Accordion.Item eventKey="1">
               <Accordion.Header>
                 <h5>Payment Method</h5>
               </Accordion.Header>
               <Accordion.Body>
-                <div className="mb-1">
-                  <Form.Check // prettier-ignore
-                    as="input"
-                    required
-                    type={"radio"}
-                    name="payment_method"
-                    id={`defaultCard`}
-                    label={`Credit Card`}
-                    defaultChecked
-                    defaultValue={"credit_card"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  <Form.Check // prettier-ignore
-                    as="input"
-                    required
-                    type={"radio"}
-                    name="payment_method"
-                    id={`defaultDirect`}
-                    label={`Direct Bank Transfer`}
-                    defaultValue={"direct_bank_transfer"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
+                <Form as="div">
+                  <Form.Group className="mb-1">
+                    <Form.Check // prettier-ignore
+                      as="input"
+                      required
+                      type={"radio"}
+                      id={`defaultCard`}
+                      label={`Credit Card`}
+                      defaultChecked
+                      name="payment_method"
+                      defaultValue={"credit_card"}
+                      onChange={handleInputChange}
+                    />
+                    <Form.Check // prettier-ignore
+                      as="input"
+                      required
+                      type={"radio"}
+                      name="payment_method"
+                      id={`defaultDirect`}
+                      label={`Direct Bank Transfer`}
+                      defaultValue={"direct_bank_transfer"}
+                      onChange={handleInputChange}
+                    />
 
-                  <Form.Check // prettier-ignore
-                    required
-                    as="input"
-                    type={"radio"}
-                    name="payment_method"
-                    id={`defaultCash`}
-                    label={`Cash On Delivery`}
-                    defaultValue={"cash_on_delivery"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                </div>
+                    <Form.Check // prettier-ignore
+                      required
+                      as="input"
+                      type={"radio"}
+                      name="payment_method"
+                      id={`defaultCash`}
+                      label={`Cash On Delivery`}
+                      defaultValue={"cash_on_delivery"}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Form>
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -315,7 +405,13 @@ const CheckoutPage = () => {
                 <h3>{CartItems.grand_total}</h3>
               </div>
             )}
-            <ButtonStyle width="100%">Place Order</ButtonStyle>
+
+            <ButtonStyle
+              width="100%"
+              // onClick={(event) => PlaceOrderHandler(event)}
+            >
+              Place Order
+            </ButtonStyle>
           </OrderDetailsStyle>
         </Col>
       </Row>

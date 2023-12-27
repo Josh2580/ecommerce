@@ -15,6 +15,8 @@ User = get_user_model()
 
 # Create your views here.
 
+# global current_cart_pk
+
 
 class CartViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
@@ -27,19 +29,21 @@ class CartViewSet(mixins.CreateModelMixin,
 
     def get_queryset(self):
         user = self.request.user
-        # print(str(user) == "AnonymousUser")
+        current_cart_pk = self.kwargs.get("pk")
+
         if str(user) == "AnonymousUser":
 
-            pk = self.kwargs.get("pk")
-            if pk:
-                single_cart = Cart(id=pk)
+            if current_cart_pk:
+                single_cart = Cart(id=current_cart_pk)
                 uuid_cart = uuid.UUID(single_cart.id)
                 # print(type(uuid_cart))
                 return Cart.objects.filter(id=uuid_cart)
             pass
         elif str(user) != "AnonymousUser":
+            # print(type(str("current_cart_pk")))
+            if self.request.method == "PUT" or "PATCH" and current_cart_pk:
+                return Cart.objects.filter(id=str(current_cart_pk))
             return Cart.objects.filter(owner=user.pk)
-            # return Cart.objects.all()
 
     def get_serializer_class(self):
         user = self.request.user

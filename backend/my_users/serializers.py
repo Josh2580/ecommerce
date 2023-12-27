@@ -25,21 +25,9 @@ class MyUserCreateSerializer(UserCreateSerializer):
 
 
 class AddressSerializer(serializers.ModelSerializer):
-    # order_info = OrderSerializer(many=True)
-    order_info = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=Order.objects.all())
-
     class Meta:
         model = Address
         fields = "__all__"
-        # depth = 1
-
-    # def create(self, validated_data):
-    #     order_data = validated_data.pop('order_info')
-    #     address = Address.objects.create(**validated_data)
-    #     for ord_data in order_data:
-    #         Order.objects.create(shipping_address=order_data, **ord_data)
-    #     return address
 
 
 class CustomersSerializer(serializers.ModelSerializer):
@@ -48,8 +36,6 @@ class CustomersSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerProfile
         fields = "__all__"
-        # fields = ["id",  "email", "first_name"]
-        # depth = 1
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -61,13 +47,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         # fields = "__all__"
         fields = ["id", "email", "first_name",
-                  "last_name", "date_of_birth", "is_seller", "cart"]
+                  "last_name", "date_of_birth", "user_address", "is_seller", "user_order_address", "cart"]
 
         # exclude = ["password"]
-
-    # def create(self, validated_data):
-    #     users_data = validated_data.pop('customer_profile')
-    #     user = User.objects.create(**validated_data)
-    #     for user_data in users_data:
-    #         Customers.objects.create(user=user, **user_data)
-    #     return user

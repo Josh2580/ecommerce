@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
 import { SelectStyled } from "../components/select/Select";
 import { ButtonStyle } from "../components/myModules/Button";
 import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { updateCart } from "../source/storage/CartSlice";
 import {
   useGetCartItemsFromIdQuery,
   useGetCartByIdQuery,
   useUpdateCartItemsMutation,
   useRemoveCartItemsMutation,
+  useUpdateCartMutation,
 } from "../source/api/CartApi";
 useGetCartItemsFromIdQuery;
 
@@ -18,8 +22,11 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const { cartId } = useParams();
 
-  const userData = useSelector((state) => state.auth.userInfo || "");
-  console.log(userData);
+  // const userData = useSelector((state) => state.auth.userInfo || "");
+  // console.log(userData);
+  const { isToken, userState } = useSelector((state) => state.auth);
+
+  // console.log(userState, isToken);
 
   const { data, isLoading, error } = useGetCartItemsFromIdQuery(cartId);
   const {
@@ -27,7 +34,8 @@ const CartPage = () => {
     isLoading: CartIsLoading,
     error: CartError,
   } = useGetCartByIdQuery(cartId);
-  const [updateCart] = useUpdateCartItemsMutation();
+  const [updateCartItemsApi] = useUpdateCartItemsMutation();
+  const [updateCartApi, { data: cartOwnerData }] = useUpdateCartMutation();
   const [removeCartItem] = useRemoveCartItemsMutation();
 
   // setInterval(() => {
@@ -35,7 +43,7 @@ const CartPage = () => {
   // }, 3000);
 
   // console.log(CartData);
-  const UpdateCartItem = (e) => {
+  const UpdateCartItemHandler = (e) => {
     let item_id = e.target.id;
     let cart_updated = e.target.value;
 
@@ -45,7 +53,7 @@ const CartPage = () => {
     console.log("item_id: ", item_id);
     console.log("cart_updated: ", cart_updated);
 
-    updateCart({ formData, cart_id: cartId, item_id: item_id });
+    updateCartItemsApi({ formData, cart_id: cartId, item_id: item_id });
   };
   const formData = new FormData();
   formData.append("owner", "");
@@ -64,11 +72,26 @@ const CartPage = () => {
         navigate(`/checkout/${data.cart}`);
       });
     }
+    toast(`Empty Cart !!!`);
   };
+
+  let { owner } = CartData || {};
+
+  useEffect(() => {
+    if (isToken && userState && (owner === null || {})) {
+      const formData = new FormData();
+      formData.append("owner", userState.id);
+      updateCartApi({ cartId, formData });
+      console.log("Updating owner");
+    }
+  }, [isToken, userState, owner]);
+
   return (
     <CartStyle>
       <button>Continue Shopping</button>
       <CartBody>
+        <ToastContainer />
+
         <CartDetails>
           <div className="header">
             <p className="proDetails">Product Details</p>
@@ -96,7 +119,7 @@ const CartPage = () => {
                   <p className="proQty">
                     <QtySelectStyled
                       id={prod.id}
-                      onChange={(e) => UpdateCartItem(e)}
+                      onChange={(e) => UpdateCartItemHandler(e)}
                     >
                       {/* Arrray Constructor for changing the QTY to an array of Numbers*/}
                       <option>{prod.quantity}</option>

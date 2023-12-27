@@ -1,23 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const userInfoFromStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
-  : [];
+const accessToken = JSON.parse(localStorage.getItem("accessToken")) || "";
+const isToken = accessToken ? true : false;
 
-// const accessToken = localStorage.getItem("accessToken")
-//   ? JSON.parse(localStorage.getItem("accessToken"))
-//   : "";
-
-const accessToken =
-  localStorage.getItem("accessToken") === undefined
-    ? console.log("Its Undefined")
-    : JSON.parse(localStorage.getItem("accessToken"));
-
-// console.log(accessToken);
+const userInfoFromStorage = JSON.parse(localStorage.getItem("userState")) || [];
 
 const initialState = {
   userState: userInfoFromStorage,
   accessToken: accessToken,
+  isToken: isToken,
 };
 
 // console.log(initialState.userInfo);
@@ -36,22 +27,20 @@ const AuthSlice = createSlice({
 
       // state.userInfo = action.payload;
       state.accessToken = action.payload.data ? action.payload.data.access : [];
+      state.isToken = true;
     },
 
     userState: (state, action) => {
       localStorage.setItem("userState", JSON.stringify(action.payload));
-      localStorage.setItem("userState", JSON.stringify(action.payload));
-      console.log(action.payload);
-
-      // state.userInfo = action.payload;
+      // console.log(action.payload);
       state.userState = action.payload || [];
     },
 
     logout: (state) => {
-      state.userInfo = localStorage.removeItem("userInfo");
-      state.userInfo = [];
-      state.token = localStorage.removeItem("accessToken");
-      state.token = [];
+      localStorage.removeItem("userState");
+      state.userState = [];
+      localStorage.removeItem("accessToken");
+      state.accessToken = [];
     },
   },
 });
@@ -59,6 +48,6 @@ const AuthSlice = createSlice({
 export const { login, userState, logout } = AuthSlice.actions;
 export default AuthSlice.reducer;
 
-export const selectCurrentUser = (state) => state.auth.user;
-export const selectCurrentToken = (state) => state.auth.token;
-export const selectUserInfo = (state) => state.auth.userInfo;
+export const selectCurrentUser = (state) => state.auth;
+export const selectCurrentToken = (state) => state.auth.accessToken;
+// export const selectUserInfo = (state) => state.auth.userState;

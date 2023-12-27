@@ -2,10 +2,10 @@ import { RootApi } from "./RootApi";
 
 const AddressApi = RootApi.injectEndpoints({
   endpoints: (build) => ({
-    // getOrderById: build.query({
-    //   query: (id) => `users/address/`,
-    //   providesTags: ["Address"],
-    // }),
+    getAddress: build.query({
+      query: (id) => `users/address/`,
+      providesTags: ["Address", "User"],
+    }),
     // getOrderItems: build.query({
     //   query: (id) => `orders/all/${id}/items/`,
     //   providesTags: ["Order", "OrderItems"],
@@ -16,10 +16,10 @@ const AddressApi = RootApi.injectEndpoints({
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: ["Address"],
+      invalidatesTags: ["Address", "User"],
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useCreateAddressMutation } = AddressApi;
+export const { useCreateAddressMutation, useGetAddressQuery } = AddressApi;

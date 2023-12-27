@@ -8,14 +8,6 @@ import { LiaTimesSolid } from "react-icons/lia";
 import AccountHeader from "../../pages/Customers/AccountHeader";
 import MobileMenu from "./MobileMenu";
 import SellersHeader from "../../pages/sellers/SellersHeader";
-//
-//
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Header = () => {
   const [hamburger, setHamburger] = useState(true);
@@ -106,52 +98,47 @@ const Header = () => {
   };
 
   return (
-    <>
-      <Navbar expand="lg" sticky="top" className="bg-body-tertiary">
-        <Container fluid>
-          <Navbar.Brand href="/">LOGO</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <div className="d-flex flex-column gap-lg-2 flex-lg-row justify-content-end w-100">
-              <Form className="d-flex">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2 "
-                  aria-label="Search"
-                />
-                <Button variant="outline-success">Search</Button>
-              </Form>
-              <Nav className=" my-2 my-lg-0" navbarScroll>
-                <Nav.Link href="/" className="ms-1">
-                  Home
-                </Nav.Link>
-                <NavDropdown
-                  className="ms-1"
-                  title="Account"
-                  id="navbarScrollingDropdown"
-                >
-                  <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action4">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action5">
-                    Something else here
-                  </NavDropdown.Item>
-                </NavDropdown>
+    <HeaderStyle>
+      <Left>
+        <div className="the_burger" onClick={BurgerHandler}>
+          {hamburger ? <HiBars3 /> : <LiaTimesSolid />}
+        </div>
 
-                <Nav.Link href="/cart" className="ms-1">
-                  {" "}
-                  <BsCart className="headIcon" />
-                  <span className="mr-1">Cart</span>
-                </Nav.Link>
-              </Nav>
-            </div>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </>
+        <NavLink to="/">
+          <h2>LOGO</h2>
+        </NavLink>
+        <div className="nav">
+          <Navigation />
+        </div>
+        <div className="mobile_nav">
+          <MobileNavigation />
+        </div>
+      </Left>
+      <Right>
+        <NavLink to="/customer/dashboard">
+          <AiOutlineUser className="headIcon" />
+          <span>Account</span>
+        </NavLink>
+        <NavLink to="/seller/dashboard">
+          <AiOutlineUser className="headIcon" />
+          <span>Sellers Account</span>
+        </NavLink>
+        <NavLink to="/customer/wishlist">
+          <AiOutlineHeart className="headIcon" />
+          <span>Wishlist</span>
+        </NavLink>
+
+        <NavLink>
+          <BsCart className="headIcon" />
+          <span>New Orders</span>
+        </NavLink>
+
+        <NavLink to="/cart">
+          <BsCart className="headIcon" />
+          <span>Cart</span>
+        </NavLink>
+      </Right>
+    </HeaderStyle>
   );
 };
 
@@ -259,9 +246,4 @@ const HeaderStyle = styled.div`
   background: #e7ccac;
   padding: 10px 0px;
   z-index: 4;
-`;
-
-const MyNavbar = styled(Navbar)`
-  display: flex;
-  justify-content: space-between;
 `;

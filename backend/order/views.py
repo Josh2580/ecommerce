@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
-from order.models import OrderItems, Order
-from order.serializers import OrderSerializer, CreateOrderSerializer, OrderItemsSerializer
+from order.models import OrderItems, Order, OrderAddress
+from order.serializers import OrderSerializer, CreateOrderSerializer, OrderItemsSerializer, OrderAddressSerializer
 import requests
 # from urllib import response
 from rest_framework.response import Response
@@ -28,7 +28,8 @@ def initiate_payment(amount, email, order_id):
         "tx_ref": str(uuid.uuid4()),
         "amount": str(amount),
         "currency": "NGN",
-        "redirect_url": "http://localhost:8000/api/orders/all/confirm_payment/?o_id=" + order_id,
+        # "redirect_url": "http://localhost:8000/api/orders/all/confirm_payment/?o_id=" + order_id,
+        "redirect_url": "http://localhost:5173/order/success/?o_id=" + order_id,
         # "redirect_url": "https://www.google.com",
 
 
@@ -76,7 +77,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         return initiate_payment(amount, email, order_id)
     #     # return Response(initiate_payment(amount, email, order_id))
 
-    @action(detail=False, methods=['POST'])
+    @action(detail=False, methods=['GET'])
     def confirm_payment(self, request):
         order_id = request.GET.get("o_id")
         order = Order.objects.get(id=order_id)
@@ -112,3 +113,17 @@ class OrderItemsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return OrderItems.objects.filter(order_id=self.kwargs["order_pk"])
+
+
+class OrderAddressViewSet(viewsets.ModelViewSet):
+    queryset = OrderAddress.objects.all()
+    serializer_class = OrderAddressSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        order_pk = self.kwargs.get("order_pk")
+        # if self.request.method == "PATCH":
+        #     return OrderAddress.objects.filter(order_id=order_pk)
+        if order_pk:
+            return OrderAddress.objects.filter(order_id=order_pk)
+        return OrderAddress.objects.filter(user_id=user.pk)

@@ -1,6 +1,7 @@
 from django.db import models
 from category.models import ProductCategory, Vendor
 from my_users.second_models import CustomerProfile
+from PIL import Image
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
@@ -25,12 +26,19 @@ class Products(models.Model):
     quantity = models.IntegerField(default=1)
     tags = models.TextField(null=True)
 
+    max_width = 800
+    max_height = 600
+
     def __str__(self):
         return f"{self.title}"
 
     def category_name(self):
         catName = ProductCategory.objects.get(name=self.category)
         return str(catName.name)
+
+    def imageUrl(self):
+        image_url = self.image.url
+        return image_url
 
 
 class ProductSize(models.Model):

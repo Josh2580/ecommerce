@@ -28,8 +28,7 @@ class Order(models.Model):
     order_time = models.DateTimeField(auto_now_add=True)
     order_status = models.CharField(
         max_length=50, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
-    shipping_address = models.ForeignKey(
-        Address, on_delete=models.SET_NULL, null=True, related_name="order_info")
+    payment_method = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         # return str(self.order_status)
@@ -55,3 +54,23 @@ class OrderItems(models.Model):
 
     def __str__(self):
         return f"{self.product.title}"
+
+
+class OrderAddress(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="user_order_address")
+    order = models.OneToOneField(Order, on_delete=models.SET_NULL,
+                                 null=True, blank=True, related_name="order_address")
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    phone_number = models.CharField(max_length=55, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    descriptions = models.TextField(max_length=500, null=True, blank=True)
+    postal_code = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    state = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    lga = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.order} {self.first_name}  {self.address}"
