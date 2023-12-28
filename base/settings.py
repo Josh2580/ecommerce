@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+
 from pathlib import Path
 
 import os
@@ -112,6 +113,11 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # }
 
 # postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com/ecommerce_0fc3
+# postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a/ecommerce_0fc3
+
+host = os.environ.get(
+    "HOSTS", "dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com")
+
 
 DATABASES = {
 
@@ -125,7 +131,7 @@ DATABASES = {
 
         'PASSWORD': 'oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu',
 
-        'HOST': 'dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com',
+        'HOST': host,
 
         'PORT': '5432',
 
