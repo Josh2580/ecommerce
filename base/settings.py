@@ -24,12 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ffuwxy*&$*qajfh6v+czqjsky9l^+8x-+maas5tvyae8ch&l+7'
+# SECRET_KEY = 'django-insecure-ffuwxy*&$*qajfh6v+czqjsky9l^+8x-+maas5tvyae8ch&l+7'
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
+# ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -100,32 +103,34 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
-
 #     'default': {
-
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-#         'NAME': "ecommerce",
-
-#         'USER': 'postgres',
-
-#         'PASSWORD': '@Secret2580',
-
-#         'HOST': 'localhost',
-
-#         'PORT': '5432',
-
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
-
 # }
+
+# postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com/ecommerce_0fc3
+
+DATABASES = {
+
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': "ecommerce_0fc3",
+
+        'USER': 'ecommerce_0fc3_user',
+
+        'PASSWORD': 'oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu',
+
+        'HOST': 'dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com',
+
+        'PORT': '5432',
+
+    }
+
+}
 
 
 # Password validation
