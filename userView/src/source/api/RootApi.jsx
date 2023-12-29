@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const RootApi = createApi({
   reducerPath: "RootApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:8000/api/",
+    baseUrl: "https://ecommerce-web-ev3g.onrender.com/api/",
     prepareHeaders: (headers, { getState }) => {
       const access = getState().auth.accessToken || "";
       // console.log(access);

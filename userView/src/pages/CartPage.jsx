@@ -104,10 +104,7 @@ const CartPage = () => {
               CartData.items.map((prod, i) => (
                 <div className="eachProd" key={i}>
                   <div className="basicInfo">
-                    <img
-                      src={"http://127.0.0.1:8000" + prod.product.image}
-                      alt={prod.product.title}
-                    />
+                    <img src={prod.product.image} alt={prod.product.title} />
                     <div className="prodVariant ">
                       <p className="prodName ">{prod.product.title}</p>
                       {/* <p>color: {prod.selectedColor}</p> */}
