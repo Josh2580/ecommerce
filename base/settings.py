@@ -112,7 +112,9 @@ WSGI_APPLICATION = 'base.wsgi.application'
 #     }
 # }
 
+# External Host url below
 # postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com/ecommerce_0fc3
+# Internal Host url below
 # postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a/ecommerce_0fc3
 
 host = os.environ.get(
