@@ -70,9 +70,16 @@ class CartItemsViewSet(viewsets.ModelViewSet):
         elif self.request.method == "PATCH":
             return UpdateCartItemSerializer
         return CartItemSerializer
+        # return CartItemSerializer(context={'request': self.request})
 
     def get_serializer_context(self):
-        return {"cart_id": self.kwargs["cart_pk"]}
+        # return {"cart_id": self.kwargs["cart_pk"]}
+        context = {"cart_id": self.kwargs["cart_pk"]}
+
+        # Include request in the context if available
+        if hasattr(self, 'request') and self.request is not None:
+            context['request'] = self.request
+        return context
 
     # filter_backends = [DjangoFilterBackend]
     # filterset_fields = ['cart']

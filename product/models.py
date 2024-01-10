@@ -4,7 +4,6 @@ from my_users.second_models import CustomerProfile
 from PIL import Image
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from django.conf import settings
 
 
 User = get_user_model()
@@ -39,7 +38,7 @@ class Products(models.Model):
 
     def imageUrl(self):
         image_url = self.image.url
-        return settings.STATIC_URL + image_url
+        return image_url
 
 
 class ProductSize(models.Model):

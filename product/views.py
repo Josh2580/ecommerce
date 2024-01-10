@@ -18,6 +18,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     #     serializer.save(color=self.request.data)
     #     print(serializer.data)
 
+
 # class ProductViewSet(generics.ListCreateAPIView):
 
 #     queryset = models.Product.objects.all()

@@ -9,13 +9,23 @@ User = get_user_model()
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductCartSerializer(many=False)
+    # product = ProductCartSerializer(many=False)
+    product = serializers.SerializerMethodField()
     sub_total = serializers.SerializerMethodField(method_name="total")
 
     class Meta:
         model = CartItems
         fields = ["id", "cart", "product", "quantity", "sub_total"]
         # depth = 1
+
+    def get_product(self, obj):
+        request = self.context.get('request')
+        # request = self.context["request"]
+
+        # print(request)
+        product_serializer = ProductCartSerializer(
+            obj.product, context={'request': request})
+        return product_serializer.data
 
     def total(self, cartItem: CartItems):
         return cartItem.quantity * cartItem.product.price
@@ -66,6 +76,11 @@ class AddCartItemSerializer(serializers.ModelSerializer):
 
     def save(self, **kwargs):
         cart_id = self.context["cart_id"]
+        # request = self.context["request"]
+
+        # print(f"Cart Item added: {cart_id}")
+        # print(f"Cart Item request: {request}")
+
         product_id = self.validated_data['product_id']
         quantity = self.validated_data['quantity']
 

@@ -26,15 +26,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-ffuwxy*&$*qajfh6v+czqjsky9l^+8x-+maas5tvyae8ch&l+7'
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", "django-insecure-ffuwxy*&$*qajfh6v+czqjsky9l^+8x-+maas5tvyae8ch&l+7")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+# DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = True
+
 
 # ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
-# ALLOWED_HOSTS = ["127.0.0.1"]
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ["127.0.0.1"]
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -73,13 +76,15 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
 
     "corsheaders.middleware.CorsMiddleware",
-
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ROOT_URLCONF = 'base.urls'
 
@@ -105,12 +110,12 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # External Host url below
 # postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com/ecommerce_0fc3
@@ -121,25 +126,25 @@ host = os.environ.get(
     "HOSTS", "dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com")
 
 
-DATABASES = {
+# DATABASES = {
 
-    'default': {
+#     'default': {
 
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': "ecommerce_0fc3",
+#         'NAME': "ecommerce_0fc3",
 
-        'USER': 'ecommerce_0fc3_user',
+#         'USER': 'ecommerce_0fc3_user',
 
-        'PASSWORD': 'oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu',
+#         'PASSWORD': 'oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu',
 
-        'HOST': host,
+#         'HOST': host,
 
-        'PORT': '5432',
+#         'PORT': '5432',
 
-    }
+#     }
 
-}
+# }
 
 
 # Password validation
@@ -182,6 +187,7 @@ MEDIA_URL = 'media/'
 
 
 MEDIA_ROOT = BASE_DIR / "media"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # STATICFILES_DIRS = [
@@ -214,10 +220,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
     "ROTATE_REFRESH_TOKENS": False,
-    "BLACKLIST_AFTER_ROTATION": False,
+    "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
 
     "ALGORITHM": "HS256",

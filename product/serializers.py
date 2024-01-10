@@ -1,13 +1,28 @@
 from rest_framework import serializers
 from product import models
+from django.conf import settings
 
 
 class ProductCartSerializer(serializers.ModelSerializer):
+    # image = serializers.SerializerMethodField(method_name="image_url")
+    hosted_image_url = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Products
-        fields = ["id", "title", "image",
+        fields = ["id", "title", "image", "hosted_image_url",
                   "quantity",  "price"]
+
+    def get_hosted_image_url(self, obj):
+        request = self.context.get('request')
+        # request = self
+
+        # print(f"the object: {obj.image}")
+        # print(f"the request: {request}")
+
+        if request and obj.image:
+            return request.build_absolute_uri(settings.MEDIA_URL + str(obj.image))
+        return None
+        # pass
 
 
 class ProductColorSerializer(serializers.ModelSerializer):
@@ -67,6 +82,17 @@ class ProductSerializer(serializers.ModelSerializer):
                   "color", "price", "size",  "quality", "image", "product_images", "description", "quantity"]
 
         # exclude = ["price", "color"]
+
+    # def get_hosted_image_url(self, obj):
+    #     request = self.context.get('request')
+    #     # request = self
+
+    #     print(f"the object: {obj.image}")
+    #     print(f"the request: {request}")
+
+    #     if request and obj.image:
+    #         return request.build_absolute_uri(settings.MEDIA_URL + str(obj.image))
+    #     return None
 
     def create(self, validated_data):
         color_data = validated_data.pop("color")
