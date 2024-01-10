@@ -10,6 +10,10 @@ pnpm-debug.log*
 lerna-debug.log*
 userView
 userView/node_modules
+userView/ecommerce_frontend
+userView/ecommerce_frontend-1
+
+
 
 
 node_modules
