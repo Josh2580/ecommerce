@@ -37,7 +37,7 @@ DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 # ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
 # ALLOWED_HOSTS = ["127.0.0.1"]
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS","127.0.0.1")
 
 
 # Application definition
