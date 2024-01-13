@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "my_users",
     "order",
     "cart",
+    'rest_framework_simplejwt.token_blacklist',
     # 'drf_multiple_model',
 
 ]
@@ -70,13 +71,14 @@ AUTH_USER_MODEL = "my_users.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
 
     # "Put CacheMiddleware here if it's needed"
     "django.middleware.locale.LocaleMiddleware",
 
     "corsheaders.middleware.CorsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -84,7 +86,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 ROOT_URLCONF = 'base.urls'
 
@@ -110,12 +116,14 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 
 # External Host url below
 # postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com/ecommerce_0fc3
