@@ -31,13 +31,13 @@ SECRET_KEY = os.environ.get(
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get("DEBUG", "False") == "True"
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+# DEBUG = True
 
 
 # ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
-ALLOWED_HOSTS = ["127.0.0.1"]
-# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+# ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -110,12 +110,12 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # External Host url below
 # postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com/ecommerce_0fc3
@@ -126,25 +126,25 @@ host = os.environ.get(
     "HOSTS", "dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com")
 
 
-# DATABASES = {
+DATABASES = {
 
-#     'default': {
+    'default': {
 
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-#         'NAME': "ecommerce_0fc3",
+        'NAME': "ecommerce_0fc3",
 
-#         'USER': 'ecommerce_0fc3_user',
+        'USER': 'ecommerce_0fc3_user',
 
-#         'PASSWORD': 'oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu',
+        'PASSWORD': 'oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu',
 
-#         'HOST': host,
+        'HOST': host,
 
-#         'PORT': '5432',
+        'PORT': '5432',
 
-#     }
+    }
 
-# }
+}
 
 
 # Password validation
@@ -220,9 +220,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
-    "ROTATE_REFRESH_TOKENS": False,
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=14),
+    "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
 

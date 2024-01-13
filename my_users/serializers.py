@@ -47,6 +47,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         # fields = "__all__"
         fields = ["id", "email", "first_name",
-                  "last_name", "date_of_birth", "user_address", "is_seller", "user_order_address", "cart"]
+                  "last_name", "date_of_birth", "user_address", "is_seller", "user_order_address", "cart", "customer_orders"]
 
         # exclude = ["password"]

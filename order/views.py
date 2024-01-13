@@ -29,7 +29,7 @@ def initiate_payment(amount, email, order_id):
         "amount": str(amount),
         "currency": "NGN",
         # "redirect_url": "http://localhost:8000/api/orders/all/confirm_payment/?o_id=" + order_id,
-        "redirect_url": "https://ecommerce-web-ev3g.onrender.com/order/success/?o_id=" + order_id,
+        "redirect_url": "https://joshecommerce.netlify.app/order/success/?o_id=" + order_id,
         # "redirect_url": "https://www.google.com",
 
 

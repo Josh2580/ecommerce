@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions
 # from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 from product import models, serializers
 # Create your views here.
@@ -12,7 +13,10 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     queryset = models.Products.objects.all()
     serializer_class = serializers.ProductSerializer
-    # filterset_fields = ["name", "price"]
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ["title", "price"]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
 
     # def perform_create(self, serializer):
     #     serializer.save(color=self.request.data)
@@ -31,8 +35,8 @@ class ProductColorViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ProductColorSerializer
 
     # permission_classes = [permissions.AllowAny]
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['products']
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['products']
 
     # def get_queryset(self):
     #     return models.ProductColor.objects.filter(products_id=self.kwargs["product_pk"])
