@@ -17,6 +17,7 @@ from pathlib import Path
 import os
 
 from datetime import timedelta
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,20 +28,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-ffuwxy*&$*qajfh6v+czqjsky9l^+8x-+maas5tvyae8ch&l+7'
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY", "django-insecure-ffuwxy*&$*qajfh6v+czqjsky9l^+8x-+maas5tvyae8ch&l+7")
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-ffuwxy*&$*qajfh6v+czqjsky9l^+8x-+maas5tvyae8ch&l+7")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.environ.get("DEBUG", "False") == "True"
 DEBUG = os.environ.get("DEBUG")
 
-# DEBUG = False
+# DEBUG = True
 
 
 # ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
-# ALLOWED_HOSTS = ["127.0.0.1"]
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ["127.0.0.1"]
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -128,33 +128,9 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # }
 
 
-# External Host url below
-# postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com/ecommerce_0fc3
-# Internal Host url below
-# postgres://ecommerce_0fc3_user:oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu@dpg-cm6r26a1hbls73a8jn3g-a/ecommerce_0fc3
-
-host = os.environ.get(
-    "HOSTS", "dpg-cm6r26a1hbls73a8jn3g-a.oregon-postgres.render.com")
-
-
+my_database_url = 'postgres://jocommercedb_user:0ak08GD2rqCXxM3GZNNy9UDTVfdY2h3b@dpg-cpjmf67109ks73eordfg-a.oregon-postgres.render.com/jocommercedb'
 DATABASES = {
-
-    'default': {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': "ecommerce_0fc3",
-
-        'USER': 'ecommerce_0fc3_user',
-
-        'PASSWORD': 'oYMnQkjSFKPkkWZlBldnOLYan5k5qMqu',
-
-        'HOST': host,
-
-        'PORT': '5432',
-
-    }
-
+    'default': dj_database_url.config(default=f'{my_database_url}')
 }
 
 
